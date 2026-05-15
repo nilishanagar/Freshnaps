@@ -1,0 +1,78 @@
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import AdminLayout from './components/layout/AdminLayout';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import AdminRoute from './components/common/AdminRoute';
+import LoadingSpinner from './components/common/LoadingSpinner';
+
+// Lazy-loaded pages
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ShopPage = lazy(() => import('./pages/ShopPage'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
+const CartPage = lazy(() => import('./pages/CartPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
+// Admin pages
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <LoadingSpinner size="lg" />
+  </div>
+);
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Customer Routes */}
+          <Route element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="shop" element={<ShopPage />} />
+            <Route path="product/:slug" element={<ProductDetailPage />} />
+            <Route path="cart" element={<CartPage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="order-success/:id" element={<OrderSuccessPage />} />
+
+            {/* Protected customer routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="checkout" element={<CheckoutPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+            </Route>
+          </Route>
+
+          {/* Admin Routes */}
+          <Route path="admin/login" element={
+            <Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>
+          } />
+          <Route element={<AdminRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route path="admin" element={<AdminDashboard />} />
+              <Route path="admin/products" element={<AdminProducts />} />
+              <Route path="admin/orders" element={<AdminOrders />} />
+            </Route>
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
+}
+
+export default App;
