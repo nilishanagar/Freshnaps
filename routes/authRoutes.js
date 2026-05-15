@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const { register, login, getMe, adminLogin } = require('../controllers/authController');
+const { protect } = require('../middleware/authMiddleware');
+
+router.post('/register', register);
+router.post('/login', login);
+router.post('/admin-login', adminLogin);
+router.get('/me', protect, getMe);
+
+module.exports = router;
