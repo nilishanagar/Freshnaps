@@ -31,6 +31,7 @@ const productSchema = new mongoose.Schema(
         color: String,
         stock: Number,
         price: Number,
+        image: String,
       },
     ],
     features: [String],

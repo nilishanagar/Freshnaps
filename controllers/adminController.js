@@ -74,4 +74,32 @@ const adminGetUsers = asyncHandler(async (req, res) => {
   res.json({ success: true, users });
 });
 
-module.exports = { getDashboardStats, adminGetProducts, createProduct, updateProduct, deleteProduct, adminGetOrders, updateOrderStatus, adminGetUsers };
+// @desc  Admin: update user role
+const updateUserRole = asyncHandler(async (req, res) => {
+  const { role } = req.body;
+  if (!['customer', 'admin'].includes(role)) {
+    res.status(400);
+    throw new Error('Invalid role');
+  }
+
+  // Prevent self-demotion
+  if (req.user._id.toString() === req.params.id && role === 'customer') {
+    res.status(400);
+    throw new Error('You cannot demote yourself');
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { role },
+    { new: true, runValidators: true }
+  ).select('-password');
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  res.json({ success: true, user });
+});
+
+module.exports = { getDashboardStats, adminGetProducts, createProduct, updateProduct, deleteProduct, adminGetOrders, updateOrderStatus, adminGetUsers, updateUserRole };

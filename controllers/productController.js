@@ -12,11 +12,36 @@ const getProducts = asyncHandler(async (req, res) => {
   if (featured === 'true') query.isFeatured = true;
   if (bestseller === 'true') query.isBestseller = true;
   if (trending === 'true') query.isTrending = true;
-  if (search) query.$text = { $search: search };
+  if (search) {
+    const searchRegex = new RegExp(search.trim().replace(/\s+/g, '|'), 'i');
+    query.$or = [
+      { name: searchRegex },
+      { description: searchRegex },
+      { category: searchRegex }
+    ];
+  }
   if (minPrice || maxPrice) {
-    query.price = {};
-    if (minPrice) query.price.$gte = Number(minPrice);
-    if (maxPrice) query.price.$lte = Number(maxPrice);
+    const min = minPrice ? Number(minPrice) : 0;
+    const max = maxPrice ? Number(maxPrice) : Infinity;
+
+    query.$expr = {
+      $and: [
+        {
+          $gte: [
+            { $cond: { if: { $gt: ["$discountPrice", 0] }, then: "$discountPrice", else: "$price" } },
+            min
+          ]
+        },
+        ...(max !== Infinity ? [
+          {
+            $lte: [
+              { $cond: { if: { $gt: ["$discountPrice", 0] }, then: "$discountPrice", else: "$price" } },
+              max
+            ]
+          }
+        ] : [])
+      ]
+    };
   }
 
   const sortOptions = {
