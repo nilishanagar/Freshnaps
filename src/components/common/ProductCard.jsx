@@ -5,6 +5,7 @@ import { ShoppingCart, Heart, Star, Eye, Zap } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/slices/cartSlice';
 import { toggleWishlistItem } from '../../store/slices/wishlistSlice';
+import { userService } from '../../services';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
@@ -13,6 +14,7 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const wishlist = useSelector(s => s.wishlist.items);
+  const user = useSelector(s => s.auth.user);
   const isWishlisted = wishlist.includes(product._id);
 
   const handleAddToCart = (e) => {
@@ -22,11 +24,20 @@ const ProductCard = ({ product }) => {
     toast.success(`Added to cart!`, { icon: '🛒' });
   };
 
-  const handleWishlist = (e) => {
+  const handleWishlist = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!user) return toast.error('Please login to save to wishlist');
+
     dispatch(toggleWishlistItem(product._id));
-    toast.success(isWishlisted ? 'Removed from wishlist' : 'Saved to wishlist ❤️');
+    
+    try {
+      await userService.toggleWishlist(product._id);
+      toast.success(isWishlisted ? 'Removed from wishlist' : 'Saved to wishlist ❤️');
+    } catch (err) {
+      dispatch(toggleWishlistItem(product._id)); // Revert on failure
+      toast.error('Failed to sync wishlist');
+    }
   };
 
   const hasDiscount = product.discountPrice > 0;

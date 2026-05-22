@@ -49,10 +49,29 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const getCategoryFromQuery = (query) => {
+    const q = query.toLowerCase().trim();
+    if (q.includes('pillow')) return 'pillow';
+    if (q.includes('mattress')) return 'mattress';
+    if (q.includes('bedsheet') || q.includes('bed sheet')) return 'bedsheet';
+    if (q.includes('cushion')) return 'cushion';
+    if (q.includes('comforter')) return 'comforter';
+    if (q.includes('blanket')) return 'blanket';
+    if (q.includes('curtain')) return 'curtain';
+    if (q.includes('accessory') || q.includes('accessories')) return 'accessory';
+    return '';
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+    const query = searchQuery.trim();
+    if (query) {
+      const category = getCategoryFromQuery(query);
+      if (category) {
+        navigate(`/shop?category=${category}&search=${encodeURIComponent(query)}`);
+      } else {
+        navigate(`/shop?search=${encodeURIComponent(query)}`);
+      }
       setSearchOpen(false);
       setSearchQuery('');
     }
@@ -175,7 +194,7 @@ const Navbar = () => {
             </button>
 
             {/* Wishlist */}
-            <Link to="/profile?tab=wishlist" className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-navy-700 transition-colors" aria-label="Wishlist">
+            <Link to="/wishlist" className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-navy-700 transition-colors" aria-label="Wishlist">
               <Heart size={20} />
               {wishlistCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">

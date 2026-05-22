@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingBag, LogOut, Crown, Moon, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Users, LogOut, Crown, Moon, ExternalLink } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ const adminNav = [
   { label: 'Dashboard', to: '/admin', icon: LayoutDashboard },
   { label: 'Products', to: '/admin/products', icon: Package },
   { label: 'Orders', to: '/admin/orders', icon: ShoppingBag },
+  { label: 'Users', to: '/admin/users', icon: Users },
 ];
 
 const AdminLayout = () => {

@@ -75,6 +75,127 @@ const categories = [
 ];
 
 // ──────────────────────────────────────────────
+// Static fallback products (shown when API is unavailable)
+// ──────────────────────────────────────────────
+const MOCK_FEATURED = [
+  {
+    _id: 'f1', slug: 'cloud-comfort-memory-foam-mattress',
+    name: 'Cloud Comfort Memory Foam Mattress',
+    category: 'mattress',
+    images: ['https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop'],
+    price: 24999, discountPrice: 18999,
+    rating: 4.8, numReviews: 124,
+    isFeatured: true, isBestseller: true,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: 'f2', slug: 'royal-silk-pillowcase-set',
+    name: 'Royal Silk Pillowcase Set',
+    category: 'pillow',
+    images: ['https://images.unsplash.com/photo-1592789705501-f9ae4278a9bc?w=800&auto=format&fit=crop'],
+    price: 3499, discountPrice: 2499,
+    rating: 4.9, numReviews: 89,
+    isFeatured: true, isBestseller: true,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: 'f3', slug: 'linen-dreams-bedsheet-set',
+    name: 'Linen Dreams Bedsheet Set',
+    category: 'bedsheet',
+    images: ['https://images.unsplash.com/photo-1562663474-6cbb3eaa4d14?w=800&auto=format&fit=crop'],
+    price: 4999, discountPrice: 3499,
+    rating: 4.7, numReviews: 156,
+    isFeatured: true, isBestseller: false,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: 'f4', slug: 'all-season-goose-down-comforter',
+    name: 'All-Season Goose Down Comforter',
+    category: 'comforter',
+    images: ['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop'],
+    price: 8999, discountPrice: 6499,
+    rating: 4.8, numReviews: 98,
+    isFeatured: true, isTrending: true,
+    createdAt: '2025-01-01',
+  },
+];
+
+const MOCK_BESTSELLERS = [
+  {
+    _id: 'b1', slug: 'cloud-comfort-memory-foam-mattress',
+    name: 'Cloud Comfort Memory Foam Mattress',
+    category: 'mattress',
+    images: ['https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop'],
+    price: 24999, discountPrice: 18999,
+    rating: 4.8, numReviews: 124,
+    isBestseller: true, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b2', slug: 'royal-silk-pillowcase-set',
+    name: 'Royal Silk Pillowcase Set',
+    category: 'pillow',
+    images: ['https://images.unsplash.com/photo-1592789705501-f9ae4278a9bc?w=800&auto=format&fit=crop'],
+    price: 3499, discountPrice: 2499,
+    rating: 4.9, numReviews: 89,
+    isBestseller: true, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b3', slug: 'velvet-comfort-cushion-set',
+    name: 'Velvet Comfort Cushion Set',
+    category: 'cushion',
+    images: ['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop'],
+    price: 2999, discountPrice: 1999,
+    rating: 4.6, numReviews: 72,
+    isBestseller: true, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b4', slug: 'bamboo-mattress-protector',
+    name: 'Bamboo Mattress Protector',
+    category: 'accessory',
+    images: ['https://images.unsplash.com/photo-1631049421450-348ccd7f8949?w=800&auto=format&fit=crop'],
+    price: 1999, discountPrice: 1399,
+    rating: 4.6, numReviews: 211,
+    isBestseller: true, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b5', slug: 'cashmere-touch-weighted-blanket',
+    name: 'Cashmere Touch Weighted Blanket',
+    category: 'blanket',
+    images: ['https://images.unsplash.com/photo-1576158114131-cc85ff77c72e?w=800&auto=format&fit=crop'],
+    price: 5999, discountPrice: 4299,
+    rating: 4.7, numReviews: 63,
+    isBestseller: false, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b6', slug: 'blackout-linen-curtains',
+    name: 'Blackout Linen Curtains',
+    category: 'curtain',
+    images: ['https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&auto=format&fit=crop'],
+    price: 3999, discountPrice: 2799,
+    rating: 4.5, numReviews: 47,
+    isBestseller: false, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b7', slug: 'linen-dreams-bedsheet-set',
+    name: 'Linen Dreams Bedsheet Set',
+    category: 'bedsheet',
+    images: ['https://images.unsplash.com/photo-1562663474-6cbb3eaa4d14?w=800&auto=format&fit=crop'],
+    price: 4999, discountPrice: 3499,
+    rating: 4.7, numReviews: 156,
+    isBestseller: false, createdAt: '2025-01-01',
+  },
+  {
+    _id: 'b8', slug: 'all-season-goose-down-comforter',
+    name: 'All-Season Goose Down Comforter',
+    category: 'comforter',
+    images: ['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop'],
+    price: 8999, discountPrice: 6499,
+    rating: 4.8, numReviews: 98,
+    isBestseller: false, createdAt: '2025-01-01',
+  },
+];
+
+// ──────────────────────────────────────────────
 // Testimonials
 // ──────────────────────────────────────────────
 const testimonials = [
@@ -99,11 +220,15 @@ const HomePage = () => {
           productService.getAll({ bestseller: 'true', limit: 8 }),
           productService.getAll({ trending: 'true', limit: 4 }),
         ]);
-        dispatch(setFeatured(f.data.products));
-        dispatch(setBestsellers(b.data.products));
-        dispatch(setTrending(t.data.products));
+        // Use API data if available, otherwise fall back to mock data
+        dispatch(setFeatured(f.data.products?.length > 0 ? f.data.products : MOCK_FEATURED));
+        dispatch(setBestsellers(b.data.products?.length > 0 ? b.data.products : MOCK_BESTSELLERS));
+        dispatch(setTrending(t.data.products?.length > 0 ? t.data.products : []));
       } catch (err) {
-        console.error(err);
+        // API unavailable — use static mock data so sections still render
+        console.warn('API unavailable, using mock product data:', err?.message || err);
+        dispatch(setFeatured(MOCK_FEATURED));
+        dispatch(setBestsellers(MOCK_BESTSELLERS));
       } finally {
         setLoading(false);
       }
@@ -221,19 +346,19 @@ const HomePage = () => {
               initial={{ opacity: 0, x: 55 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:flex items-center justify-center"
+              className="relative hidden lg:flex items-center justify-end pr-4 xl:pr-12"
             >
-              {/* Main image */}
+              {/* Main image - Increased size to occupy more of the background panel */}
               <motion.div
                 animate={{ y: [-7, 7, -7] }}
                 transition={{ repeat: Infinity, duration: 5.5, ease: 'easeInOut' }}
-                className="relative z-10 w-full max-w-[500px]"
+                className="relative z-10 w-full max-w-[640px] xl:max-w-[720px] -mr-12 xl:-mr-24"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80"
+                  src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
                   alt="Premium bedroom setup"
-                  className="w-full rounded-3xl shadow-2xl object-cover aspect-[4/3]"
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://picsum.photos/seed/bedroom1/900/675'; }}
+                  className="w-full rounded-3xl shadow-2xl object-cover aspect-[16/10]"
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://picsum.photos/seed/bedroom1/1200/750'; }}
                 />
               </motion.div>
 
@@ -279,7 +404,7 @@ const HomePage = () => {
         </motion.div>
       </section>
 
-      {/* ─── STATS STRIP ─── */}
+      {/* ─── STATS STRIP ───
       <section className="bg-white dark:bg-navy-900 border-b border-gray-100 dark:border-navy-800">
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100 dark:divide-navy-800">
@@ -308,10 +433,10 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ─── CATEGORIES ─── */}
-      <section className="py-20 bg-white dark:bg-navy-900">
+      <section className="py-12 bg-white dark:bg-navy-900">
         <div className="container-custom">
 
           {/* Header */}
@@ -408,7 +533,7 @@ const HomePage = () => {
       </section>
 
       {/* ─── FEATURED PRODUCTS ─── */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="container-custom">
           <Section>
             <div className="flex items-end justify-between mb-12">
@@ -423,16 +548,21 @@ const HomePage = () => {
           </Section>
 
           {loading ? (
-            <div className="flex justify-center py-20"><LoadingSpinner size="xl" /></div>
-          ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {(featured.length > 0 ? featured : Array(4).fill(null)).map((product, i) =>
-                product ? (
-                  <ProductCard key={product._id} product={product} />
-                ) : (
-                  <div key={i} className="card aspect-square animate-pulse bg-gray-100 dark:bg-navy-700 rounded-2xl" />
-                )
-              )}
+              {Array(4).fill(null).map((_, i) => (
+                <div key={i} className="card aspect-[4/3] animate-pulse bg-gray-100 dark:bg-navy-700 rounded-2xl" />
+              ))}
+            </div>
+          ) : featured.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featured.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-gray-400 mb-4">No featured products right now.</p>
+              <Link to="/shop" className="btn-primary px-8 py-3 text-sm">Browse All Products <ArrowRight size={15} /></Link>
             </div>
           )}
         </div>
@@ -463,7 +593,7 @@ const HomePage = () => {
       </Section>
 
       {/* ─── BESTSELLERS ─── */}
-      <section className="py-20 bg-gray-50 dark:bg-navy-800/30">
+      <section className="py-12 bg-gray-50 dark:bg-navy-800/30">
         <div className="container-custom">
           <Section>
             <div className="flex items-end justify-between mb-12">
@@ -478,12 +608,21 @@ const HomePage = () => {
           </Section>
 
           {loading ? (
-            <div className="flex justify-center py-20"><LoadingSpinner size="xl" /></div>
-          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Array(4).fill(null).map((_, i) => (
+                <div key={i} className="card aspect-[4/3] animate-pulse bg-gray-100 dark:bg-navy-700 rounded-2xl" />
+              ))}
+            </div>
+          ) : bestsellers.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {bestsellers.slice(0, 8).map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-gray-400 mb-4">No bestsellers available right now.</p>
+              <Link to="/shop" className="btn-primary px-8 py-3 text-sm">Browse All Products <ArrowRight size={15} /></Link>
             </div>
           )}
         </div>
@@ -491,7 +630,7 @@ const HomePage = () => {
 
       {/* ─── TRENDING ─── */}
       {trending.length > 0 && (
-        <section className="py-20">
+        <section className="py-12">
           <div className="container-custom">
             <Section>
               <div className="flex items-end justify-between mb-12">
@@ -513,7 +652,7 @@ const HomePage = () => {
 
       {/* ─── WHY FRESHNAPS ─── */}
       <Section>
-        <section className="py-20 bg-navy-900 dark:bg-navy-950 text-white">
+        <section className="py-12 bg-navy-900 dark:bg-navy-950 text-white">
           <div className="container-custom">
             <div className="text-center mb-14">
               <span className="text-gold-400 font-medium text-sm uppercase tracking-widest">Why Choose Us</span>
@@ -550,7 +689,7 @@ const HomePage = () => {
       </Section>
 
       {/* ─── TESTIMONIALS ─── */}
-      <section className="py-20 bg-cream-200 dark:bg-navy-800/50">
+      <section className="py-12 bg-cream-200 dark:bg-navy-800/50">
         <div className="container-custom">
           <Section>
             <div className="text-center mb-12">
@@ -584,7 +723,7 @@ const HomePage = () => {
 
       {/* ─── NEWSLETTER ─── */}
       <Section>
-        <section className="py-20 bg-white dark:bg-navy-900">
+        <section className="py-12 bg-white dark:bg-navy-900">
           <div className="container-custom">
             <div className="relative rounded-3xl overflow-hidden bg-gold-gradient p-10 md:p-16 text-center shadow-gold-lg">
               {/* Subtle pattern overlay */}

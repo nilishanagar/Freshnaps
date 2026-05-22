@@ -36,5 +36,6 @@ export const adminService = {
   getOrders: () => api.get('/admin/orders'),
   updateOrderStatus: (id, data) => api.put(`/admin/orders/${id}/status`, data),
   getUsers: () => api.get('/admin/users'),
+  updateUserRole: (id, data) => api.put(`/admin/users/${id}/role`, data),
   uploadImages: (formData) => api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
 };

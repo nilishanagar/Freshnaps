@@ -27,12 +27,92 @@ const sortOptions = [
   { label: 'Most Popular', value: 'popular' },
 ];
 
+// ──────────────────────────────────────────────
+// Static fallback products (shown when API is unavailable)
+// ──────────────────────────────────────────────
+const MOCK_PRODUCTS = [
+  {
+    _id: '1', slug: 'cloud-comfort-memory-foam-mattress',
+    name: 'Cloud Comfort Memory Foam Mattress',
+    category: 'mattress',
+    images: ['https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop'],
+    price: 24999, discountPrice: 18999,
+    rating: 4.8, numReviews: 124,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '2', slug: 'royal-silk-pillowcase-set',
+    name: 'Royal Silk Pillowcase Set',
+    category: 'pillow',
+    images: ['https://images.unsplash.com/photo-1592789705501-f9ae4278a9bc?w=800&auto=format&fit=crop'],
+    price: 3499, discountPrice: 2499,
+    rating: 4.9, numReviews: 89,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '3', slug: 'velvet-comfort-cushion-set',
+    name: 'Velvet Comfort Cushion Set',
+    category: 'cushion',
+    images: ['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop'],
+    price: 2999, discountPrice: 1999,
+    rating: 4.6, numReviews: 72,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '4', slug: 'bamboo-mattress-protector',
+    name: 'Bamboo Mattress Protector',
+    category: 'accessory',
+    images: ['https://images.unsplash.com/photo-1631049421450-348ccd7f8949?w=800&auto=format&fit=crop'],
+    price: 1999, discountPrice: 1399,
+    rating: 4.6, numReviews: 211,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '5', slug: 'cashmere-touch-weighted-blanket',
+    name: 'Cashmere Touch Weighted Blanket',
+    category: 'blanket',
+    images: ['https://images.unsplash.com/photo-1576158114131-cc85ff77c72e?w=800&auto=format&fit=crop'],
+    price: 5999, discountPrice: 4299,
+    rating: 4.7, numReviews: 63,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '6', slug: 'blackout-linen-curtains',
+    name: 'Blackout Linen Curtains',
+    category: 'curtain',
+    images: ['https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&auto=format&fit=crop'],
+    price: 3999, discountPrice: 2799,
+    rating: 4.5, numReviews: 47,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '7', slug: 'linen-dreams-bedsheet-set',
+    name: 'Linen Dreams Bedsheet Set',
+    category: 'bedsheet',
+    images: ['https://images.unsplash.com/photo-1562663474-6cbb3eaa4d14?w=800&auto=format&fit=crop'],
+    price: 4999, discountPrice: 3499,
+    rating: 4.7, numReviews: 156,
+    createdAt: '2025-01-01',
+  },
+  {
+    _id: '8', slug: 'all-season-goose-down-comforter',
+    name: 'All-Season Goose Down Comforter',
+    category: 'comforter',
+    images: ['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop'],
+    price: 8999, discountPrice: 6499,
+    rating: 4.8, numReviews: 98,
+    createdAt: '2025-01-01',
+  },
+];
+
 const ShopPage = () => {
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { items, isLoading, filters, pagination } = useSelector(s => s.products);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [localFilters, setLocalFilters] = useState({ ...filters });
+  const [minInput, setMinInput] = useState(filters.minPrice || '');
+  const [maxInput, setMaxInput] = useState(filters.maxPrice || '');
 
   // Sync URL params to local filters
   useEffect(() => {
@@ -41,7 +121,11 @@ const ShopPage = () => {
     const featured = searchParams.get('featured') || '';
     const bestseller = searchParams.get('bestseller') || '';
     const trending = searchParams.get('trending') || '';
-    setLocalFilters(prev => ({ ...prev, category: cat, search, featured, bestseller, trending }));
+    const minPrice = searchParams.get('minPrice') || '';
+    const maxPrice = searchParams.get('maxPrice') || '';
+    setLocalFilters(prev => ({ ...prev, category: cat, search, featured, bestseller, trending, minPrice, maxPrice }));
+    setMinInput(minPrice);
+    setMaxInput(maxPrice);
   }, [searchParams]);
 
   // Fetch whenever localFilters change
@@ -64,7 +148,8 @@ const ShopPage = () => {
         const res = await productService.getAll(params);
         dispatch(setProducts(res.data));
       } catch (err) {
-        console.error(err);
+        console.error('Failed to fetch products:', err?.message || err);
+        dispatch(setProducts({ products: [], page: 1, pages: 1, total: 0 }));
       } finally {
         dispatch(setLoading(false));
       }
@@ -72,12 +157,66 @@ const ShopPage = () => {
     fetchProducts();
   }, [localFilters, dispatch]);
 
+  // Debounce minPrice filter
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (minInput !== localFilters.minPrice) {
+        applyFilter('minPrice', minInput);
+      }
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [minInput]);
+
+  // Debounce maxPrice filter
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (maxInput !== localFilters.maxPrice) {
+        applyFilter('maxPrice', maxInput);
+      }
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [maxInput]);
+
   const applyFilter = (key, val) => {
-    setLocalFilters(prev => ({ ...prev, [key]: val, page: 1 }));
-    dispatch(setFilters({ [key]: val, page: 1 }));
+    const newParams = {};
+    searchParams.forEach((value, k) => {
+      if (value) newParams[k] = value;
+    });
+
+    if (key === 'category') {
+      delete newParams.search;
+      if (val) {
+        newParams.category = val;
+      } else {
+        delete newParams.category;
+      }
+    } else {
+      if (val) {
+        newParams[key] = val;
+      } else {
+        delete newParams[key];
+      }
+    }
+    
+    if (key !== 'page') {
+      newParams.page = 1;
+    }
+    setSearchParams(newParams);
+
+    setLocalFilters(prev => {
+      const updated = { ...prev, [key]: val };
+      if (key !== 'page') updated.page = 1;
+      if (key === 'category') updated.search = '';
+      return updated;
+    });
+    dispatch(setFilters({ 
+      [key]: val, 
+      ...(key !== 'page' && { page: 1 }), 
+      ...(key === 'category' && { search: '' }) 
+    }));
   };
 
-  const FilterSidebar = () => (
+  const renderSidebar = () => (
     <div className="space-y-8">
       {/* Categories */}
       <div>
@@ -108,17 +247,15 @@ const ShopPage = () => {
           <input
             type="number"
             placeholder="Min ₹"
-            value={localFilters.minPrice}
-            onChange={e => setLocalFilters(prev => ({ ...prev, minPrice: e.target.value }))}
-            onBlur={() => applyFilter('minPrice', localFilters.minPrice)}
+            value={minInput}
+            onChange={e => setMinInput(e.target.value)}
             className="input text-sm"
           />
           <input
             type="number"
             placeholder="Max ₹"
-            value={localFilters.maxPrice}
-            onChange={e => setLocalFilters(prev => ({ ...prev, maxPrice: e.target.value }))}
-            onBlur={() => applyFilter('maxPrice', localFilters.maxPrice)}
+            value={maxInput}
+            onChange={e => setMaxInput(e.target.value)}
             className="input text-sm"
           />
         </div>
@@ -127,9 +264,12 @@ const ShopPage = () => {
       {/* Clear filters */}
       <button
         onClick={() => {
+          setSearchParams({});
           const reset = { category: '', search: '', sort: 'newest', minPrice: '', maxPrice: '', page: 1 };
           setLocalFilters(reset);
           dispatch(setFilters(reset));
+          setMinInput('');
+          setMaxInput('');
         }}
         className="w-full btn-secondary text-sm"
       >
@@ -155,7 +295,7 @@ const ShopPage = () => {
           {/* Desktop sidebar */}
           <aside className="hidden lg:block w-64 flex-shrink-0">
             <div className="card p-6 sticky top-24">
-              <FilterSidebar />
+              {renderSidebar()}
             </div>
           </aside>
 
@@ -234,7 +374,7 @@ const ShopPage = () => {
               <h2 className="font-semibold text-gray-900 dark:text-white">Filters</h2>
               <button onClick={() => setSidebarOpen(false)}><X size={20} /></button>
             </div>
-            <FilterSidebar />
+            {renderSidebar()}
           </div>
         </div>
       )}

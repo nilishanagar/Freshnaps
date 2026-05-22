@@ -49,7 +49,8 @@ const CheckoutPage = () => {
       dispatch(clearCart());
       navigate(`/order-success/${res.data.order._id}`);
     } catch (err) {
-      toast.error(err.message || 'Failed to place order');
+      const msg = err.response?.data?.message || err.message || 'Failed to place order';
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

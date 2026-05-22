@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Heart, Star, Truck, RotateCcw, Shield, ChevronLeft, ChevronRight, Minus, Plus, Zap } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productService } from '../services';
+import { productService, userService } from '../services';
 import { setCurrentProduct, setRelatedProducts } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { toggleWishlistItem } from '../store/slices/wishlistSlice';
@@ -53,8 +53,12 @@ const ProductDetailPage = () => {
 
   const isWishlisted = wishlist.includes(product._id);
   const hasDiscount = product.discountPrice > 0;
-  const displayPrice = hasDiscount ? product.discountPrice : product.price;
-  const discountPct = hasDiscount ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0;
+  
+  // Calculate display price based on variant
+  const basePrice = selectedVariant?.price || product.price;
+  const discountAmount = hasDiscount ? (product.price - product.discountPrice) : 0;
+  const displayPrice = selectedVariant?.price ? (selectedVariant.price - discountAmount) : (hasDiscount ? product.discountPrice : product.price);
+  const discountPct = hasDiscount ? Math.round((discountAmount / product.price) * 100) : 0;
 
   const handleAddToCart = () => {
     dispatch(addToCart({ product, quantity, variant: selectedVariant }));
@@ -66,9 +70,17 @@ const ProductDetailPage = () => {
     navigate('/checkout');
   };
 
-  const handleWishlist = () => {
+  const handleWishlist = async () => {
+    if (!user) return toast.error('Please login to save to wishlist');
+    
     dispatch(toggleWishlistItem(product._id));
-    toast.success(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
+    try {
+      await userService.toggleWishlist(product._id);
+      toast.success(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
+    } catch (err) {
+      dispatch(toggleWishlistItem(product._id)); // Revert
+      toast.error('Failed to sync wishlist');
+    }
   };
 
   return (
@@ -166,8 +178,8 @@ const ProductDetailPage = () => {
               <span className="text-3xl font-bold text-gray-900 dark:text-white">{formatPrice(displayPrice)}</span>
               {hasDiscount && (
                 <>
-                  <span className="text-xl text-gray-400 line-through">{formatPrice(product.price)}</span>
-                  <span className="badge bg-red-100 text-red-600 text-sm px-2">Save {formatPrice(product.price - product.discountPrice)}</span>
+                  <span className="text-xl text-gray-400 line-through">{formatPrice(basePrice)}</span>
+                  <span className="badge bg-red-100 text-red-600 text-sm px-2">Save {formatPrice(discountAmount)}</span>
                 </>
               )}
             </div>
@@ -185,13 +197,24 @@ const ProductDetailPage = () => {
                   {product.variants.map((v, i) => (
                     <button
                       key={i}
-                      onClick={() => setSelectedVariant(v)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium border-2 transition-all ${
+                      onClick={() => {
+                        setSelectedVariant(v);
+                        if (v.image) {
+                          const idx = product.images.indexOf(v.image);
+                          if (idx !== -1) setActiveImg(idx);
+                        }
+                      }}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium border-2 transition-all flex items-center gap-2 ${
                         selectedVariant === v
                           ? 'border-gold-500 bg-gold-50 dark:bg-gold-900/20 text-gold-700 dark:text-gold-400'
                           : 'border-gray-200 dark:border-navy-600 text-gray-600 dark:text-gray-300 hover:border-gold-300'
                       }`}
                     >
+                      {v.image && (
+                        <div className="w-6 h-6 rounded-md overflow-hidden flex-shrink-0 bg-gray-100">
+                          <img src={v.image} alt={v.color || v.size} className="w-full h-full object-cover" />
+                        </div>
+                      )}
                       {v.size || v.color}
                     </button>
                   ))}

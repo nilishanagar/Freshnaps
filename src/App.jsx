@@ -19,11 +19,13 @@ const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 
 const PageLoader = () => (
@@ -53,6 +55,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="wishlist" element={<WishlistPage />} />
             </Route>
           </Route>
 
@@ -65,6 +68,7 @@ function App() {
               <Route path="admin" element={<AdminDashboard />} />
               <Route path="admin/products" element={<AdminProducts />} />
               <Route path="admin/orders" element={<AdminOrders />} />
+              <Route path="admin/users" element={<AdminUsers />} />
             </Route>
           </Route>
 
