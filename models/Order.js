@@ -33,8 +33,68 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ['placed', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+      enum: ['placed', 'confirmed', 'packed', 'shipped', 'out_for_delivery', 'delivered', 'cancelled', 'returned', 'refunded'],
       default: 'placed',
+    },
+    billingAddress: {
+      name: String,
+      phone: String,
+      street: String,
+      city: String,
+      state: String,
+      pincode: String,
+    },
+    taxAmount: { type: Number, default: 0 },
+    taxBreakdown: {
+      cgst: { type: Number, default: 0 },
+      sgst: { type: Number, default: 0 },
+      igst: { type: Number, default: 0 },
+    },
+    invoiceNumber: String,
+    invoiceUrl: String,
+    estimatedDelivery: Date,
+    deliveryPartner: String,
+    shipmentProvider: String,
+    trackingId: String,
+    trackingHistory: [
+      {
+        status: String,
+        location: String,
+        timestamp: { type: Date, default: Date.now },
+        description: String,
+      }
+    ],
+    transactionId: String,
+    refundStatus: {
+      type: String,
+      enum: ['none', 'initiated', 'approved', 'processed', 'refunded'],
+      default: 'none',
+    },
+    refundAmount: { type: Number, default: 0 },
+    refundReason: String,
+    refundDate: Date,
+    returnStatus: {
+      type: String,
+      enum: ['none', 'requested', 'approved', 'picked_up', 'received', 'completed'],
+      default: 'none',
+    },
+    returnReason: String,
+    returnImages: [String],
+    returnRequestDate: Date,
+    cancelReason: String,
+    cancelDate: Date,
+    statusHistory: [
+      {
+        status: String,
+        timestamp: { type: Date, default: Date.now },
+        note: String,
+      }
+    ],
+    review: {
+      rating: Number,
+      comment: String,
+      images: [String],
+      createdAt: Date,
     },
     subtotal: Number,
     discount: { type: Number, default: 0 },
@@ -43,7 +103,6 @@ const orderSchema = new mongoose.Schema(
     couponCode: String,
     notes: String,
     deliveredAt: Date,
-    trackingNumber: String,
   },
   { timestamps: true }
 );

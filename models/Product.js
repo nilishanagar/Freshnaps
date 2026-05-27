@@ -32,6 +32,7 @@ const productSchema = new mongoose.Schema(
         stock: Number,
         price: Number,
         image: String,
+        sku: String,
       },
     ],
     features: [String],
@@ -43,6 +44,18 @@ const productSchema = new mongoose.Schema(
     isBestseller: { type: Boolean, default: false },
     isTrending: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
+    
+    // Inventory and auditing fields
+    sku: { type: String, unique: true, sparse: true },
+    lowStockThreshold: { type: Number, default: 5 },
+    stockAuditHistory: [
+      {
+        action: { type: String, enum: ['decrement', 'restock', 'cancelled', 'adjustment'] },
+        quantity: { type: Number },
+        timestamp: { type: Date, default: Date.now },
+        note: { type: String }
+      }
+    ]
   },
   { timestamps: true }
 );

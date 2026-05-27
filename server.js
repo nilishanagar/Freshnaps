@@ -13,6 +13,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const { errorHandler } = require('./middleware/errorMiddleware');
 
@@ -23,6 +24,12 @@ if (!process.env.JWT_SECRET) {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Create standard HTTP server wrapping Express for Socket.io
+const http = require('http');
+const server = http.createServer(app);
+const { initSocket } = require('./utils/socketService');
+initSocket(server);
+
 // Middleware
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
@@ -31,7 +38,14 @@ app.use(cors({
   credentials: true,
 }));
 app.use(morgan('dev'));
-app.use(express.json({ limit: '10mb' }));
+
+// Capture raw body for Stripe webhook signature verification
+app.use(express.json({ 
+  limit: '10mb',
+  verify: (req, res, buf) => {
+    req.rawBody = buf.toString();
+  }
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -45,6 +59,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -54,12 +69,20 @@ app.get('/api/health', (req, res) => {
 // Error handler
 app.use(errorHandler);
 
+// Background worker queue service import
+const { startQueueWorker } = require('./utils/queueService');
+
 // MongoDB connect
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+    
+    // Start asynchronous notification outbox worker
+    startQueueWorker();
+    
+    // Listen on the HTTP Server instance
+    server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch((err) => {
     console.error('❌ MongoDB connection failed:', err.message);

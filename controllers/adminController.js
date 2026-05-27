@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
+const notificationService = require('../utils/notificationService');
 
 // Helper: generate slug
 const generateSlug = (name) =>
@@ -53,18 +54,110 @@ const adminGetOrders = asyncHandler(async (req, res) => {
   res.json({ success: true, orders });
 });
 
-// @desc  Admin: update order status
+// @desc  Admin: update order status, tracking, and refund/return statuses
 const updateOrderStatus = asyncHandler(async (req, res) => {
-  const order = await Order.findByIdAndUpdate(
-    req.params.id,
-    {
-      orderStatus: req.body.orderStatus,
-      ...(req.body.trackingNumber && { trackingNumber: req.body.trackingNumber }),
-      ...(req.body.orderStatus === 'delivered' && { deliveredAt: new Date() }),
-    },
-    { new: true }
-  );
-  if (!order) { res.status(404); throw new Error('Order not found'); }
+  const { orderStatus, trackingId, deliveryPartner, trackingEvent, returnStatus, refundStatus, refundAmount } = req.body;
+
+  const order = await Order.findById(req.params.id).populate('user', 'name email phone');
+  if (!order) {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+
+  // 1. Update Tracking Details
+  if (trackingId) order.trackingId = trackingId;
+  if (deliveryPartner) {
+    order.deliveryPartner = deliveryPartner;
+    order.shipmentProvider = deliveryPartner;
+  }
+
+  // 2. Add custom Tracking Event (if provided)
+  if (trackingEvent) {
+    const { status, location, description } = trackingEvent;
+    order.trackingHistory.push({
+      status: status || order.orderStatus,
+      location: location || 'Transit Hub',
+      timestamp: new Date(),
+      description: description || 'Package status updated.'
+    });
+  }
+
+  // 3. Update Order Status
+  if (orderStatus && orderStatus !== order.orderStatus) {
+    const oldStatus = order.orderStatus;
+    order.orderStatus = orderStatus;
+
+    if (orderStatus === 'delivered') {
+      order.deliveredAt = new Date();
+      order.paymentStatus = 'paid';
+    }
+
+    // Auto-generate tracking history for standard updates
+    let desc = '';
+    let loc = order.shippingAddress?.city || 'Fulfillment Center';
+    
+    if (orderStatus === 'confirmed') desc = 'Order has been confirmed by our merchant.';
+    else if (orderStatus === 'packed') desc = 'Order has been packed and is ready for courier handoff.';
+    else if (orderStatus === 'shipped') desc = `Order has been handed over to ${order.deliveryPartner || 'courier'}. Tracking ID: ${order.trackingId || 'N/A'}`;
+    else if (orderStatus === 'out_for_delivery') desc = 'Order is out for delivery with our executive.';
+    else if (orderStatus === 'delivered') desc = 'Order successfully delivered to customer.';
+    else if (orderStatus === 'returned') desc = 'Order has been returned back to our fulfillment center.';
+    else if (orderStatus === 'refunded') desc = 'Refund processed and completed.';
+
+    order.trackingHistory.push({
+      status: orderStatus,
+      location: loc,
+      timestamp: new Date(),
+      description: desc || `Status changed from ${oldStatus} to ${orderStatus}.`
+    });
+
+    order.statusHistory.push({
+      status: orderStatus,
+      note: `Status updated by Admin to ${orderStatus}.`,
+      timestamp: new Date()
+    });
+
+    // Send order status notification
+    try {
+      await notificationService.sendOrderStatusUpdate(order, order.user);
+    } catch (notifErr) {
+      console.error('Notification error:', notifErr);
+    }
+  }
+
+  // 4. Update Return/Refund Statuses
+  if (returnStatus && returnStatus !== order.returnStatus) {
+    order.returnStatus = returnStatus;
+    order.statusHistory.push({
+      status: order.orderStatus,
+      note: `Return status updated to ${returnStatus} by Admin.`,
+      timestamp: new Date()
+    });
+
+    // Send return update notification
+    try {
+      await notificationService.sendReturnUpdate(order, order.user);
+    } catch (notifErr) {
+      console.error('Notification error:', notifErr);
+    }
+  }
+
+  if (refundStatus && refundStatus !== order.refundStatus) {
+    order.refundStatus = refundStatus;
+    if (refundStatus === 'refunded') {
+      order.refundDate = new Date();
+      order.orderStatus = 'refunded';
+      order.refundAmount = refundAmount || order.totalAmount;
+    }
+    
+    order.statusHistory.push({
+      status: order.orderStatus,
+      note: `Refund status updated to ${refundStatus} by Admin. Refund amount: INR ${order.refundAmount}`,
+      timestamp: new Date()
+    });
+  }
+
+  await order.save();
   res.json({ success: true, order });
 });
 
