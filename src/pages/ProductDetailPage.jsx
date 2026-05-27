@@ -268,16 +268,23 @@ const ProductDetailPage = () => {
 
         {/* Tabs */}
         <div className="mt-12">
-          <div className="flex gap-1 border-b border-gray-200 dark:border-navy-700 mb-8">
-            {['description', 'features', 'reviews'].map(t => (
+          <div className="flex gap-1 border-b border-gray-200 dark:border-navy-700 mb-8 overflow-x-auto">
+            {[
+              { id: 'description', label: 'Description' },
+              product.material && { id: 'material', label: 'Material & Construction' },
+              product.washCare && { id: 'washCare', label: 'Wash & Care' },
+              product.warranty && { id: 'warranty', label: 'Warranty' },
+              { id: 'features', label: 'Features' },
+              { id: 'reviews', label: 'Reviews' }
+            ].filter(Boolean).map(t => (
               <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`px-6 py-3 text-sm font-medium capitalize transition-all border-b-2 -mb-px ${
-                  tab === t ? 'border-gold-500 text-gold-600 dark:text-gold-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`px-6 py-3 text-sm font-medium whitespace-nowrap transition-all border-b-2 -mb-px ${
+                  tab === t.id ? 'border-gold-500 text-gold-600 dark:text-gold-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
-                {t}
+                {t.label}
               </button>
             ))}
           </div>
@@ -285,7 +292,19 @@ const ProductDetailPage = () => {
           <AnimatePresence mode="wait">
             <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {tab === 'description' && (
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">{product.description}</p>
+                <div 
+                  className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl prose dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+              )}
+              {tab === 'material' && (
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl whitespace-pre-line">{product.material}</p>
+              )}
+              {tab === 'washCare' && (
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl whitespace-pre-line">{product.washCare}</p>
+              )}
+              {tab === 'warranty' && (
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl whitespace-pre-line">{product.warranty}</p>
               )}
               {tab === 'features' && (
                 <ul className="space-y-3 max-w-xl">

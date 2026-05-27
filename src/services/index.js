@@ -44,13 +44,34 @@ export const userService = {
 
 export const adminService = {
   getStats: () => api.get('/admin/stats'),
-  getProducts: () => api.get('/admin/products'),
+
+  // Products
+  getProducts: (params) => api.get('/admin/products', { params }),
+  getProduct: (id) => api.get(`/admin/products/${id}`),
   createProduct: (data) => api.post('/admin/products', data),
   updateProduct: (id, data) => api.put(`/admin/products/${id}`, data),
   deleteProduct: (id) => api.delete(`/admin/products/${id}`),
+  checkSku: (sku, excludeId) =>
+    api.get('/admin/products/check-sku', { params: { sku, excludeId } }),
+
+  // Orders
   getOrders: () => api.get('/admin/orders'),
   updateOrderStatus: (id, data) => api.put(`/admin/orders/${id}/status`, data),
+
+  // Users
   getUsers: () => api.get('/admin/users'),
   updateUserRole: (id, data) => api.put(`/admin/users/${id}/role`, data),
-  uploadImages: (formData) => api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+
+  // Uploads
+  uploadImages: (formData) =>
+    api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  deleteImage: (publicId) => api.delete('/upload', { data: { publicId } }),
+};
+
+export const categoryService = {
+  getAll: (params) => api.get('/categories', { params }),
+  getTree: () => api.get('/categories/tree'),
+  create: (data) => api.post('/categories', data),
+  update: (id, data) => api.put(`/categories/${id}`, data),
+  remove: (id) => api.delete(`/categories/${id}`),
 };
