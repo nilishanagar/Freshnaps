@@ -35,7 +35,7 @@ const createOrder = asyncHandler(async (req, res) => {
     enrichedItems.push({
       product: product._id,
       name: product.name,
-      image: product.images[0] || '',
+      image: product.images[0]?.url || product.images[0] || '',
       price,
       quantity: item.quantity,
       variant: item.variant || {},

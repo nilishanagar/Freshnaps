@@ -8,7 +8,18 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const query = { isActive: true };
 
-  if (category) query.category = category;
+  const mongoose = require('mongoose');
+
+  // Category filter: support both ObjectId (new products) and legacy string (old products)
+  if (category) {
+    if (mongoose.Types.ObjectId.isValid(category)) {
+      query.category = category;
+    } else {
+      // Legacy products store category as a plain string in categoryLegacy
+      // Note: don't add { category } here — it would cast string to ObjectId and fail
+      query.categoryLegacy = category;
+    }
+  }
   if (featured === 'true') query.isFeatured = true;
   if (bestseller === 'true') query.isBestseller = true;
   if (trending === 'true') query.isTrending = true;
@@ -17,7 +28,7 @@ const getProducts = asyncHandler(async (req, res) => {
     query.$or = [
       { name: searchRegex },
       { description: searchRegex },
-      { category: searchRegex }
+      { categoryLegacy: searchRegex },
     ];
   }
   if (minPrice || maxPrice) {

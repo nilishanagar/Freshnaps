@@ -14,6 +14,7 @@ const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 const { errorHandler } = require('./middleware/errorMiddleware');
 
@@ -34,10 +35,12 @@ initSocket(server);
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
 app.use(cors({
-  origin: true,
+  origin: process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL]
+    : true,
   credentials: true,
 }));
-app.use(morgan('dev'));
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // Capture raw body for Stripe webhook signature verification
 app.use(express.json({ 
@@ -60,6 +63,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
