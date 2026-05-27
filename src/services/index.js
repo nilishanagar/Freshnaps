@@ -5,6 +5,14 @@ export const authService = {
   login: (data) => api.post('/auth/login', data),
   adminLogin: (data) => api.post('/auth/admin-login', data),
   getMe: () => api.get('/auth/me'),
+  otpRequest: (data) => api.post('/auth/otp-request', data),
+  otpVerify: (data) => api.post('/auth/otp-verify', data),
+  googleLogin: (data) => api.post('/auth/google', data),
+  refresh: () => api.post('/auth/refresh'),
+  logout: () => api.post('/auth/logout'),
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
+  verifyEmail: (token) => api.get(`/auth/verify-email/${token}`),
 };
 
 export const productService = {
@@ -16,8 +24,15 @@ export const productService = {
 
 export const orderService = {
   create: (data) => api.post('/orders', data),
-  getMyOrders: () => api.get('/orders/my'),
+  getMyOrders: (params) => api.get('/orders/my', { params }),
   getById: (id) => api.get(`/orders/${id}`),
+  cancel: (id, data) => api.post(`/orders/${id}/cancel`, data),
+  returnOrder: (id, data) => api.post(`/orders/${id}/return`, data),
+  reorder: (id) => api.post(`/orders/${id}/reorder`),
+  getInvoice: (id) => api.get(`/orders/${id}/invoice`, { responseType: 'blob' }),
+  getTracking: (id) => api.get(`/orders/${id}/tracking`),
+  addReview: (id, data) => api.post(`/orders/${id}/review`, data),
+  confirmSandboxPayment: (orderId, sessionId) => api.post('/payments/stripe/webhook', { orderId, sessionId }),
 };
 
 export const userService = {

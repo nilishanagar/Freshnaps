@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Package, CreditCard, MapPin, Edit, Plus, X, Trash2, ShieldCheck, Lock } from 'lucide-react';
+import { User, Package, CreditCard, MapPin, Edit, Plus, X, Trash2, ShieldCheck, Lock, ArrowRight } from 'lucide-react';
 import { orderService, userService } from '../services';
 import { updateUser } from '../store/slices/authSlice';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { indianStatesAndCities, statesList } from '../utils/indiaData';
 import toast from 'react-hot-toast';
+
+import { fetchOrders, cancelOrder, reorderItems } from '../store/slices/orderSlice';
+import { addToCart } from '../store/slices/cartSlice';
+import OrderCard from '../components/orders/OrderCard';
+import CancelOrderModal from '../components/orders/CancelOrderModal';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
 
@@ -18,22 +23,16 @@ const tabs = [
   { id: 'payments', label: 'Payments', icon: CreditCard },
 ];
 
-const statusColors = {
-  placed: 'bg-blue-100 text-blue-700',
-  confirmed: 'bg-indigo-100 text-indigo-700',
-  processing: 'bg-yellow-100 text-yellow-700',
-  shipped: 'bg-purple-100 text-purple-700',
-  delivered: 'bg-green-100 text-green-700',
-  cancelled: 'bg-red-100 text-red-700',
-};
-
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector(s => s.auth);
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'profile');
-  const [orders, setOrders] = useState([]);
-  const [loadingOrders, setLoadingOrders] = useState(false);
+
+  const { orders, loading: loadingOrders, actionLoading } = useSelector(s => s.order);
+  const [selectedOrderForCancel, setSelectedOrderForCancel] = useState(null);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   // Profile Edit State
   const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -57,14 +56,91 @@ const ProfilePage = () => {
   const [savingPayment, setSavingPayment] = useState(false);
 
   useEffect(() => {
-    if (activeTab === 'orders' && orders.length === 0) {
-      setLoadingOrders(true);
-      orderService.getMyOrders()
-        .then(res => setOrders(res.data.orders))
-        .catch(() => toast.error('Failed to load orders'))
-        .finally(() => setLoadingOrders(false));
+    if (activeTab === 'orders') {
+      dispatch(fetchOrders());
     }
-  }, [activeTab]);
+  }, [activeTab, dispatch]);
+
+  // 1. Cancellation Flow
+  const handleOpenCancelModal = (order) => {
+    setSelectedOrderForCancel(order);
+    setIsCancelModalOpen(true);
+  };
+
+  const handleConfirmCancel = async ({ reason }) => {
+    if (!selectedOrderForCancel) return;
+
+    try {
+      toast.loading('Processing cancellation...', { id: 'cancel-toast' });
+      const resultAction = await dispatch(
+        cancelOrder({ id: selectedOrderForCancel._id, reason })
+      );
+
+      if (cancelOrder.fulfilled.match(resultAction)) {
+        toast.success('Order successfully cancelled!', { id: 'cancel-toast' });
+        setIsCancelModalOpen(false);
+        setSelectedOrderForCancel(null);
+        dispatch(fetchOrders());
+      } else {
+        toast.error(resultAction.payload || 'Failed to cancel order', { id: 'cancel-toast' });
+      }
+    } catch (err) {
+      toast.error('Cancellation failed. Please try again.', { id: 'cancel-toast' });
+    }
+  };
+
+  // 2. Reordering Flow
+  const handleReorder = async (order) => {
+    try {
+      toast.loading('Adding previous items to cart...', { id: 'reorder-toast' });
+      const resultAction = await dispatch(reorderItems(order._id));
+
+      if (reorderItems.fulfilled.match(resultAction)) {
+        const enrichedItems = resultAction.payload;
+        
+        for (const item of enrichedItems) {
+          dispatch(
+            addToCart({
+              product: item.product,
+              quantity: item.quantity,
+              variant: item.variant,
+            })
+          );
+        }
+
+        toast.success('All items added to cart! Redirecting...', { id: 'reorder-toast' });
+        navigate('/checkout');
+      } else {
+        toast.error(resultAction.payload || 'Failed to reorder items', { id: 'reorder-toast' });
+      }
+    } catch (err) {
+      toast.error('Reorder failed. Please try again.', { id: 'reorder-toast' });
+    }
+  };
+
+  // 3. Invoice Downloads (Streams Blob)
+  const handleInvoiceDownload = async (order) => {
+    try {
+      toast.loading('Generating invoice PDF...', { id: 'invoice-down' });
+      const response = await orderService.getInvoice(order._id);
+      
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${order.invoiceNumber || 'FN-invoice'}.pdf`);
+      document.body.appendChild(link);
+      
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      
+      toast.success('Invoice downloaded successfully!', { id: 'invoice-down' });
+    } catch (err) {
+      console.error('Invoice download err:', err);
+      toast.error('Failed to download invoice PDF.', { id: 'invoice-down' });
+    }
+  };
 
   const validateProfile = () => {
     let errs = {};
@@ -278,37 +354,38 @@ const ProfilePage = () => {
                 {loadingOrders ? (
                   <div className="flex justify-center py-16"><LoadingSpinner size="xl" /></div>
                 ) : orders.length === 0 ? (
-                  <div className="card p-12 text-center">
+                  <div className="card p-12 text-center bg-white dark:bg-navy-600 border border-cream-200 dark:border-navy-700/60 rounded-3xl">
                     <Package size={48} className="text-gray-300 mx-auto mb-4" />
                     <p className="text-gray-500">No orders yet. Start shopping!</p>
                   </div>
                 ) : (
-                  orders.map(order => (
-                    <div key={order._id} className="card p-5">
-                      <div className="flex items-start justify-between flex-wrap gap-3 mb-4">
-                        <div>
-                          <p className="font-semibold text-gray-900 dark:text-white">#{order._id.slice(-8).toUpperCase()}</p>
-                          <p className="text-sm text-gray-400">{new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                        </div>
-                        <span className={`badge capitalize ${statusColors[order.orderStatus] || 'bg-gray-100 text-gray-600'}`}>
-                          {order.orderStatus}
-                        </span>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center px-2">
+                      <div>
+                        <h3 className="font-display text-lg font-bold text-gray-900 dark:text-white">Recent Orders</h3>
+                        <p className="text-xs text-gray-400 font-semibold mt-0.5">Showing your last 3 orders</p>
                       </div>
-                      <div className="space-y-2">
-                        {order.orderItems.map((item, i) => (
-                          <div key={i} className="flex items-center gap-3 text-sm">
-                            <img src={item.image} alt={item.name} className="w-10 h-10 rounded-lg object-cover" />
-                            <span className="text-gray-600 dark:text-gray-300 flex-1 line-clamp-1">{item.name} ×{item.quantity}</span>
-                            <span className="font-medium">{formatPrice(item.price * item.quantity)}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100 dark:border-navy-700">
-                        <p className="text-sm text-gray-500">Total: <span className="font-bold text-gray-900 dark:text-white">{formatPrice(order.totalAmount)}</span></p>
-                        <p className="text-xs text-gray-400">{order.paymentMethod}</p>
-                      </div>
+                      <button
+                        onClick={() => navigate('/orders')}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-cream-50 hover:bg-gold-500 hover:text-white dark:bg-navy-800 text-gold-600 dark:text-gold-400 rounded-xl text-xs font-bold transition-all border border-cream-200 dark:border-navy-700 shadow-sm cursor-pointer"
+                      >
+                        View All Orders
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
                     </div>
-                  ))
+                    <div className="space-y-4">
+                      {orders.slice(0, 3).map(order => (
+                        <OrderCard
+                          key={order._id}
+                          order={order}
+                          onCancel={handleOpenCancelModal}
+                          onReorder={handleReorder}
+                          onInvoiceDownload={handleInvoiceDownload}
+                          actionLoading={actionLoading}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             )}
@@ -503,6 +580,14 @@ const ProfilePage = () => {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Cancel Confirmation Modal */}
+      <CancelOrderModal
+        isOpen={isCancelModalOpen}
+        onClose={() => setIsCancelModalOpen(false)}
+        onConfirm={handleConfirmCancel}
+        loading={actionLoading}
+      />
     </div>
   );
 };

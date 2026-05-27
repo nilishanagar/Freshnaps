@@ -1,8 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-gold-50: #fdf9f0;
+  --color-gold-100: #f9efd8;
+  --color-gold-200: #f2d9a6;
+  --color-gold-300: #e8c06e;
+  --color-gold-400: #dda83e;
+  --color-gold-500: #C9A96E;
+  --color-gold-600: #b8924a;
+  --color-gold-700: #9a7839;
+  --color-gold-800: #7d6133;
+  --color-gold-900: #654f2c;
+
+  --color-navy-50: #f0f0f8;
+  --color-navy-100: #d8d8ed;
+  --color-navy-200: #b0b0da;
+  --color-navy-300: #8585c2;
+  --color-navy-400: #5e5ea8;
+  --color-navy-500: #1A1A2E;
+  --color-navy-600: #151527;
+  --color-navy-700: #101020;
+  --color-navy-800: #0c0c18;
+  --color-navy-900: #080810;
+
+  --color-cream-50: #fefdfb;
+  --color-cream-100: #fdf9f2;
+  --color-cream-200: #F5F0E8;
+  --color-cream-300: #ede3d0;
+  --color-cream-400: #e0d3b4;
+  --color-cream-500: #d0bd97;
+
+  --font-display: Playfair Display, Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+
+  --background-image-gold-gradient: linear-gradient(135deg, #C9A96E 0%, #e8c06e 50%, #b8924a 100%);
+  --background-image-dark-gradient: linear-gradient(135deg, #0F0F1A 0%, #1A1A2E 100%);
+
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-slide-in: slideIn 0.4s ease-out;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4,0,0.6,1) infinite;
+
+  --height-18: 4.5rem;
+
+  --shadow-gold: 0 4px 14px rgba(201, 169, 110, 0.30);
+  --shadow-gold-lg: 0 8px 30px rgba(201, 169, 110, 0.45);
+  --shadow-gold-xl: 0 16px 48px rgba(201, 169, 110, 0.55);
+  --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.07);
+  --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.14);
+  --shadow-inner-gold: inset 0 1px 0 rgba(255,255,255,0.15);
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideIn {
+    0% { transform: translateX(-20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
 
 @layer base {
   :root {
