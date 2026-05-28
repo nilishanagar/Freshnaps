@@ -1,9 +1,12 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
+const { OAuth2Client } = require('google-auth-library');
+const axios = require('axios');
 const User = require('../models/User');
 const { generateOTP, hashOTP, verifyOTP } = require('../utils/otpService');
 const generateToken = require('../utils/generateToken');
+
 
 // Dynamic defensive imports for real communication services
 const twilioService = require('../utils/twilioService');
@@ -252,7 +255,58 @@ const refresh = asyncHandler(async (req, res) => {
 // @desc  Google OAuth Single Sign On
 // @route POST /api/auth/google
 const googleLogin = asyncHandler(async (req, res) => {
-  const { credential, email, name, googleId } = req.body;
+  const { credential, token, email: clientEmail, name: clientName, googleId: clientGoogleId } = req.body;
+
+  let email, name, googleId;
+
+  // 1. Secure Cryptographic Verification of ID Token (JWT)
+  if (credential) {
+    try {
+      const googleClientId = process.env.GOOGLE_CLIENT_ID || '670908182695-ip45ijh7pebb2fetrn6c9fuj7nkafb1d.apps.googleusercontent.com';
+      const client = new OAuth2Client(googleClientId);
+      const ticket = await client.verifyIdToken({
+        idToken: credential,
+        audience: googleClientId,
+      });
+      const payload = ticket.getPayload();
+      
+      email = payload.email;
+      name = payload.name;
+      googleId = payload.sub;
+    } catch (err) {
+      console.error('Google ID token verification failed:', err);
+      res.status(401);
+      throw new Error('Google identity token verification failed. Please try again.');
+    }
+  } 
+  // 2. Secure Verification of Access Token
+  else if (token) {
+    try {
+      const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const profile = response.data;
+      email = profile.email;
+      name = profile.name;
+      googleId = profile.sub;
+    } catch (err) {
+      console.error('Google access token verification failed:', err);
+      res.status(401);
+      throw new Error('Google access token verification failed. Please try again.');
+    }
+  } 
+  // 3. Fallback for non-production environments / compatibility
+  else {
+    if (process.env.NODE_ENV === 'production') {
+      res.status(400);
+      throw new Error('Google authentication token/credential is required in production.');
+    }
+    
+    // In non-production, allow raw details as fallback if none supplied
+    email = clientEmail;
+    name = clientName;
+    googleId = clientGoogleId;
+  }
 
   if (!email || !googleId) {
     res.status(400);
@@ -277,11 +331,11 @@ const googleLogin = asyncHandler(async (req, res) => {
     await user.save();
   }
 
-  const token = await generateAuthTokens(user, res);
+  const authToken = await generateAuthTokens(user, res);
 
   res.json({
     success: true,
-    token,
+    token: authToken,
     user: {
       _id: user._id,
       name: user.name,
@@ -408,6 +462,20 @@ const logout = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'User logged out successfully' });
 });
 
+module.exports = {
+  register,
+  login,
+  otpRequest,
+  otpVerify,
+  refresh,
+  googleLogin,
+  forgotPassword,
+  resetPassword,
+  verifyEmail,
+  getMe,
+  adminLogin,
+  logout
+};
 module.exports = {
   register,
   login,
