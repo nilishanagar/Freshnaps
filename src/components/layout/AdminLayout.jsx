@@ -4,6 +4,8 @@ import { LayoutDashboard, Package, ShoppingBag, Users, LogOut, Crown, Moon, Exte
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '../../services';
+import toast from 'react-hot-toast';
 
 const adminNav = [
   { label: 'Dashboard', to: '/admin', icon: LayoutDashboard },
@@ -18,8 +20,14 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const { user } = useSelector(s => s.auth);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+    } catch (err) {
+      // Proceed with local logout even if API call fails
+    }
     dispatch(logout());
+    toast.success('Signed out successfully!');
     navigate('/admin/login');
   };
 

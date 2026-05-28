@@ -9,6 +9,8 @@ import {
 import { toggleTheme } from '../../store/slices/uiSlice';
 import { logout } from '../../store/slices/authSlice';
 import { selectCartCount } from '../../store/slices/cartSlice';
+import { authService } from '../../services';
+import toast from 'react-hot-toast';
 
 const categories = [
   { label: 'Mattresses', slug: 'mattress' },
@@ -77,9 +79,15 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+    } catch (err) {
+      // Proceed with local logout even if API call fails
+    }
     dispatch(logout());
     setUserMenuOpen(false);
+    toast.success('You have been logged out successfully!');
     navigate('/');
   };
 

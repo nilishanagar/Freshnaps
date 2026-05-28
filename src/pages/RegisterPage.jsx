@@ -8,6 +8,7 @@ import { loginStart, loginSuccess, loginFailure } from '../store/slices/authSlic
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff, User, Mail, Smartphone, Lock, Sparkles } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -37,27 +38,28 @@ const RegisterPage = () => {
     }
   };
 
-  // Google SSO mock handler
-  const handleGoogleSignUp = async () => {
-    dispatch(loginStart());
-    try {
-      const mockGoogleUser = {
-        googleId: 'google_109823472093847',
-        email: 'customer@freshnaps.com',
-        name: 'Nilisha Nagar',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200'
-      };
-      
-      const res = await authService.googleLogin(mockGoogleUser);
-      dispatch(loginSuccess(res.data));
-      toast.success(`Google SSO Activated! Welcome, ${res.data.user.name}`);
-      navigate('/');
-    } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Google Auth Failed';
-      dispatch(loginFailure(msg));
-      toast.error(msg);
-    }
-  };
+  // Google SSO handler (Real OAuth)
+  const googleSignUp = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      dispatch(loginStart());
+      try {
+        const res = await authService.googleLogin({
+          token: tokenResponse.access_token,
+        });
+        dispatch(loginSuccess(res.data));
+        toast.success(`Welcome to Freshnaps, ${res.data.user.name}!`);
+        navigate('/');
+      } catch (err) {
+        const msg = err.response?.data?.message || err.message || 'Google Auth Failed';
+        dispatch(loginFailure(msg));
+        toast.error(msg);
+      }
+    },
+    onError: (error) => {
+      console.error('Google SignUp Error:', error);
+      toast.error('Google Sign-Up was cancelled or failed');
+    },
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-cream-50/20 dark:bg-navy-950 px-4 py-20 select-none">
@@ -200,7 +202,7 @@ const RegisterPage = () => {
           {/* Google SSO */}
           <button
             type="button"
-            onClick={handleGoogleSignUp}
+            onClick={() => googleSignUp()}
             className="w-full py-3.5 border border-cream-200 dark:border-navy-800 bg-white hover:bg-cream-50/50 dark:bg-navy-950 dark:hover:bg-navy-850 text-xs font-extrabold text-navy-500 dark:text-gray-300 rounded-xl transition-all flex items-center justify-center gap-2 select-none cursor-pointer"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">

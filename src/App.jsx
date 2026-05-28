@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Layout from './components/layout/Layout';
 import AdminLayout from './components/layout/AdminLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -32,6 +33,8 @@ const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <LoadingSpinner size="lg" />
@@ -40,51 +43,54 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          {/* Customer Routes */}
-          <Route element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="shop" element={<ShopPage />} />
-            <Route path="product/:slug" element={<ProductDetailPage />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="order-success/:id" element={<OrderSuccessPage />} />
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <BrowserRouter>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Customer Routes */}
+            <Route element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="shop" element={<ShopPage />} />
+              <Route path="product/:slug" element={<ProductDetailPage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="order-success/:id" element={<OrderSuccessPage />} />
 
-            {/* Protected customer routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="wishlist" element={<WishlistPage />} />
-              <Route path="orders" element={<OrdersPage />} />
-              <Route path="orders/:id" element={<OrderDetailPage />} />
+              {/* Protected customer routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="wishlist" element={<WishlistPage />} />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="orders/:id" element={<OrderDetailPage />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* Admin Routes */}
-          <Route path="admin/login" element={
-            <Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>
-          } />
-          <Route element={<AdminRoute />}>
-            <Route element={<AdminLayout />}>
-              <Route path="admin" element={<AdminDashboard />} />
-              <Route path="admin/products" element={<AdminProducts />} />
-              <Route path="admin/products/new" element={<AddProductPage />} />
-              <Route path="admin/products/:id/edit" element={<EditProductPage />} />
-              <Route path="admin/orders" element={<AdminOrders />} />
-              <Route path="admin/users" element={<AdminUsers />} />
+            {/* Admin Routes */}
+            <Route path="admin/login" element={
+              <Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>
+            } />
+            <Route element={<AdminRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route path="admin" element={<AdminDashboard />} />
+                <Route path="admin/products" element={<AdminProducts />} />
+                <Route path="admin/products/new" element={<AddProductPage />} />
+                <Route path="admin/products/:id/edit" element={<EditProductPage />} />
+                <Route path="admin/orders" element={<AdminOrders />} />
+                <Route path="admin/users" element={<AdminUsers />} />
+              </Route>
             </Route>
-          </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   );
 }
 
 export default App;
+

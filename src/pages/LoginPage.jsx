@@ -8,6 +8,7 @@ import { loginStart, loginSuccess, loginFailure } from '../store/slices/authSlic
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff, Smartphone, Mail, Lock, Sparkles, AlertCircle } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -86,28 +87,28 @@ const LoginPage = () => {
     }
   };
 
-  // Handle Google Single Sign-on
-  const handleGoogleSignIn = async () => {
-    dispatch(loginStart());
-    try {
-      // High fidelity Google Single Sign-on Mock Sandbox
-      const mockGoogleUser = {
-        googleId: 'google_109823472093847',
-        email: 'customer@freshnaps.com',
-        name: 'Nilisha Nagar',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200'
-      };
-      
-      const res = await authService.googleLogin(mockGoogleUser);
-      dispatch(loginSuccess(res.data));
-      toast.success(`Google Auth Successful! Welcome, ${res.data.user.name}`);
-      navigate('/');
-    } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Google Auth Failed';
-      dispatch(loginFailure(msg));
-      toast.error(msg);
-    }
-  };
+  // Handle Google Single Sign-on (Real OAuth)
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      dispatch(loginStart());
+      try {
+        const res = await authService.googleLogin({
+          token: tokenResponse.access_token,
+        });
+        dispatch(loginSuccess(res.data));
+        toast.success(`Welcome, ${res.data.user.name}!`);
+        navigate('/');
+      } catch (err) {
+        const msg = err.response?.data?.message || err.message || 'Google Auth Failed';
+        dispatch(loginFailure(msg));
+        toast.error(msg);
+      }
+    },
+    onError: (error) => {
+      console.error('Google Login Error:', error);
+      toast.error('Google Sign-In was cancelled or failed');
+    },
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-cream-50/20 dark:bg-navy-950 px-4 py-20 select-none">
@@ -351,7 +352,7 @@ const LoginPage = () => {
           {/* Google Sign-in SSO button */}
           <button
             type="button"
-            onClick={handleGoogleSignIn}
+            onClick={() => googleLogin()}
             className="w-full py-3.5 border border-cream-200 dark:border-navy-800 bg-white hover:bg-cream-50/50 dark:bg-navy-950 dark:hover:bg-navy-850 text-xs font-extrabold text-navy-500 dark:text-gray-300 rounded-xl transition-all flex items-center justify-center gap-2 select-none cursor-pointer"
           >
             {/* Custom Google Vector Logo */}
