@@ -248,10 +248,19 @@ const HomePage = () => {
     <div className="overflow-x-hidden">
 
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[88vh] bg-[#FAF8F5] dark:bg-navy-900 overflow-hidden flex items-center">
+      <section className="relative min-h-[88vh] overflow-hidden flex items-center">
 
-        {/* Right panel warm background */}
-        <div className="absolute right-0 top-0 w-[52%] h-full bg-[#F0EAE0] dark:bg-navy-800/50 rounded-l-[80px] md:rounded-l-[120px]" />
+        {/* Full-section background image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80"
+            alt="Premium bedroom setup"
+            className="w-full h-full object-cover"
+            onError={(e) => { e.target.onerror = null; e.target.src = 'https://picsum.photos/seed/bedroom1/1600/900'; }}
+          />
+          {/* Gradient overlay — solid on the left for text readability, fades to transparent */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 to-[#FAF8F5]/10 dark:from-navy-900 dark:via-navy-900/88 dark:to-navy-900/10" />
+        </div>
 
         {/* Ambient glow */}
         <motion.div
@@ -341,27 +350,13 @@ const HomePage = () => {
               </motion.div>
             </motion.div>
 
-            {/* ── RIGHT: product image + floating cards ── */}
+            {/* ── RIGHT: floating cards ── */}
             <motion.div
               initial={{ opacity: 0, x: 55 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:flex items-center justify-end pr-4 xl:pr-12"
+              className="relative hidden lg:flex items-center justify-end pr-4 xl:pr-12 min-h-105"
             >
-              {/* Main image - Increased size to occupy more of the background panel */}
-              <motion.div
-                animate={{ y: [-7, 7, -7] }}
-                transition={{ repeat: Infinity, duration: 5.5, ease: 'easeInOut' }}
-                className="relative z-10 w-full max-w-[640px] xl:max-w-[720px] -mr-12 xl:-mr-24"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
-                  alt="Premium bedroom setup"
-                  className="w-full rounded-3xl shadow-2xl object-cover aspect-[16/10]"
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://picsum.photos/seed/bedroom1/1200/750'; }}
-                />
-              </motion.div>
-
               {/* Floating card — rating */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.75, x: -20 }}

@@ -7,7 +7,7 @@ import { authService } from '../services';
 import { loginStart, loginSuccess, loginFailure } from '../store/slices/authSlice';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
-import { Eye, EyeOff, Smartphone, Mail, Lock, Sparkles, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
@@ -21,12 +21,11 @@ const LoginPage = () => {
 
   // OTP State Machine
   const [otpSent, setOtpSent] = useState(false);
-  const [targetPhone, setTargetPhone] = useState('');
+  const [targetEmail, setTargetEmail] = useState('');
   const [otpTimer, setOtpTimer] = useState(0);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
-  const watchPhone = watch('phone');
 
   // Countdown timer for OTP resending
   useEffect(() => {
@@ -54,28 +53,28 @@ const LoginPage = () => {
     }
   };
 
-  // Request OTP SMS/WhatsApp
+  // Request Email OTP
   const onRequestOtp = async (data) => {
     dispatch(loginStart());
     try {
-      const res = await authService.otpRequest({ phone: data.phone });
-      setTargetPhone(data.phone);
+      const res = await authService.emailOtpRequest({ email: data.otpEmail });
+      setTargetEmail(data.otpEmail);
       setOtpSent(true);
       setOtpTimer(60); // 60 seconds resend lock
       dispatch(loginSuccess({ user: null })); // clear loading state
-      toast.success(res.data.message || 'Verification OTP code dispatched!');
+      toast.success(res.data.message || 'Verification OTP sent to your email!');
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Failed to dispatch OTP';
+      const msg = err.response?.data?.message || err.message || 'Failed to send OTP';
       dispatch(loginFailure(msg));
       toast.error(msg);
     }
   };
 
-  // Verify OTP Code
+  // Verify Email OTP Code
   const onVerifyOtpSubmit = async (data) => {
     setVerifyingOtp(true);
     try {
-      const res = await authService.otpVerify({ phone: targetPhone, otp: data.otpCode });
+      const res = await authService.emailOtpVerify({ email: targetEmail, otp: data.otpCode });
       dispatch(loginSuccess(res.data));
       toast.success(`Welcome back, ${res.data.user.name || 'Valued Customer'}!`);
       navigate('/');
@@ -84,6 +83,18 @@ const LoginPage = () => {
       toast.error(msg);
     } finally {
       setVerifyingOtp(false);
+    }
+  };
+
+  // Resend OTP for login
+  const handleResendOtp = async () => {
+    try {
+      const res = await authService.emailOtpRequest({ email: targetEmail });
+      setOtpTimer(60);
+      toast.success(res.data.message || 'OTP resent to your email!');
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Failed to resend OTP';
+      toast.error(msg);
     }
   };
 
@@ -147,8 +158,8 @@ const LoginPage = () => {
                   : 'text-gray-500 hover:text-navy-500 dark:text-gray-400 dark:hover:text-gold-400'
               }`}
             >
-              <Smartphone size={14} />
-              <span>Mobile OTP</span>
+              <Mail size={14} />
+              <span>Email OTP</span>
               <span className="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 text-[8px] px-1 py-0.5 rounded font-extrabold uppercase animate-pulse">Fast</span>
             </button>
             <button
@@ -181,21 +192,21 @@ const LoginPage = () => {
                   /* Form: Send OTP */
                   <form onSubmit={handleSubmit(onRequestOtp)} className="space-y-4">
                     <div>
-                      <label className="text-[10px] font-bold text-gray-400 dark:text-gray-450 uppercase tracking-wider mb-1 block">Phone Number (with Country Code) *</label>
+                      <label className="text-[10px] font-bold text-gray-400 dark:text-gray-450 uppercase tracking-wider mb-1 block">Email Address *</label>
                       <div className="relative">
-                        <Smartphone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          {...register('phone', { 
-                            required: 'Phone number is required', 
-                            pattern: { value: /^\+?[1-9]\d{6,14}$/, message: 'Must be in international E.164 format (+91...)' }
+                          {...register('otpEmail', { 
+                            required: 'Email is required', 
+                            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Please enter a valid email address' }
                           })}
-                          type="text"
-                          placeholder="e.g. +919876543210"
+                          type="email"
+                          placeholder="e.g. nilisha@gmail.com"
                           className="input pl-10"
                           disabled={isLoading}
                         />
                       </div>
-                      {errors.phone && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-wide">{errors.phone.message}</p>}
+                      {errors.otpEmail && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-wide">{errors.otpEmail.message}</p>}
                     </div>
 
                     <button 
@@ -215,9 +226,9 @@ const LoginPage = () => {
                   /* Form: Verify OTP */
                   <form onSubmit={handleSubmit(onVerifyOtpSubmit)} className="space-y-4">
                     <div className="p-3 bg-cream-50/20 dark:bg-navy-950 border border-cream-100 dark:border-navy-850 rounded-2xl text-[11px] leading-relaxed text-gray-500 flex gap-2">
-                      <AlertCircle className="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" />
+                      <ShieldCheck className="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" />
                       <div>
-                        OTP code dispatched to <span className="font-extrabold text-navy-500 dark:text-gold-400">{targetPhone}</span> via SMS and WhatsApp.
+                        Verification code sent to <span className="font-extrabold text-navy-500 dark:text-gold-400">{targetEmail}</span>. Check your inbox (and spam folder).
                       </div>
                     </div>
 
@@ -244,7 +255,7 @@ const LoginPage = () => {
                         className="text-gray-400 font-extrabold hover:text-navy-500 uppercase tracking-wider text-[10px] cursor-pointer"
                         disabled={verifyingOtp}
                       >
-                        Change Phone
+                        Change Email
                       </button>
 
                       {otpTimer > 0 ? (
@@ -254,7 +265,7 @@ const LoginPage = () => {
                       ) : (
                         <button
                           type="button"
-                          onClick={() => onRequestOtp({ phone: targetPhone })}
+                          onClick={handleResendOtp}
                           className="text-gold-600 hover:text-gold-700 font-extrabold uppercase tracking-wider text-[10px] cursor-pointer"
                           disabled={verifyingOtp}
                         >

@@ -62,7 +62,7 @@ const ProductCard = ({ product }) => {
         {/* ── Image ── */}
         <div className="relative overflow-hidden bg-cream-200 dark:bg-navy-700 aspect-[4/3]">
           <img
-            src={product.images?.[0] || `https://picsum.photos/seed/${product._id}/800/600`}
+            src={product.images?.[0]?.url || product.images?.[0] || `https://picsum.photos/seed/${product._id}/800/600`}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
@@ -134,7 +134,7 @@ const ProductCard = ({ product }) => {
         <div className="p-4">
           {/* Category chip */}
           <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-gold-500 mb-1.5">
-            {product.category}
+            {product.categoryLegacy || product.category}
           </span>
 
           {/* Name */}
