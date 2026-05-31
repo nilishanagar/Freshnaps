@@ -8,15 +8,14 @@ import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const categories = [
-  { label: 'All', slug: '' },
+  { label: 'All Collection', slug: '' },
   { label: 'Mattresses', slug: 'mattress' },
   { label: 'Pillows', slug: 'pillow' },
   { label: 'Bedsheets', slug: 'bedsheet' },
   { label: 'Cushions', slug: 'cushion' },
   { label: 'Comforters', slug: 'comforter' },
   { label: 'Blankets', slug: 'blanket' },
-  { label: 'Curtains', slug: 'curtain' },
-  { label: 'Accessories', slug: 'accessory' },
+  { label: 'Accessories & Protectors', slug: 'accessory' },
 ];
 
 const sortOptions = [
@@ -26,6 +25,41 @@ const sortOptions = [
   { label: 'Top Rated', value: 'rating' },
   { label: 'Most Popular', value: 'popular' },
 ];
+
+const categoryQuickTags = {
+  '': [
+    { label: 'Bestsellers Only', queryKey: 'bestseller', value: 'true' },
+    { label: 'Orthopedic Support', queryKey: 'search', value: 'Orthopedic' },
+    { label: 'Premium Bedding', queryKey: 'search', value: 'Cotton' },
+    { label: 'Protectors & Accessories', queryKey: 'search', value: 'Protector' }
+  ],
+  'mattress': [
+    { label: 'King Size Mattresses', queryKey: 'search', value: 'King' },
+    { label: 'Queen Size Mattresses', queryKey: 'search', value: 'Queen' },
+    { label: 'Single Mattresses', queryKey: 'search', value: 'Single' },
+    { label: 'Double Mattresses', queryKey: 'search', value: 'Double' },
+    { label: 'Memory Foam', queryKey: 'search', value: 'Foam' },
+    { label: 'Orthopedic Support', queryKey: 'search', value: 'Orthopedic' },
+    { label: 'Pocket Spring', queryKey: 'search', value: 'Spring' }
+  ],
+  'pillow': [
+    { label: 'Memory Foam Pillows', queryKey: 'search', value: 'Foam' },
+    { label: 'Orthopedic Pillows', queryKey: 'search', value: 'Orthorest' },
+    { label: 'Natural Latex Pillows', queryKey: 'search', value: 'Latex' },
+    { label: 'Soft Microfiber', queryKey: 'search', value: 'Fiber' }
+  ],
+  'bedsheet': [
+    { label: 'Egyptian Cotton', queryKey: 'search', value: 'Cotton' },
+    { label: 'Luxurious Silk', queryKey: 'search', value: 'Silk' },
+    { label: 'Printed Sheets', queryKey: 'search', value: 'Printed' },
+    { label: 'Solid Percale', queryKey: 'search', value: 'Solid' }
+  ],
+  'accessory': [
+    { label: 'Mattress Protectors', queryKey: 'search', value: 'Protector' },
+    { label: 'Luxury Toppers', queryKey: 'search', value: 'Topper' },
+    { label: 'Duvet Covers', queryKey: 'search', value: 'Cover' }
+  ]
+};
 
 // ──────────────────────────────────────────────
 // Static fallback products (shown when API is unavailable)
@@ -77,12 +111,12 @@ const MOCK_PRODUCTS = [
     createdAt: '2025-01-01',
   },
   {
-    _id: '6', slug: 'blackout-linen-curtains',
-    name: 'Blackout Linen Curtains',
-    category: 'curtain',
-    images: ['https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&auto=format&fit=crop'],
-    price: 3999, discountPrice: 2799,
-    rating: 4.5, numReviews: 47,
+    _id: '6', slug: 'luxury-comfort-mattress-topper',
+    name: 'Luxury Comfort Mattress Topper',
+    category: 'accessory',
+    images: ['https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=800&auto=format&fit=crop'],
+    price: 6999, discountPrice: 4999,
+    rating: 4.8, numReviews: 142,
     createdAt: '2025-01-01',
   },
   {
@@ -291,6 +325,32 @@ const ShopPage = () => {
       </div>
 
       <div className="container-custom py-8">
+        {/* Horizontal scroll pill quick-filters */}
+        <div className="flex gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          {(categoryQuickTags[localFilters.category] || categoryQuickTags['']).map((tag, idx) => {
+            const isActive = localFilters[tag.queryKey] === tag.value;
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  if (isActive) {
+                    applyFilter(tag.queryKey, '');
+                  } else {
+                    applyFilter(tag.queryKey, tag.value);
+                  }
+                }}
+                className={`px-5 py-2.5 rounded text-[13px] font-semibold tracking-tight whitespace-nowrap border transition-all duration-200 ${
+                  isActive
+                    ? 'bg-[#f6f2ed] border-gold-600 text-gold-700 font-bold shadow-sm'
+                    : 'bg-white dark:bg-navy-800 border-gray-200 dark:border-navy-700 text-gray-700 dark:text-gray-300 hover:border-gold-500 hover:text-gold-500'
+                }`}
+              >
+                {tag.label}
+              </button>
+            );
+          })}
+        </div>
+
         <div className="flex gap-8">
           {/* Desktop sidebar */}
           <aside className="hidden lg:block w-64 flex-shrink-0">

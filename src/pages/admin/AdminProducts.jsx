@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-const CATEGORIES = ['mattress','pillow','bedsheet','cushion','comforter','blanket','curtain','accessory'];
-;
+const CATEGORIES = ['mattress','pillow','bedsheet','cushion','comforter','blanket','accessory'];
 
 const emptyForm = {
   name: '', description: '', shortDescription: '', category: 'mattress',

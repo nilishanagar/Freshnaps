@@ -11,7 +11,6 @@ const footerLinks = {
     { label: 'Comforters', to: '/shop?category=comforter' },
     { label: 'Blankets', to: '/shop?category=blanket' },
     { label: 'Cushions', to: '/shop?category=cushion' },
-    { label: 'Curtains', to: '/shop?category=curtain' },
   ],
   company: [
     { label: 'About Us', to: '/about' },
