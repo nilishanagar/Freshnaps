@@ -655,7 +655,7 @@ const HomePage = () => {
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-8">
             <span className="text-primary-500 text-xs font-bold uppercase tracking-widest">SLEEP COMPLEMENTS</span>
-            <h2 className="section-title mt-2">Pillows, Bedding &amp; <span className="text-transparent bg-clip-text bg-brand-gradient">Accessories</span></h2>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white mt-2">Pillows, Bedding &amp; <span className="text-transparent bg-clip-text bg-brand-gradient">Accessories</span></h2>
             <p className="text-gray-500 mt-2">Complete your mattress setup with our highly engineered pillows, breathable protectors, and high-TC bedding accessories.</p>
           </div>
 
@@ -814,7 +814,7 @@ const HomePage = () => {
                     <Sparkles size={11} className="fill-primary-300 animate-pulse" /> FRESHNAPS COMMUNITY
                   </span>
                   <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-white leading-tight">
-                    Stay Updated With FreshNaps
+                    Stay Updated With <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white">FreshNaps</span>
                   </h2>
                   <p className="text-white/80 text-sm md:text-base mb-8 max-w-md leading-relaxed">
                     Be the first to know about new product launches, exclusive offers, sleep wellness tips, and special member updates.
@@ -847,7 +847,7 @@ const HomePage = () => {
                     <HelpCircle size={11} className="text-primary-300" /> NEED HELP?
                   </span>
                   <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-white leading-tight">
-                    Not Sure Which Mattress Is Right For You?
+                    Not Sure Which <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white">Mattress</span> Is Right For You?
                   </h2>
                   <p className="text-white/80 text-sm md:text-base mb-8 max-w-md leading-relaxed">
                     Our sleep experts can help you find the perfect mattress based on your comfort preferences, sleeping position, and budget.

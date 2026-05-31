@@ -31,7 +31,7 @@ const ContactPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact info */}
           <div>
-            <h2 className="font-display text-2xl font-bold text-gray-900 dark:text-white mb-6">Let's Talk</h2>
+            <h2 className="font-display text-2xl font-bold text-gray-900 dark:text-white mb-6">Let's <span className="text-transparent bg-clip-text bg-brand-gradient">Talk</span></h2>
             <div className="space-y-5">
               {[
                 { icon: Phone, title: 'Phone', lines: ['+91 98765 43210', 'Mon–Sat 9AM–7PM'], href: 'tel:+919876543210' },
@@ -59,7 +59,7 @@ const ContactPage = () => {
           {/* Form */}
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <div className="card p-8">
-              <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white mb-6">Send a Message</h2>
+              <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white mb-6">Send a <span className="text-transparent bg-clip-text bg-brand-gradient">Message</span></h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>

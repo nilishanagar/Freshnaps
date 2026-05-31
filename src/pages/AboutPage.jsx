@@ -26,7 +26,7 @@ const AboutPage = () => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <span className="text-primary-500 font-medium text-sm uppercase tracking-widest">Since 2020</span>
-          <h2 className="section-title mt-2 mb-5">Crafting Sleep Excellence</h2>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-5">Crafting Sleep <span className="text-transparent bg-clip-text bg-brand-gradient">Excellence</span></h2>
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
             Freshnaps was founded with a single belief: every person deserves a luxurious, restful sleep — regardless of their budget. Our journey began in the textile heartland of Jodhpur, Rajasthan, where generations of artisanal fabric craftsmanship meet modern comfort science.
           </p>
@@ -45,7 +45,7 @@ const AboutPage = () => (
     <section className="py-16 bg-surface-200 dark:bg-surface-900/50">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="section-title">Our Values</h2>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">Our <span className="text-transparent bg-clip-text bg-brand-gradient">Values</span></h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[

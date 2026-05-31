@@ -22,7 +22,7 @@ const CartPage = () => {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-6 text-center px-4">
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-8xl">🛒</motion.div>
-        <h2 className="section-title">Your Cart is Empty</h2>
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">Your Cart is <span className="text-transparent bg-clip-text bg-brand-gradient">Empty</span></h2>
         <p className="text-gray-500 max-w-sm">Looks like you haven't added any products to your cart yet. Explore our collection!</p>
         <Link to="/shop" className="btn-primary px-8 py-4">
           <ShoppingBag size={18} /> Start Shopping
@@ -95,7 +95,7 @@ const CartPage = () => {
           {/* Order summary */}
           <div>
             <div className="card p-6 sticky top-24 space-y-5">
-              <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Order Summary</h2>
+              <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Order <span className="text-transparent bg-clip-text bg-brand-gradient">Summary</span></h2>
 
               {/* Coupon */}
               <div>

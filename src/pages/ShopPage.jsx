@@ -34,10 +34,10 @@ const categoryQuickTags = {
     { label: 'Protectors & Accessories', queryKey: 'search', value: 'Protector' }
   ],
   'mattress': [
-    { label: 'King Size Mattresses', queryKey: 'search', value: 'King' },
-    { label: 'Queen Size Mattresses', queryKey: 'search', value: 'Queen' },
-    { label: 'Single Mattresses', queryKey: 'search', value: 'Single' },
-    { label: 'Double Mattresses', queryKey: 'search', value: 'Double' },
+    { label: 'King Size', queryKey: 'search', value: 'King' },
+    { label: 'Queen Size', queryKey: 'search', value: 'Queen' },
+    { label: 'Single', queryKey: 'search', value: 'Single' },
+    { label: 'Double', queryKey: 'search', value: 'Double' },
     { label: 'Memory Foam', queryKey: 'search', value: 'Foam' },
     { label: 'Orthopedic Support', queryKey: 'search', value: 'Orthopedic' },
     { label: 'Pocket Spring', queryKey: 'search', value: 'Spring' }
@@ -317,40 +317,76 @@ const ShopPage = () => {
       {/* Header */}
       <div className="bg-surface-200 dark:bg-surface-900 border-b border-gray-100 dark:border-surface-800 py-8">
         <div className="container-custom">
-          <h1 className="section-title">Shop All Products</h1>
-          <p className="section-subtitle">
-            {pagination.total > 0 ? `${pagination.total} products found` : 'Browse our collection'}
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white leading-tight">
+                Shop All <span className="text-transparent bg-clip-text bg-brand-gradient">Products</span>
+              </h1>
+              <span className="text-xs font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-surface-800 px-3 py-1 rounded-full border border-primary-100 dark:border-surface-700 shadow-sm whitespace-nowrap animate-fade-in">
+                {pagination.total > 0 ? `${pagination.total} Products` : '0 Products'}
+              </span>
+            </div>
+            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+              Premium Bedding &amp; Home Comfort
+            </p>
+          </div>
+
+          {/* Sale Banner reference from Image 2 */}
+          <div className="mt-6 relative rounded-2xl overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-300 p-5 md:p-6 text-amber-950 shadow-sm border border-amber-300 flex flex-col lg:flex-row items-center justify-between gap-6">
+            {/* Background floating decor */}
+            <div className="absolute right-0 top-0 bottom-0 w-48 bg-white/10 rounded-l-full blur-xl pointer-events-none" />
+            
+            {/* Left Column: Title & Button */}
+            <div className="flex items-center gap-6 flex-wrap sm:flex-nowrap w-full lg:w-auto justify-between sm:justify-start">
+              <div className="text-left select-none pr-2">
+                <div className="relative">
+                  <h2 className="font-extrabold text-3xl md:text-4xl tracking-tighter uppercase leading-none text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                    SUMMER
+                  </h2>
+                  <span className="absolute -bottom-3 -right-3 font-display text-2xl md:text-3xl font-bold text-amber-900 italic rotate-[-5deg] drop-shadow-sm font-serif">
+                    Sale
+                  </span>
+                </div>
+              </div>
+              <div className="h-10 w-[1px] bg-amber-950/20 hidden sm:block" />
+              <button 
+                onClick={() => {
+                  applyFilter('bestseller', 'true');
+                }} 
+                className="px-6 py-2.5 bg-amber-950 hover:bg-amber-900 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all active:scale-[0.97] shadow-md hover:-translate-y-0.5"
+              >
+                Shop Now
+              </button>
+            </div>
+
+            {/* Middle Divider */}
+            <div className="h-12 w-[1px] bg-amber-950/20 hidden lg:block" />
+
+            {/* Right Column: Offer details */}
+            <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 lg:gap-8 w-full lg:w-auto">
+              <div className="text-center sm:text-left flex-1 min-w-[120px]">
+                <p className="font-extrabold text-xl lg:text-2xl leading-none mb-1">UP TO 70% OFF</p>
+                <p className="text-[11px] font-bold text-amber-900 uppercase tracking-wider">on selected products</p>
+              </div>
+              
+              <div className="h-[1px] w-full bg-amber-950/10 sm:hidden" />
+              
+              <div className="grid grid-cols-2 gap-4 lg:gap-8 flex-1 w-full">
+                <div className="text-center sm:text-left border-l border-amber-950/15 pl-4">
+                  <p className="font-extrabold text-sm leading-tight text-amber-950">Extra 5% OFF</p>
+                  <p className="text-[10px] font-semibold text-amber-900">on prepaid offers</p>
+                </div>
+                <div className="text-center sm:text-left border-l border-amber-950/15 pl-4">
+                  <p className="font-extrabold text-sm leading-tight text-amber-950">Assured Free Gift</p>
+                  <p className="text-[10px] font-semibold text-amber-900">on orders above ₹1499</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="container-custom py-8">
-        {/* Horizontal scroll pill quick-filters */}
-        <div className="flex gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {(categoryQuickTags[localFilters.category] || categoryQuickTags['']).map((tag, idx) => {
-            const isActive = localFilters[tag.queryKey] === tag.value;
-            return (
-              <button
-                key={idx}
-                onClick={() => {
-                  if (isActive) {
-                    applyFilter(tag.queryKey, '');
-                  } else {
-                    applyFilter(tag.queryKey, tag.value);
-                  }
-                }}
-                className={`px-5 py-2.5 rounded text-[13px] font-semibold tracking-tight whitespace-nowrap border transition-all duration-200 ${
-                  isActive
-                    ? 'bg-[#f6f2ed] border-primary-600 text-primary-700 font-bold shadow-sm'
-                    : 'bg-white dark:bg-surface-900 border-gray-200 dark:border-surface-800 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-500'
-                }`}
-              >
-                {tag.label}
-              </button>
-            );
-          })}
-        </div>
-
         <div className="flex gap-8">
           {/* Desktop sidebar */}
           <aside className="hidden lg:block w-64 flex-shrink-0">
@@ -361,26 +397,56 @@ const ShopPage = () => {
 
           {/* Main content */}
           <div className="flex-1 min-w-0">
-            {/* Toolbar */}
-            <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden flex items-center gap-2 btn-secondary text-sm"
-              >
-                <SlidersHorizontal size={16} /> Filters
-              </button>
+            {/* Unified Toolbar: subcategory tabs, and sort select aligned in single horizontal line */}
+            <div className="flex items-center justify-between gap-4 bg-gray-50 dark:bg-surface-900/60 p-3 rounded-2xl border border-gray-100 dark:border-surface-800/80 mb-6 flex-wrap lg:flex-nowrap">
 
-              <div className="flex items-center gap-2 ml-auto">
-                <label className="text-sm text-gray-500 dark:text-gray-400">Sort:</label>
-                <select
-                  value={localFilters.sort}
-                  onChange={e => applyFilter('sort', e.target.value)}
-                  className="input w-auto text-sm py-2"
+              {/* Subcategory scroll pills */}
+              <div className="flex-1 flex gap-2 overflow-x-auto no-scrollbar py-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {(categoryQuickTags[localFilters.category] || categoryQuickTags['']).map((tag, idx) => {
+                  const isActive = localFilters[tag.queryKey] === tag.value;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        if (isActive) {
+                          applyFilter(tag.queryKey, '');
+                        } else {
+                          applyFilter(tag.queryKey, tag.value);
+                        }
+                      }}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all duration-200 ${
+                        isActive
+                          ? 'bg-primary-500 border-primary-500 text-white shadow-sm font-bold'
+                          : 'bg-white dark:bg-surface-900 border-gray-200 dark:border-surface-800 text-gray-600 dark:text-gray-300 hover:border-primary-500 hover:text-primary-500'
+                      }`}
+                    >
+                      {tag.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Sort by dropdown */}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="lg:hidden flex items-center gap-1.5 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded-xl px-3 py-2 text-xs font-bold text-gray-600 dark:text-gray-300"
                 >
-                  {sortOptions.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
+                  <SlidersHorizontal size={14} /> Filters
+                </button>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Sort:</span>
+                  <select
+                    value={localFilters.sort}
+                    onChange={e => applyFilter('sort', e.target.value)}
+                    className="bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded-xl px-3 py-2 text-xs font-bold text-gray-700 dark:text-gray-300 outline-none focus:border-primary-500 min-w-[130px] shadow-sm cursor-pointer"
+                  >
+                    {sortOptions.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
