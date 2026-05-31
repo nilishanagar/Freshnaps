@@ -49,17 +49,17 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto select-none">
-      <div className="bg-white dark:bg-navy-600 rounded-3xl w-full max-w-lg my-8 overflow-hidden shadow-gold-lg border border-cream-200 dark:border-navy-700/60 transition-all duration-300 animate-slide-up">
+      <div className="bg-white dark:bg-surface-700 rounded-3xl w-full max-w-lg my-8 overflow-hidden shadow-brand-lg border border-surface-200 dark:border-surface-800/60 transition-all duration-300 animate-slide-up">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-cream-200 dark:border-navy-700">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-surface-200 dark:border-surface-800">
           <div className="flex items-center gap-2 text-orange-500">
             <RefreshCw className="w-5 h-5 animate-spin-slow" />
             <h3 className="text-base font-bold text-gray-800 dark:text-gray-100">Request Return / Replacement</h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-cream-100 dark:hover:bg-navy-700 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-all cursor-pointer"
+            className="p-1 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-all cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -79,7 +79,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
                 setReason(e.target.value);
                 setError('');
               }}
-              className="w-full px-3 py-2.5 text-sm rounded-xl border border-cream-300 dark:border-navy-700 bg-cream-50/20 dark:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all cursor-pointer"
+              className="w-full px-3 py-2.5 text-sm rounded-xl border border-surface-300 dark:border-surface-800 bg-surface-50/20 dark:bg-surface-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all cursor-pointer"
             >
               <option value="" disabled>Select a return reason...</option>
               {reasons.map((r) => (
@@ -99,7 +99,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
               rows={2}
               value={customComment}
               onChange={(e) => setCustomComment(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-xl border border-cream-300 dark:border-navy-700 bg-cream-50/20 dark:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all resize-none placeholder-gray-400"
+              className="w-full px-3 py-2 text-sm rounded-xl border border-surface-300 dark:border-surface-800 bg-surface-50/20 dark:bg-surface-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all resize-none placeholder-gray-400"
             />
           </div>
 
@@ -109,7 +109,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
               Upload Product Images (Recommended)
             </label>
             <div className="flex flex-wrap gap-3 items-center">
-              <label className="w-24 h-24 border-2 border-dashed border-cream-300 hover:border-orange-400 dark:border-navy-700 dark:hover:border-orange-500 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all bg-cream-50/20 dark:bg-navy-800 hover:bg-cream-100/30">
+              <label className="w-24 h-24 border-2 border-dashed border-surface-300 hover:border-orange-400 dark:border-surface-800 dark:hover:border-orange-500 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all bg-surface-50/20 dark:bg-surface-900 hover:bg-surface-100/30">
                 <Upload className="w-5 h-5 text-gray-400" />
                 <span className="text-[10px] text-gray-400 mt-1 font-bold">Add Photo</span>
                 <input
@@ -123,7 +123,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
               </label>
 
               {images.map((img, idx) => (
-                <div key={idx} className="w-24 h-24 rounded-2xl overflow-hidden border border-cream-200 dark:border-navy-700 relative group shadow-sm bg-gray-50">
+                <div key={idx} className="w-24 h-24 rounded-2xl overflow-hidden border border-surface-200 dark:border-surface-800 relative group shadow-sm bg-gray-50">
                   <img
                     src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop" // Beautiful bedding stock replacement
                     alt="Upload Preview"
@@ -154,7 +154,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
                 className={`p-3 rounded-xl border flex items-center gap-2.5 cursor-pointer transition-all ${
                   refundMethod === 'original'
                     ? 'border-orange-500 bg-orange-50/10 text-orange-600 dark:border-orange-500 dark:bg-orange-950/15'
-                    : 'border-cream-200 bg-white hover:bg-cream-50 dark:border-navy-700 dark:bg-navy-800'
+                    : 'border-surface-200 bg-white hover:bg-surface-50 dark:border-surface-800 dark:bg-surface-900'
                 }`}
                 onClick={() => setRefundMethod('original')}
               >
@@ -175,7 +175,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
                 className={`p-3 rounded-xl border flex items-center gap-2.5 cursor-pointer transition-all ${
                   refundMethod === 'wallet'
                     ? 'border-orange-500 bg-orange-50/10 text-orange-600 dark:border-orange-500 dark:bg-orange-950/15'
-                    : 'border-cream-200 bg-white hover:bg-cream-50 dark:border-navy-700 dark:bg-navy-800'
+                    : 'border-surface-200 bg-white hover:bg-surface-50 dark:border-surface-800 dark:bg-surface-900'
                 }`}
                 onClick={() => setRefundMethod('wallet')}
               >
@@ -198,7 +198,7 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
           </div>
 
           {/* Pickup Address Check */}
-          <div className="p-3 bg-cream-50/50 dark:bg-navy-700 border border-cream-200 dark:border-navy-700 rounded-2xl flex items-start gap-2.5">
+          <div className="p-3 bg-surface-50/50 dark:bg-surface-800 border border-surface-200 dark:border-surface-800 rounded-2xl flex items-start gap-2.5">
             <MapPin className="w-4.5 h-4.5 text-orange-500 flex-shrink-0 mt-0.5" />
             <div>
               <span className="block text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -214,12 +214,12 @@ const ReturnOrderModal = ({ isOpen, onClose, onConfirm, order, loading = false }
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-cream-200 dark:border-navy-700 mt-4">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-surface-200 dark:border-surface-800 mt-4">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-5 py-2.5 text-xs font-bold text-gray-500 dark:text-gray-300 hover:bg-cream-100 dark:hover:bg-navy-700 rounded-xl transition-all cursor-pointer"
+              className="px-5 py-2.5 text-xs font-bold text-gray-500 dark:text-gray-300 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-xl transition-all cursor-pointer"
             >
               Close
             </button>

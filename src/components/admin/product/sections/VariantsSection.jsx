@@ -116,14 +116,14 @@ const VariantsSection = ({ form, onChange }) => {
         </div>
 
         {form.hasVariants && (
-          <div className="space-y-6 border-t border-gray-100 dark:border-navy-700 pt-4">
+          <div className="space-y-6 border-t border-gray-100 dark:border-surface-800 pt-4">
             {/* Attribute List */}
             {form.variantAttributes.length > 0 && (
               <div className="space-y-2">
                 {form.variantAttributes.map((attr, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-navy-900 rounded-xl"
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-surface-950 rounded-xl"
                   >
                     <div>
                       <span className="font-semibold text-sm text-gray-800 dark:text-white mr-2">
@@ -136,7 +136,7 @@ const VariantsSection = ({ form, onChange }) => {
                     <button
                       type="button"
                       onClick={() => removeAttribute(idx)}
-                      className="p-1 text-gray-400 hover:text-red-500 rounded hover:bg-gray-100 dark:hover:bg-navy-800 transition-colors"
+                      className="p-1 text-gray-400 hover:text-red-500 rounded hover:bg-gray-100 dark:hover:bg-surface-900 transition-colors"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -146,7 +146,7 @@ const VariantsSection = ({ form, onChange }) => {
             )}
 
             {/* Add Attribute Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 border border-dashed border-gray-200 dark:border-navy-700 rounded-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 border border-dashed border-gray-200 dark:border-surface-800 rounded-2xl">
               <div>
                 <label className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">
                   Option Name

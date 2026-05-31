@@ -113,8 +113,8 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
         onDrop={handleDrop}
         className={`relative border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center transition-all duration-200 min-h-[160px] ${
           dragActive
-            ? 'border-gold-500 bg-gold-50/30 dark:bg-gold-500/5'
-            : 'border-gray-200 dark:border-navy-700 bg-gray-50/50 dark:bg-navy-900/50 hover:bg-gray-50 dark:hover:bg-navy-900'
+            ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/5'
+            : 'border-gray-200 dark:border-surface-800 bg-gray-50/50 dark:bg-surface-950/50 hover:bg-gray-50 dark:hover:bg-surface-950'
         }`}
       >
         <input
@@ -127,7 +127,7 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
         />
         <div className="flex flex-col items-center justify-center text-center space-y-2 pointer-events-none">
           {loading ? (
-            <Loader2 className="h-8 w-8 text-gold-500 animate-spin" />
+            <Loader2 className="h-8 w-8 text-primary-500 animate-spin" />
           ) : (
             <Upload className="h-8 w-8 text-gray-400 dark:text-gray-500" />
           )}
@@ -146,7 +146,7 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
           {images.map((img, idx) => (
             <div
               key={idx}
-              className="relative aspect-square rounded-xl border border-gray-100 dark:border-navy-700 bg-white dark:bg-navy-800 overflow-hidden group shadow-sm hover:shadow-md transition-shadow"
+              className="relative aspect-square rounded-xl border border-gray-100 dark:border-surface-800 bg-white dark:bg-surface-900 overflow-hidden group shadow-sm hover:shadow-md transition-shadow"
             >
               <img
                 src={img.url.startsWith('http') ? img.url : `http://localhost:5000${img.url}`}
@@ -164,7 +164,7 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
                     <X size={14} />
                   </button>
                   {img.isPrimary && (
-                    <span className="text-[10px] font-bold text-white px-2 py-0.5 bg-gold-500 rounded-full">
+                    <span className="text-[10px] font-bold text-white px-2 py-0.5 bg-primary-500 rounded-full">
                       Cover
                     </span>
                   )}

@@ -33,17 +33,17 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
   };
 
   return (
-    <div className="group bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+    <div className="group bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden">
       
       {/* Card Top / Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 bg-cream-50/40 dark:bg-navy-700/20 border-b border-cream-200/80 dark:border-navy-700">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 bg-surface-50/40 dark:bg-surface-800/20 border-b border-surface-200/80 dark:border-surface-800">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
           <div>
             <span className="font-bold">Ordered:</span> <span className="font-semibold text-gray-700 dark:text-gray-300">{dateStr}</span>
           </div>
-          <div className="h-3 w-px bg-cream-300 dark:bg-navy-700 hidden sm:block" />
+          <div className="h-3 w-px bg-surface-300 dark:bg-surface-800 hidden sm:block" />
           <div>
-            <span className="font-bold">Order ID:</span> <span className="font-mono font-bold text-navy-500 dark:text-gold-300">#{orderIdShort}</span>
+            <span className="font-bold">Order ID:</span> <span className="font-mono font-bold text-surface-600 dark:text-primary-300">#{orderIdShort}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -59,8 +59,8 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
               {items.slice(0, showItemsCount).map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 bg-cream-50/20 dark:bg-navy-700/30 border border-cream-100 dark:border-navy-700 p-2 rounded-2xl flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0 border border-cream-200 dark:border-navy-700">
+                <div key={idx} className="flex items-center gap-3 bg-surface-50/20 dark:bg-surface-800/30 border border-surface-100 dark:border-surface-800 p-2 rounded-2xl flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0 border border-surface-200 dark:border-surface-800">
                     <img
                       src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop"
                       alt={item.name}
@@ -79,8 +79,8 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
               ))}
 
               {extraItemsCount > 0 && (
-                <div className="w-12 h-12 rounded-xl bg-gold-50 dark:bg-navy-700 border border-gold-200 dark:border-navy-600 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-extrabold text-gold-600 dark:text-gold-400">
+                <div className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-surface-800 border border-primary-200 dark:border-surface-700 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-extrabold text-primary-600 dark:text-primary-400">
                     +{extraItemsCount}
                   </span>
                 </div>
@@ -96,10 +96,10 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
           </div>
 
           {/* Right Side: Totals and Est Delivery */}
-          <div className="flex flex-row md:flex-col md:items-end justify-between items-center gap-2 border-t md:border-t-0 pt-4 md:pt-0 border-cream-200 dark:border-navy-700">
+          <div className="flex flex-row md:flex-col md:items-end justify-between items-center gap-2 border-t md:border-t-0 pt-4 md:pt-0 border-surface-200 dark:border-surface-800">
             <div className="text-left md:text-right">
               <span className="block text-[10px] text-gray-400 uppercase font-bold tracking-wider">Grand Total</span>
-              <span className="text-base font-extrabold text-navy-500 dark:text-gold-400">
+              <span className="text-base font-extrabold text-surface-600 dark:text-primary-400">
                 INR {order?.totalAmount?.toFixed(2)}
               </span>
             </div>
@@ -121,17 +121,17 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
 
         {/* Compact Stepper for Order Cards */}
         {status !== 'cancelled' && status !== 'returned' && status !== 'refunded' && (
-          <div className="mt-6 border-t border-cream-100 dark:border-navy-700/40 pt-4 hidden sm:block">
+          <div className="mt-6 border-t border-surface-100 dark:border-surface-800/40 pt-4 hidden sm:block">
             <OrderStatusTimeline status={status} statusHistory={order?.statusHistory} layout="horizontal" />
           </div>
         )}
       </Link>
 
       {/* Card Footer / Quick Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 bg-cream-50/20 dark:bg-navy-700/10 border-t border-cream-100 dark:border-navy-700/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 bg-surface-50/20 dark:bg-surface-800/10 border-t border-surface-100 dark:border-surface-800/60">
         <Link
           to={`/orders/${order?._id}`}
-          className="flex items-center gap-1.5 text-xs font-bold text-navy-600 hover:text-gold-600 dark:text-gold-400 dark:hover:text-gold-300 transition-all select-none cursor-pointer"
+          className="flex items-center gap-1.5 text-xs font-bold text-surface-700 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 transition-all select-none cursor-pointer"
         >
           <Eye className="w-4 h-4" />
           View Full Details
@@ -155,7 +155,7 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
             <button
               onClick={handleInvoiceClick}
               disabled={actionLoading}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-navy-500 hover:text-white bg-cream-50 hover:bg-gold-500 dark:text-gray-300 dark:bg-navy-700 rounded-xl transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-surface-600 hover:text-white bg-surface-50 hover:bg-primary-500 dark:text-gray-300 dark:bg-surface-800 rounded-xl transition-all cursor-pointer"
             >
               Invoice
             </button>
@@ -165,7 +165,7 @@ const OrderCard = ({ order, onCancel, onReorder, onInvoiceDownload, actionLoadin
             <button
               onClick={handleReorderClick}
               disabled={actionLoading}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white bg-gold-gradient hover:opacity-90 rounded-xl transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white bg-brand-gradient hover:opacity-90 rounded-xl transition-all shadow-sm cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               Buy Again

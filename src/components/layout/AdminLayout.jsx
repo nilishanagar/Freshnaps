@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingBag, Users, LogOut, Crown, Moon, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Users, LogOut, Leaf, Moon, ExternalLink } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -32,26 +32,26 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-navy-950">
+    <div className="min-h-screen flex bg-gray-50 dark:bg-surface-950">
       {/* Sidebar */}
-      <aside className="w-64 bg-navy-900 dark:bg-navy-950 border-r border-navy-700/50 flex flex-col flex-shrink-0">
+      <aside className="w-64 bg-surface-950 dark:bg-surface-950 border-r border-surface-800/50 flex flex-col flex-shrink-0">
 
         {/* Brand */}
-        <div className="p-5 border-b border-navy-700/50">
+        <div className="p-5 border-b border-surface-800/50">
           <Link to="/admin" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gold-gradient flex items-center justify-center shadow-gold group-hover:shadow-gold-lg transition-shadow duration-300">
+            <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center shadow-brand group-hover:shadow-brand-lg transition-shadow duration-300">
               <Moon size={16} className="text-white" strokeWidth={2} />
             </div>
             <div>
               <p className="font-display font-bold text-white text-sm leading-tight">Freshnaps</p>
-              <p className="text-[10px] text-gold-400 font-medium tracking-wider uppercase leading-tight">Admin Panel</p>
+              <p className="text-[10px] text-primary-400 font-medium tracking-wider uppercase leading-tight">Admin Panel</p>
             </div>
           </Link>
         </div>
 
         {/* Nav */}
         <nav className="flex-1 p-3 space-y-1">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-navy-500 dark:text-navy-400 px-3 pt-2 pb-1">Navigation</p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-surface-600 dark:text-surface-400 px-3 pt-2 pb-1">Navigation</p>
           {adminNav.map(({ label, to, icon: Icon }) => {
             const isActive = location.pathname === to;
             return (
@@ -60,23 +60,23 @@ const AdminLayout = () => {
                 to={to}
                 className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-gold-500/15 text-gold-400 border border-gold-500/20'
-                    : 'text-gray-400 hover:bg-navy-800 hover:text-gray-200'
+                    ? 'bg-primary-500/15 text-primary-400 border border-primary-500/20'
+                    : 'text-gray-400 hover:bg-surface-900 hover:text-gray-200'
                 }`}
               >
                 <Icon size={17} strokeWidth={isActive ? 2 : 1.8} />
                 {label}
-                {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-gold-400" />}
+                {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-400" />}
               </Link>
             );
           })}
 
-          <div className="pt-3 mt-3 border-t border-navy-700/50">
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-navy-500 dark:text-navy-400 px-3 pb-1">Store</p>
+          <div className="pt-3 mt-3 border-t border-surface-800/50">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-surface-600 dark:text-surface-400 px-3 pb-1">Store</p>
             <Link
               to="/"
               target="_blank"
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:bg-navy-800 hover:text-gray-200 transition-all duration-200"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:bg-surface-900 hover:text-gray-200 transition-all duration-200"
             >
               <ExternalLink size={17} strokeWidth={1.8} />
               View Storefront
@@ -85,10 +85,10 @@ const AdminLayout = () => {
         </nav>
 
         {/* User + logout */}
-        <div className="p-3 border-t border-navy-700/50 space-y-2">
+        <div className="p-3 border-t border-surface-800/50 space-y-2">
           {user && (
-            <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-navy-800/50">
-              <div className="w-7 h-7 rounded-lg bg-gold-gradient flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-surface-900/50">
+              <div className="w-7 h-7 rounded-lg bg-brand-gradient flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-xs font-bold">{user.name?.[0]?.toUpperCase()}</span>
               </div>
               <div className="min-w-0">

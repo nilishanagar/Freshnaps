@@ -26,7 +26,7 @@ const SEOSection = ({ form, onChange }) => {
     >
       <div className="space-y-6">
         {/* Google Snippet Live Preview */}
-        <div className="p-4 bg-gray-50 dark:bg-navy-950 border border-gray-100 dark:border-navy-900 rounded-2xl space-y-1">
+        <div className="p-4 bg-gray-50 dark:bg-surface-950 border border-gray-100 dark:border-surface-950 rounded-2xl space-y-1">
           <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">
             Google Search Snippet Preview
           </span>

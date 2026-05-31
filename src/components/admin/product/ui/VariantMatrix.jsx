@@ -22,9 +22,9 @@ const VariantMatrix = ({ variants = [], onChange }) => {
   if (variants.length === 0) return null;
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-gray-100 dark:border-navy-700 bg-white dark:bg-navy-800">
+    <div className="w-full overflow-x-auto rounded-xl border border-gray-100 dark:border-surface-800 bg-white dark:bg-surface-900">
       <table className="w-full border-collapse text-left text-sm">
-        <thead className="bg-gray-50 dark:bg-navy-900 border-b border-gray-100 dark:border-navy-700 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <thead className="bg-gray-50 dark:bg-surface-950 border-b border-gray-100 dark:border-surface-800 text-xs font-semibold text-gray-500 uppercase tracking-wider">
           <tr>
             <th className="px-4 py-3">Variant</th>
             <th className="px-4 py-3">SKU</th>
@@ -34,9 +34,9 @@ const VariantMatrix = ({ variants = [], onChange }) => {
             <th className="px-4 py-3 text-right">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100 dark:divide-navy-700">
+        <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
           {variants.map((v, idx) => (
-            <tr key={idx} className="hover:bg-gray-50/50 dark:hover:bg-navy-700/30">
+            <tr key={idx} className="hover:bg-gray-50/50 dark:hover:bg-surface-800/30">
               <td className="px-4 py-3 font-semibold text-gray-900 dark:text-white">
                 {v.name}
               </td>

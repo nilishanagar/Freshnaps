@@ -388,14 +388,14 @@ const CheckoutPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-cream-50/20 dark:bg-navy-950 py-10 px-4 md:px-8 select-none">
+    <div className="min-h-screen bg-surface-50/20 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cream-200/60 dark:border-navy-800 pb-5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-surface-200/60 dark:border-surface-900 pb-5">
           <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-navy-500 dark:text-gold-300 flex items-center gap-2">
-              <Lock className="w-6 h-6 text-gold-500 animate-pulse" /> Secure Checkout
+            <h1 className="text-2xl md:text-3xl font-extrabold text-surface-600 dark:text-primary-300 flex items-center gap-2">
+              <Lock className="w-6 h-6 text-primary-500 animate-pulse" /> Secure Checkout
             </h1>
             <p className="text-xs md:text-sm text-gray-400 font-semibold mt-1">
               Primacy Sleep Premium System • 100% Encrypted Connection
@@ -403,19 +403,19 @@ const CheckoutPage = () => {
           </div>
 
           {/* Stepper */}
-          <div className="flex items-center gap-3 bg-white dark:bg-navy-900 border border-cream-100 dark:border-navy-800 px-4 py-2 rounded-2xl w-fit shadow-sm">
+          <div className="flex items-center gap-3 bg-white dark:bg-surface-950 border border-surface-100 dark:border-surface-900 px-4 py-2 rounded-2xl w-fit shadow-sm">
             {steps.map((s, i) => (
               <React.Fragment key={s}>
-                <div className={`flex items-center gap-1.5 text-xs font-bold ${i <= step ? 'text-gold-500' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1.5 text-xs font-bold ${i <= step ? 'text-primary-500' : 'text-gray-400'}`}>
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] transition-all font-mono ${
-                    i < step ? 'bg-gold-500 text-white' : i === step ? 'bg-gold-500 text-white shadow-gold' : 'bg-gray-200 dark:bg-navy-800'
+                    i < step ? 'bg-primary-500 text-white' : i === step ? 'bg-primary-500 text-white shadow-brand' : 'bg-gray-200 dark:bg-surface-900'
                   }`}>
                     {i < step ? <Check className="w-3.5 h-3.5" /> : i + 1}
                   </div>
                   <span>{s}</span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div className={`w-8 h-px transition-all ${i < step ? 'bg-gold-500' : 'bg-gray-200 dark:bg-navy-800'}`} />
+                  <div className={`w-8 h-px transition-all ${i < step ? 'bg-primary-500' : 'bg-gray-200 dark:bg-surface-900'}`} />
                 )}
               </React.Fragment>
             ))}
@@ -430,9 +430,9 @@ const CheckoutPage = () => {
             
             {/* Step 0: Address Form */}
             {step === 0 && (
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-navy-900 rounded-3xl border border-cream-200 dark:border-navy-800 shadow-card p-6 md:p-8 space-y-6">
-                <h2 className="font-display text-xl font-bold text-navy-500 dark:text-gold-300 flex items-center gap-2">
-                  <Truck className="w-5 h-5 text-gold-500" /> Shipping Details
+              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-surface-950 rounded-3xl border border-surface-200 dark:border-surface-900 shadow-card p-6 md:p-8 space-y-6">
+                <h2 className="font-display text-xl font-bold text-surface-600 dark:text-primary-300 flex items-center gap-2">
+                  <Truck className="w-5 h-5 text-primary-500" /> Shipping Details
                 </h2>
                 
                 <form onSubmit={handleSubmit(handleAddressSubmit)} className="space-y-4">
@@ -518,54 +518,54 @@ const CheckoutPage = () => {
                 {/* Back button */}
                 <button 
                   onClick={() => setStep(0)} 
-                  className="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-navy-500 dark:hover:text-gold-400 transition-colors"
+                  className="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-surface-600 dark:hover:text-primary-400 transition-colors"
                 >
                   ← Edit Shipping Address
                 </button>
 
                 {/* Delivery address mini panel */}
                 {address && (
-                  <div className="bg-cream-50/40 dark:bg-navy-900 rounded-2xl border border-cream-200/50 dark:border-navy-800/80 p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="bg-surface-50/40 dark:bg-surface-950 rounded-2xl border border-surface-200/50 dark:border-surface-900/80 p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                      <p className="text-xs font-extrabold text-navy-500 dark:text-gold-300 uppercase tracking-wider">Shipping To</p>
+                      <p className="text-xs font-extrabold text-surface-600 dark:text-primary-300 uppercase tracking-wider">Shipping To</p>
                       <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 mt-0.5">{address.name} • {address.phone}</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">{address.street}, {address.city}, {address.state} - {address.pincode}</p>
                     </div>
                     <button 
                       onClick={() => setStep(0)} 
-                      className="px-3 py-1.5 border border-cream-200 dark:border-navy-700 bg-white dark:bg-navy-800 hover:bg-cream-100 dark:hover:bg-navy-700 text-xs font-bold text-navy-500 dark:text-gray-300 rounded-xl transition-all"
+                      className="px-3 py-1.5 border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 hover:bg-surface-100 dark:hover:bg-surface-800 text-xs font-bold text-surface-600 dark:text-gray-300 rounded-xl transition-all"
                     >
                       Change
                     </button>
                   </div>
                 )}
 
-                <div className="bg-white dark:bg-navy-900 rounded-3xl border border-cream-200 dark:border-navy-800 shadow-card p-6 md:p-8 space-y-6">
+                <div className="bg-white dark:bg-surface-950 rounded-3xl border border-surface-200 dark:border-surface-900 shadow-card p-6 md:p-8 space-y-6">
                   <div>
-                    <h2 className="font-display text-xl font-bold text-navy-500 dark:text-gold-300 flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-gold-500" /> Select Payment Method
+                    <h2 className="font-display text-xl font-bold text-surface-600 dark:text-primary-300 flex items-center gap-2">
+                      <CreditCard className="w-5 h-5 text-primary-500" /> Select Payment Method
                     </h2>
                     <p className="text-xs text-gray-400 font-semibold mt-1">Select one of our secure payment gateways below.</p>
                   </div>
 
                   {/* Accordion List */}
-                  <div className="border border-cream-200 dark:border-navy-800 rounded-2xl overflow-hidden divide-y divide-cream-100 dark:divide-navy-800">
+                  <div className="border border-surface-200 dark:border-surface-900 rounded-2xl overflow-hidden divide-y divide-surface-100 dark:divide-surface-900">
                     
                     {/* 1. UPI Payments */}
-                    <div className={`transition-all ${paymentType === 'UPI' ? 'bg-cream-50/10 dark:bg-navy-950/20' : ''}`}>
+                    <div className={`transition-all ${paymentType === 'UPI' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
                         onClick={() => setPaymentType('UPI')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'UPI' ? 'border-gold-500' : 'border-gray-300 dark:border-navy-700'}`}>
-                            {paymentType === 'UPI' && <div className="w-2.5 h-2.5 rounded-full bg-gold-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'UPI' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'UPI' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
-                            <span className="text-sm font-extrabold text-navy-500 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
                               UPI Payments
                               <span className="badge bg-green-100 text-green-700 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md animate-pulse">Instant Payment</span>
-                              <span className="badge bg-gold-500 text-white text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Recommended</span>
+                              <span className="badge bg-primary-500 text-white text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Recommended</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Google Pay, PhonePe, Paytm, QR Code</span>
                           </div>
@@ -584,7 +584,7 @@ const CheckoutPage = () => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-5 pb-6 pt-2 border-t border-cream-100 dark:border-navy-800 space-y-4">
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
                               
                               {/* Gpay / PhonePe Quick Select Cards */}
                               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -600,15 +600,15 @@ const CheckoutPage = () => {
                                     onClick={() => { setUpiProvider(p.id); setShowQr(false); }}
                                     className={`p-3 border rounded-xl flex items-center justify-between text-left transition-all ${
                                       upiProvider === p.id && !showQr
-                                        ? 'border-gold-500 bg-gold-50/10 dark:bg-navy-800'
-                                        : 'border-cream-200 dark:border-navy-700 bg-white dark:bg-navy-900 hover:border-gold-300'
+                                        ? 'border-primary-500 bg-primary-50/10 dark:bg-surface-900'
+                                        : 'border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-950 hover:border-primary-300'
                                     }`}
                                   >
                                     <div>
                                       <p className="text-xs font-bold text-gray-900 dark:text-white">{p.name}</p>
                                       <p className="text-[9px] text-gray-400 font-semibold">Instant Pay</p>
                                     </div>
-                                    <div className="w-6 h-6 rounded-lg bg-cream-100 dark:bg-navy-800 flex items-center justify-center font-bold text-[10px] text-gold-600">
+                                    <div className="w-6 h-6 rounded-lg bg-surface-100 dark:bg-surface-900 flex items-center justify-center font-bold text-[10px] text-primary-600">
                                       {p.logo}
                                     </div>
                                   </button>
@@ -616,7 +616,7 @@ const CheckoutPage = () => {
                               </div>
 
                               {/* UPI ID Input Option */}
-                              <div className="bg-cream-50/30 dark:bg-navy-900 p-4 rounded-xl border border-cream-100/50 dark:border-navy-800/80">
+                              <div className="bg-surface-50/30 dark:bg-surface-950 p-4 rounded-xl border border-surface-100/50 dark:border-surface-900/80">
                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">Pay via UPI ID</label>
                                 <div className="flex gap-2">
                                   <div className="relative flex-1">
@@ -638,7 +638,7 @@ const CheckoutPage = () => {
                                     type="button"
                                     onClick={handleVerifyUpi}
                                     disabled={verifyingUpi || upiVerified || showQr}
-                                    className="px-4 py-2.5 bg-navy-500 hover:bg-navy-600 dark:bg-navy-800 text-xs font-bold text-white rounded-xl transition-all flex items-center gap-1 disabled:opacity-50 select-none cursor-pointer"
+                                    className="px-4 py-2.5 bg-surface-600 hover:bg-surface-700 dark:bg-surface-900 text-xs font-bold text-white rounded-xl transition-all flex items-center gap-1 disabled:opacity-50 select-none cursor-pointer"
                                   >
                                     {verifyingUpi ? <RefreshCw className="w-3 h-3 animate-spin" /> : 'Verify'}
                                   </button>
@@ -647,9 +647,9 @@ const CheckoutPage = () => {
 
                               {/* OR Separator */}
                               <div className="relative flex py-2 items-center">
-                                <div className="flex-grow border-t border-cream-200 dark:border-navy-800"></div>
+                                <div className="flex-grow border-t border-surface-200 dark:border-surface-900"></div>
                                 <span className="flex-shrink mx-4 text-gray-400 text-[10px] font-bold uppercase tracking-widest">OR</span>
-                                <div className="flex-grow border-t border-cream-200 dark:border-navy-800"></div>
+                                <div className="flex-grow border-t border-surface-200 dark:border-surface-900"></div>
                               </div>
 
                               {/* QR Code trigger */}
@@ -658,18 +658,18 @@ const CheckoutPage = () => {
                                   <button
                                     type="button"
                                     onClick={() => { setShowQr(true); setQrTimer(300); setUpiVerified(false); }}
-                                    className="px-6 py-3 border border-dashed border-gold-300 bg-gold-50/5 hover:bg-gold-50/10 text-xs font-bold text-gold-600 dark:text-gold-400 rounded-2xl transition-all flex items-center gap-2 select-none cursor-pointer"
+                                    className="px-6 py-3 border border-dashed border-primary-300 bg-primary-50/5 hover:bg-primary-50/10 text-xs font-bold text-primary-600 dark:text-primary-400 rounded-2xl transition-all flex items-center gap-2 select-none cursor-pointer"
                                   >
                                     <QrCode className="w-4 h-4" />
                                     Generate Secure Payment QR Code
                                   </button>
                                 ) : (
-                                  <div className="flex flex-col items-center p-4 bg-cream-50/30 dark:bg-navy-900 rounded-2xl border border-cream-200 dark:border-navy-800 text-center space-y-3 max-w-[280px]">
-                                    <div className="bg-white p-3 rounded-xl shadow-md border border-cream-200">
+                                  <div className="flex flex-col items-center p-4 bg-surface-50/30 dark:bg-surface-950 rounded-2xl border border-surface-200 dark:border-surface-900 text-center space-y-3 max-w-[280px]">
+                                    <div className="bg-white p-3 rounded-xl shadow-md border border-surface-200">
                                       {/* Mock premium QR Code representation */}
                                       <div className="w-36 h-36 bg-gray-900 flex items-center justify-center text-white relative">
                                         <QrCode className="w-24 h-24 text-gray-200" />
-                                        <div className="absolute inset-0 border-4 border-gold-500 m-2 rounded animate-pulse opacity-40" />
+                                        <div className="absolute inset-0 border-4 border-primary-500 m-2 rounded animate-pulse opacity-40" />
                                       </div>
                                     </div>
                                     <div>
@@ -696,19 +696,19 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* 2. Credit & Debit Cards */}
-                    <div className={`transition-all ${paymentType === 'Card' ? 'bg-cream-50/10 dark:bg-navy-950/20' : ''}`}>
+                    <div className={`transition-all ${paymentType === 'Card' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
                         onClick={() => setPaymentType('Card')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Card' ? 'border-gold-500' : 'border-gray-300 dark:border-navy-700'}`}>
-                            {paymentType === 'Card' && <div className="w-2.5 h-2.5 rounded-full bg-gold-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Card' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'Card' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
-                            <span className="text-sm font-extrabold text-navy-500 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
                               Credit & Debit Cards
-                              <span className="badge bg-gold-100 text-gold-700 dark:bg-navy-800 dark:text-gold-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">SSL Secured</span>
+                              <span className="badge bg-primary-100 text-primary-700 dark:bg-surface-900 dark:text-primary-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">SSL Secured</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Visa, Mastercard, RuPay, Amex • EMI Options</span>
                           </div>
@@ -724,22 +724,22 @@ const CheckoutPage = () => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-5 pb-6 pt-2 border-t border-cream-100 dark:border-navy-800 space-y-4">
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
                               
                               {/* Quick Autofill Tools */}
-                              <div className="flex items-center gap-2 flex-wrap bg-cream-50/20 dark:bg-navy-900/60 p-3 rounded-xl border border-cream-100 dark:border-navy-850">
+                              <div className="flex items-center gap-2 flex-wrap bg-surface-50/20 dark:bg-surface-950/60 p-3 rounded-xl border border-surface-100 dark:border-surface-900">
                                 <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Quick Autofill (Demo):</span>
-                                <button type="button" onClick={() => autofillCard('visa')} className="px-2.5 py-1 bg-white hover:bg-cream-100 dark:bg-navy-800 dark:hover:bg-navy-700 text-[10px] font-bold border border-cream-200 dark:border-navy-700 rounded-lg text-navy-500 dark:text-gray-300 cursor-pointer">Autofill Visa</button>
-                                <button type="button" onClick={() => autofillCard('mastercard')} className="px-2.5 py-1 bg-white hover:bg-cream-100 dark:bg-navy-800 dark:hover:bg-navy-700 text-[10px] font-bold border border-cream-200 dark:border-navy-700 rounded-lg text-navy-500 dark:text-gray-300 cursor-pointer">Autofill Mastercard</button>
-                                <button type="button" onClick={() => autofillCard('amex')} className="px-2.5 py-1 bg-white hover:bg-cream-100 dark:bg-navy-800 dark:hover:bg-navy-700 text-[10px] font-bold border border-cream-200 dark:border-navy-700 rounded-lg text-navy-500 dark:text-gray-300 cursor-pointer">Autofill Amex</button>
+                                <button type="button" onClick={() => autofillCard('visa')} className="px-2.5 py-1 bg-white hover:bg-surface-100 dark:bg-surface-900 dark:hover:bg-surface-800 text-[10px] font-bold border border-surface-200 dark:border-surface-800 rounded-lg text-surface-600 dark:text-gray-300 cursor-pointer">Autofill Visa</button>
+                                <button type="button" onClick={() => autofillCard('mastercard')} className="px-2.5 py-1 bg-white hover:bg-surface-100 dark:bg-surface-900 dark:hover:bg-surface-800 text-[10px] font-bold border border-surface-200 dark:border-surface-800 rounded-lg text-surface-600 dark:text-gray-300 cursor-pointer">Autofill Mastercard</button>
+                                <button type="button" onClick={() => autofillCard('amex')} className="px-2.5 py-1 bg-white hover:bg-surface-100 dark:bg-surface-900 dark:hover:bg-surface-800 text-[10px] font-bold border border-surface-200 dark:border-surface-800 rounded-lg text-surface-600 dark:text-gray-300 cursor-pointer">Autofill Amex</button>
                               </div>
 
                               {/* Saved Cards Quick Picker */}
                               <div className="space-y-2">
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Saved Cards</p>
-                                <div className="p-3 border border-cream-200 dark:border-navy-800 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-between gap-3">
+                                <div className="p-3 border border-surface-200 dark:border-surface-900 bg-white dark:bg-surface-950 rounded-xl flex items-center justify-between gap-3">
                                   <div className="flex items-center gap-3">
-                                    <div className="w-10 h-7 bg-cream-50 dark:bg-navy-800 rounded flex items-center justify-center font-bold text-[8px] uppercase border border-cream-200 dark:border-navy-700 text-gold-500">
+                                    <div className="w-10 h-7 bg-surface-50 dark:bg-surface-900 rounded flex items-center justify-center font-bold text-[8px] uppercase border border-surface-200 dark:border-surface-800 text-primary-500">
                                       VISA
                                     </div>
                                     <div>
@@ -757,7 +757,7 @@ const CheckoutPage = () => {
                                       setCardCvv('999');
                                       toast.success('Selected saved Visa card.');
                                     }}
-                                    className="text-xs font-bold text-gold-600 hover:text-gold-700 uppercase tracking-wide cursor-pointer"
+                                    className="text-xs font-bold text-primary-600 hover:text-primary-700 uppercase tracking-wide cursor-pointer"
                                   >
                                     Use Card
                                   </button>
@@ -829,7 +829,7 @@ const CheckoutPage = () => {
                                         type="checkbox"
                                         checked={saveCard}
                                         onChange={(e) => setSaveCard(e.target.checked)}
-                                        className="w-4 h-4 rounded text-gold-500 focus:ring-gold-500 bg-white dark:bg-navy-900 border-gray-300 dark:border-navy-750"
+                                        className="w-4 h-4 rounded text-primary-500 focus:ring-primary-500 bg-white dark:bg-surface-950 border-gray-300 dark:border-surface-800"
                                       />
                                       <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Save card for future checkouts</span>
                                     </label>
@@ -852,12 +852,12 @@ const CheckoutPage = () => {
                                       onClick={() => setSelectedEmiPlan(plan.id)}
                                       className={`p-3 border rounded-xl text-left transition-all ${
                                         selectedEmiPlan === plan.id
-                                          ? 'border-gold-500 bg-gold-50/5 dark:bg-navy-800'
-                                          : 'border-cream-200 dark:border-navy-700 bg-white dark:bg-navy-900 hover:border-gold-300'
+                                          ? 'border-primary-500 bg-primary-50/5 dark:bg-surface-900'
+                                          : 'border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-950 hover:border-primary-300'
                                       }`}
                                     >
                                       <p className="text-xs font-bold text-gray-900 dark:text-white">{plan.label}</p>
-                                      <p className="text-[9px] text-gold-600 dark:text-gold-400 font-extrabold mt-0.5">{plan.rate}</p>
+                                      <p className="text-[9px] text-primary-600 dark:text-primary-400 font-extrabold mt-0.5">{plan.rate}</p>
                                     </button>
                                   ))}
                                 </div>
@@ -870,17 +870,17 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* 3. Net Banking */}
-                    <div className={`transition-all ${paymentType === 'NetBanking' ? 'bg-cream-50/10 dark:bg-navy-950/20' : ''}`}>
+                    <div className={`transition-all ${paymentType === 'NetBanking' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
                         onClick={() => setPaymentType('NetBanking')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'NetBanking' ? 'border-gold-500' : 'border-gray-300 dark:border-navy-700'}`}>
-                            {paymentType === 'NetBanking' && <div className="w-2.5 h-2.5 rounded-full bg-gold-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'NetBanking' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'NetBanking' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
-                            <span className="text-sm font-extrabold text-navy-500 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
                               Net Banking
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Select from popular Indian Banks</span>
@@ -897,7 +897,7 @@ const CheckoutPage = () => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-5 pb-6 pt-2 border-t border-cream-100 dark:border-navy-800 space-y-4">
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
                               
                               {/* Popular banks quick select grid */}
                               <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
@@ -914,12 +914,12 @@ const CheckoutPage = () => {
                                     onClick={() => setSelectedBank(bank.code)}
                                     className={`p-3 border rounded-xl flex flex-col items-center justify-center text-center transition-all ${
                                       selectedBank === bank.code
-                                        ? 'border-gold-500 bg-gold-50/10 dark:bg-navy-800'
-                                        : 'border-cream-200 dark:border-navy-700 bg-white dark:bg-navy-900 hover:border-gold-300'
+                                        ? 'border-primary-500 bg-primary-50/10 dark:bg-surface-900'
+                                        : 'border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-950 hover:border-primary-300'
                                     }`}
                                   >
                                     <span className="text-xl mb-1">{bank.logo}</span>
-                                    <span className="text-[10px] font-extrabold text-navy-500 dark:text-gray-300">{bank.name}</span>
+                                    <span className="text-[10px] font-extrabold text-surface-600 dark:text-gray-300">{bank.name}</span>
                                   </button>
                                 ))}
                               </div>
@@ -939,13 +939,13 @@ const CheckoutPage = () => {
                                 </div>
 
                                 {bankSearch && (
-                                  <div className="border border-cream-200 dark:border-navy-800 bg-white dark:bg-navy-900 rounded-xl divide-y divide-cream-100 dark:divide-navy-800 max-h-32 overflow-y-auto shadow-inner">
+                                  <div className="border border-surface-200 dark:border-surface-900 bg-white dark:bg-surface-950 rounded-xl divide-y divide-surface-100 dark:divide-surface-900 max-h-32 overflow-y-auto shadow-inner">
                                     {filteredBanks.map(b => (
                                       <button
                                         key={b}
                                         type="button"
                                         onClick={() => { setSelectedBank(b); setBankSearch(''); }}
-                                        className="w-full text-left px-4 py-2.5 text-xs text-gray-700 dark:text-gray-300 hover:bg-cream-50 dark:hover:bg-navy-800 font-bold transition-all block"
+                                        className="w-full text-left px-4 py-2.5 text-xs text-gray-700 dark:text-gray-300 hover:bg-surface-50 dark:hover:bg-surface-900 font-bold transition-all block"
                                       >
                                         {b}
                                       </button>
@@ -970,17 +970,17 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* 4. Wallets */}
-                    <div className={`transition-all ${paymentType === 'Wallet' ? 'bg-cream-50/10 dark:bg-navy-950/20' : ''}`}>
+                    <div className={`transition-all ${paymentType === 'Wallet' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
                         onClick={() => setPaymentType('Wallet')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Wallet' ? 'border-gold-500' : 'border-gray-300 dark:border-navy-700'}`}>
-                            {paymentType === 'Wallet' && <div className="w-2.5 h-2.5 rounded-full bg-gold-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Wallet' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'Wallet' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
-                            <span className="text-sm font-extrabold text-navy-500 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
                               Mobile Wallets
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Paytm, Amazon Pay, Mobikwik, Freecharge</span>
@@ -997,7 +997,7 @@ const CheckoutPage = () => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-5 pb-6 pt-2 border-t border-cream-100 dark:border-navy-800 space-y-4">
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
                               
                               {/* Wallet Quick grid */}
                               <div className="grid grid-cols-2 gap-3">
@@ -1013,8 +1013,8 @@ const CheckoutPage = () => {
                                     onClick={() => { setSelectedWallet(wallet.id); setWalletLinked(false); }}
                                     className={`p-3 border rounded-xl flex items-center gap-3 text-left transition-all ${
                                       selectedWallet === wallet.id
-                                        ? 'border-gold-500 bg-gold-50/10 dark:bg-navy-800'
-                                        : 'border-cream-200 dark:border-navy-700 bg-white dark:bg-navy-900 hover:border-gold-300'
+                                        ? 'border-primary-500 bg-primary-50/10 dark:bg-surface-900'
+                                        : 'border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-950 hover:border-primary-300'
                                     }`}
                                   >
                                     <span className="text-2xl">{wallet.icon}</span>
@@ -1027,9 +1027,9 @@ const CheckoutPage = () => {
                               </div>
 
                               {/* Link wallet controls */}
-                              <div className="p-4 bg-cream-50/30 dark:bg-navy-900 border border-cream-100 dark:border-navy-800 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                              <div className="p-4 bg-surface-50/30 dark:bg-surface-950 border border-surface-100 dark:border-surface-900 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div>
-                                  <p className="text-xs font-extrabold text-navy-500 dark:text-gray-200 uppercase tracking-wider">Link Account</p>
+                                  <p className="text-xs font-extrabold text-surface-600 dark:text-gray-200 uppercase tracking-wider">Link Account</p>
                                   <p className="text-[10px] text-gray-400 font-semibold mt-0.5">Link your mobile wallet securely to check balance and pay.</p>
                                   {walletLinked && (
                                     <p className="text-xs text-green-500 font-bold mt-1.5 flex items-center gap-1">
@@ -1044,7 +1044,7 @@ const CheckoutPage = () => {
                                     toast.success('Wallet linked successfully!');
                                   }}
                                   disabled={walletLinked}
-                                  className="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-white text-xs font-bold rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
+                                  className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-xs font-bold rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
                                 >
                                   {walletLinked ? 'Linked' : 'Link Account'}
                                 </button>
@@ -1057,17 +1057,17 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* 5. Cash on Delivery (COD) */}
-                    <div className={`transition-all ${paymentType === 'COD' ? 'bg-cream-50/10 dark:bg-navy-950/20' : ''}`}>
+                    <div className={`transition-all ${paymentType === 'COD' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
                         onClick={() => setPaymentType('COD')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'COD' ? 'border-gold-500' : 'border-gray-300 dark:border-navy-700'}`}>
-                            {paymentType === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-gold-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'COD' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
-                            <span className="text-sm font-extrabold text-navy-500 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
                               Cash on Delivery (COD)
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Pay when you receive your sleep products</span>
@@ -1084,10 +1084,10 @@ const CheckoutPage = () => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-5 pb-6 pt-2 border-t border-cream-100 dark:border-navy-800 space-y-4">
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
                               
                               {/* Verify Pincode Eligibility */}
-                              <div className="bg-cream-50/30 dark:bg-navy-900 p-4 rounded-xl border border-cream-100/50 dark:border-navy-800/80 space-y-2">
+                              <div className="bg-surface-50/30 dark:bg-surface-950 p-4 rounded-xl border border-surface-100/50 dark:border-surface-900/80 space-y-2">
                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Verify Pincode Eligibility for COD</label>
                                 <div className="flex gap-2">
                                   <input
@@ -1105,7 +1105,7 @@ const CheckoutPage = () => {
                                     type="button"
                                     onClick={handleCheckPincode}
                                     disabled={pincodeStatus === 'checking'}
-                                    className="px-4 py-2.5 bg-navy-500 hover:bg-navy-600 dark:bg-navy-800 text-xs font-bold text-white rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
+                                    className="px-4 py-2.5 bg-surface-600 hover:bg-surface-700 dark:bg-surface-900 text-xs font-bold text-white rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
                                   >
                                     {pincodeStatus === 'checking' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : 'Check'}
                                   </button>
@@ -1141,7 +1141,7 @@ const CheckoutPage = () => {
                   </div>
 
                   {/* Failure toggle switch for demo purposes */}
-                  <div className="p-3 bg-cream-50/20 dark:bg-navy-800/40 rounded-xl border border-cream-200/40 dark:border-navy-800/60 flex items-center justify-between text-xs">
+                  <div className="p-3 bg-surface-50/20 dark:bg-surface-900/40 rounded-xl border border-surface-200/40 dark:border-surface-900/60 flex items-center justify-between text-xs">
                     <span className="font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-[9px] flex items-center gap-1">
                       <HelpCircle className="w-3.5 h-3.5" /> Demo Gateway Controls:
                     </span>
@@ -1150,7 +1150,7 @@ const CheckoutPage = () => {
                         type="checkbox" 
                         checked={simulateFailure} 
                         onChange={(e) => setSimulateFailure(e.target.checked)}
-                        className="w-3.5 h-3.5 rounded text-rose-500 focus:ring-rose-500 bg-white dark:bg-navy-900 border-gray-300 dark:border-navy-700"
+                        className="w-3.5 h-3.5 rounded text-rose-500 focus:ring-rose-500 bg-white dark:bg-surface-950 border-gray-300 dark:border-surface-800"
                       />
                       <span className="text-[10px] font-bold text-rose-500">Simulate Payment Failure</span>
                     </label>
@@ -1161,14 +1161,14 @@ const CheckoutPage = () => {
                     <button
                       type="button"
                       onClick={() => setStep(0)}
-                      className="px-6 py-4 rounded-xl border border-cream-200 text-gray-500 hover:bg-cream-50 dark:border-navy-700 dark:text-gray-300 dark:hover:bg-navy-800 font-bold text-xs transition-all tracking-wider uppercase select-none cursor-pointer"
+                      className="px-6 py-4 rounded-xl border border-surface-200 text-gray-500 hover:bg-surface-50 dark:border-surface-800 dark:text-gray-300 dark:hover:bg-surface-900 font-bold text-xs transition-all tracking-wider uppercase select-none cursor-pointer"
                     >
                       ← Address Step
                     </button>
                     <button
                       type="button"
                       onClick={handlePaymentAndCheckout}
-                      className="flex-1 py-4 bg-gold-gradient hover:opacity-95 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-gold flex items-center justify-center gap-1.5 cursor-pointer select-none"
+                      className="flex-1 py-4 bg-brand-gradient hover:opacity-95 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-brand flex items-center justify-center gap-1.5 cursor-pointer select-none"
                     >
                       <Lock className="w-3.5 h-3.5" />
                       Pay Securely — {formatPrice(pricing.finalAmount)}
@@ -1185,35 +1185,35 @@ const CheckoutPage = () => {
           <div className="lg:col-span-4 space-y-6">
             
             {/* Sticky summary wrapper */}
-            <div className="bg-white dark:bg-navy-900 rounded-3xl border border-cream-200 dark:border-navy-800 shadow-card p-5 h-fit sticky top-24 space-y-5">
-              <h3 className="font-display text-lg font-bold text-navy-500 dark:text-gold-300 border-b border-cream-100 dark:border-navy-800 pb-3 flex items-center justify-between">
+            <div className="bg-white dark:bg-surface-950 rounded-3xl border border-surface-200 dark:border-surface-900 shadow-card p-5 h-fit sticky top-24 space-y-5">
+              <h3 className="font-display text-lg font-bold text-surface-600 dark:text-primary-300 border-b border-surface-100 dark:border-surface-900 pb-3 flex items-center justify-between">
                 Order Summary
-                <span className="badge bg-cream-50 dark:bg-navy-800 text-gold-600 dark:text-gold-400 text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                <span className="badge bg-surface-50 dark:bg-surface-900 text-primary-600 dark:text-primary-400 text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider">
                   {items.length} Product{items.length > 1 ? 's' : ''}
                 </span>
               </h3>
 
               {/* Order items lists */}
-              <div className="divide-y divide-cream-50 dark:divide-navy-800 max-h-44 overflow-y-auto pr-1">
+              <div className="divide-y divide-surface-50 dark:divide-surface-900 max-h-44 overflow-y-auto pr-1">
                 {items.map(item => {
                   const price = item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price;
                   return (
                     <div key={item.key} className="py-2.5 flex gap-3 text-xs">
-                      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop" alt={item.product.name} className="w-10 h-10 rounded-lg object-cover border border-cream-100 dark:border-navy-700 flex-shrink-0" />
+                      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop" alt={item.product.name} className="w-10 h-10 rounded-lg object-cover border border-surface-100 dark:border-surface-800 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="font-bold text-gray-800 dark:text-gray-200 truncate">{item.product.name}</p>
                         <p className="text-[10px] text-gray-400 font-semibold mt-0.5">Qty: {item.quantity} • {item.variant?.size || 'Standard'}</p>
                       </div>
-                      <p className="font-extrabold text-navy-500 dark:text-gray-200">{formatPrice(price * item.quantity)}</p>
+                      <p className="font-extrabold text-surface-600 dark:text-gray-200">{formatPrice(price * item.quantity)}</p>
                     </div>
                   );
                 })}
               </div>
 
               {/* Real-time Coupon Code input */}
-              <div className="bg-cream-50/20 dark:bg-navy-950/20 p-3 rounded-2xl border border-cream-200/50 dark:border-navy-850 space-y-2">
+              <div className="bg-surface-50/20 dark:bg-surface-950/20 p-3 rounded-2xl border border-surface-200/50 dark:border-surface-900 space-y-2">
                 <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest flex items-center gap-1">
-                  <Tag className="w-3 h-3 text-gold-500" /> Apply Coupon Code
+                  <Tag className="w-3 h-3 text-primary-500" /> Apply Coupon Code
                 </p>
                 
                 {!appliedCoupon ? (
@@ -1228,14 +1228,14 @@ const CheckoutPage = () => {
                     <button
                       type="button"
                       onClick={handleApplyCoupon}
-                      className="px-3 py-2 bg-navy-500 hover:bg-navy-600 dark:bg-navy-800 text-xs font-bold text-white rounded-xl transition-all cursor-pointer"
+                      className="px-3 py-2 bg-surface-600 hover:bg-surface-700 dark:bg-surface-900 text-xs font-bold text-white rounded-xl transition-all cursor-pointer"
                     >
                       Apply
                     </button>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between bg-gold-50/20 dark:bg-navy-900 border border-gold-300/40 p-2.5 rounded-xl text-xs font-bold">
-                    <span className="text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                  <div className="flex items-center justify-between bg-primary-50/20 dark:bg-surface-950 border border-primary-300/40 p-2.5 rounded-xl text-xs font-bold">
+                    <span className="text-primary-600 dark:text-primary-400 flex items-center gap-1">
                       <Percent className="w-3.5 h-3.5" /> {appliedCoupon.code} Applied
                     </span>
                     <button
@@ -1268,7 +1268,7 @@ const CheckoutPage = () => {
               </div>
 
               {/* Final receipt block */}
-              <div className="border-t border-cream-100 dark:border-navy-800 pt-4 space-y-2.5 text-xs">
+              <div className="border-t border-surface-100 dark:border-surface-900 pt-4 space-y-2.5 text-xs">
                 <div className="flex justify-between text-gray-500 dark:text-gray-400 font-semibold">
                   <span>Subtotal</span>
                   <span>{formatPrice(subtotal)}</span>
@@ -1302,24 +1302,24 @@ const CheckoutPage = () => {
                   </span>
                 </div>
 
-                <div className="flex justify-between font-extrabold text-base text-navy-500 dark:text-gold-300 pt-3 border-t border-cream-100 dark:border-navy-800">
+                <div className="flex justify-between font-extrabold text-base text-surface-600 dark:text-primary-300 pt-3 border-t border-surface-100 dark:border-surface-900">
                   <span>Grand Total</span>
                   <span>{formatPrice(pricing.finalAmount)}</span>
                 </div>
               </div>
 
               {/* Trust Badges */}
-              <div className="border-t border-cream-50 dark:border-navy-800/80 pt-4 grid grid-cols-3 gap-2 text-center text-gray-400 font-semibold">
+              <div className="border-t border-surface-50 dark:border-surface-900/80 pt-4 grid grid-cols-3 gap-2 text-center text-gray-400 font-semibold">
                 <div className="flex flex-col items-center">
-                  <ShieldCheck className="w-5 h-5 text-gold-500 mb-1" />
+                  <ShieldCheck className="w-5 h-5 text-primary-500 mb-1" />
                   <span className="text-[8px] uppercase tracking-wider leading-tight">100% Secure Payments</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <Lock className="w-5 h-5 text-gold-500 mb-1 animate-pulse" />
+                  <Lock className="w-5 h-5 text-primary-500 mb-1 animate-pulse" />
                   <span className="text-[8px] uppercase tracking-wider leading-tight">SSL Secured Gateway</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <RefreshCw className="w-5 h-5 text-gold-500 mb-1" />
+                  <RefreshCw className="w-5 h-5 text-primary-500 mb-1" />
                   <span className="text-[8px] uppercase tracking-wider leading-tight">Easy 14d Refunds</span>
                 </div>
               </div>
@@ -1339,20 +1339,20 @@ const CheckoutPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-navy-950/90 backdrop-blur-md flex items-center justify-center p-4 text-white"
+            className="fixed inset-0 z-50 bg-surface-950/90 backdrop-blur-md flex items-center justify-center p-4 text-white"
           >
-            <div className="max-w-md w-full bg-navy-900 border border-navy-800 rounded-3xl p-6 md:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+            <div className="max-w-md w-full bg-surface-950 border border-surface-900 rounded-3xl p-6 md:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
               
               {/* Top lock decoration */}
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gold-gradient" />
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-brand-gradient" />
 
               {/* Dynamic Status Rendering */}
               {paymentStatus === 'loading' && (
                 <div className="space-y-6 py-6">
                   <div className="relative w-20 h-20 mx-auto">
-                    <div className="absolute inset-0 rounded-full border-4 border-navy-800" />
-                    <div className="absolute inset-0 rounded-full border-4 border-t-gold-500 animate-spin" />
-                    <Lock className="w-7 h-7 text-gold-500 absolute inset-0 m-auto animate-pulse" />
+                    <div className="absolute inset-0 rounded-full border-4 border-surface-900" />
+                    <div className="absolute inset-0 rounded-full border-4 border-t-primary-500 animate-spin" />
+                    <Lock className="w-7 h-7 text-primary-500 absolute inset-0 m-auto animate-pulse" />
                   </div>
                   
                   <div className="space-y-2">
@@ -1360,8 +1360,8 @@ const CheckoutPage = () => {
                     <p className="text-sm text-gray-400 font-medium">Please do not refresh this page or click back.</p>
                   </div>
 
-                  <div className="bg-navy-950/40 p-4 rounded-2xl border border-navy-800/80">
-                    <p className="text-xs font-mono font-bold text-gold-500 animate-pulse">{paymentProgressMsg}</p>
+                  <div className="bg-surface-950/40 p-4 rounded-2xl border border-surface-900/80">
+                    <p className="text-xs font-mono font-bold text-primary-500 animate-pulse">{paymentProgressMsg}</p>
                   </div>
                 </div>
               )}
@@ -1377,7 +1377,7 @@ const CheckoutPage = () => {
                     <p className="text-sm text-gray-400 font-medium">Your Sleepwell-grade premium order has been approved.</p>
                   </div>
 
-                  <p className="text-xs font-bold text-gold-500 tracking-widest uppercase animate-pulse">Redirecting to order dashboard...</p>
+                  <p className="text-xs font-bold text-primary-500 tracking-widest uppercase animate-pulse">Redirecting to order dashboard...</p>
                 </div>
               )}
 
@@ -1401,7 +1401,7 @@ const CheckoutPage = () => {
                         setPaymentStatus('idle');
                         setSimulateFailure(false);
                       }}
-                      className="flex-1 py-3 border border-navy-750 text-xs font-bold uppercase rounded-xl hover:bg-navy-850 transition-all cursor-pointer"
+                      className="flex-1 py-3 border border-surface-800 text-xs font-bold uppercase rounded-xl hover:bg-surface-900 transition-all cursor-pointer"
                     >
                       Change Method
                     </button>
@@ -1412,7 +1412,7 @@ const CheckoutPage = () => {
                         setSimulateFailure(false);
                         handlePaymentAndCheckout();
                       }}
-                      className="flex-1 py-3 bg-gold-gradient text-white text-xs font-extrabold uppercase rounded-xl transition-all shadow-gold cursor-pointer"
+                      className="flex-1 py-3 bg-brand-gradient text-white text-xs font-extrabold uppercase rounded-xl transition-all shadow-brand cursor-pointer"
                     >
                       Retry Payment
                     </button>

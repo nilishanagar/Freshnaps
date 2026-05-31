@@ -32,9 +32,9 @@ const CartPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900 py-10">
+    <div className="min-h-screen bg-white dark:bg-surface-950 py-10">
       <div className="container-custom">
-        <h1 className="section-title mb-8">Shopping Cart <span className="text-gold-500 text-2xl">({items.length})</span></h1>
+        <h1 className="section-title mb-8">Shopping Cart <span className="text-primary-500 text-2xl">({items.length})</span></h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart items */}
@@ -60,17 +60,17 @@ const CartPage = () => {
                     </Link>
 
                     <div className="flex-1 min-w-0">
-                      <Link to={`/product/${item.product.slug}`} className="font-semibold text-gray-900 dark:text-white hover:text-gold-500 transition-colors line-clamp-2">{item.product.name}</Link>
+                      <Link to={`/product/${item.product.slug}`} className="font-semibold text-gray-900 dark:text-white hover:text-primary-500 transition-colors line-clamp-2">{item.product.name}</Link>
                       {item.variant && (
                         <p className="text-xs text-gray-400 mt-1">{item.variant.size && `Size: ${item.variant.size}`} {item.variant.color && `Color: ${item.variant.color}`}</p>
                       )}
                       <div className="flex items-center justify-between mt-3 flex-wrap gap-3">
-                        <div className="flex items-center gap-2 bg-gray-100 dark:bg-navy-700 rounded-xl p-1">
-                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity - 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-navy-600 flex items-center justify-center transition-all">
+                        <div className="flex items-center gap-2 bg-gray-100 dark:bg-surface-800 rounded-xl p-1">
+                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity - 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
                             <Minus size={14} />
                           </button>
                           <span className="w-6 text-center font-semibold text-sm">{item.quantity}</span>
-                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity + 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-navy-600 flex items-center justify-center transition-all">
+                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity + 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
                             <Plus size={14} />
                           </button>
                         </div>
@@ -114,7 +114,7 @@ const CartPage = () => {
                 </div>
               </div>
 
-              <div className="space-y-3 border-t border-gray-100 dark:border-navy-700 pt-4">
+              <div className="space-y-3 border-t border-gray-100 dark:border-surface-800 pt-4">
                 <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                   <span>Subtotal ({items.reduce((a, i) => a + i.quantity, 0)} items)</span>
                   <span>{formatPrice(subtotal)}</span>
@@ -124,11 +124,11 @@ const CartPage = () => {
                   <span className={shippingCharge === 0 ? 'text-green-500 font-medium' : ''}>{shippingCharge === 0 ? 'FREE' : formatPrice(shippingCharge)}</span>
                 </div>
                 {subtotal < 999 && (
-                  <p className="text-xs text-gold-500 bg-gold-50 dark:bg-gold-900/20 p-2.5 rounded-lg">
+                  <p className="text-xs text-primary-500 bg-primary-50 dark:bg-primary-900/20 p-2.5 rounded-lg">
                     Add {formatPrice(999 - subtotal)} more for free shipping!
                   </p>
                 )}
-                <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-navy-700">
+                <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-surface-800">
                   <span>Total</span>
                   <span>{formatPrice(total)}</span>
                 </div>
@@ -138,7 +138,7 @@ const CartPage = () => {
                 Proceed to Checkout <ArrowRight size={18} />
               </button>
 
-              <Link to="/shop" className="flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-gold-500 transition-colors">
+              <Link to="/shop" className="flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-primary-500 transition-colors">
                 <ShoppingBag size={14} /> Continue Shopping
               </Link>
             </div>

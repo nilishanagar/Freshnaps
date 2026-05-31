@@ -8,7 +8,7 @@ const Layout = () => {
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-navy-900">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-surface-950">
       <Navbar />
       <main className="flex-1">
         <Outlet />

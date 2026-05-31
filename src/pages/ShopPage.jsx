@@ -264,8 +264,8 @@ const ShopPage = () => {
               onClick={() => applyFilter('category', cat.slug)}
               className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                 localFilters.category === cat.slug
-                  ? 'bg-gold-500 text-white font-medium'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-navy-700'
+                  ? 'bg-primary-500 text-white font-medium'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-800'
               }`}
             >
               {cat.label}
@@ -313,9 +313,9 @@ const ShopPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900">
+    <div className="min-h-screen bg-white dark:bg-surface-950">
       {/* Header */}
-      <div className="bg-cream-200 dark:bg-navy-800 border-b border-gray-100 dark:border-navy-700 py-8">
+      <div className="bg-surface-200 dark:bg-surface-900 border-b border-gray-100 dark:border-surface-800 py-8">
         <div className="container-custom">
           <h1 className="section-title">Shop All Products</h1>
           <p className="section-subtitle">
@@ -341,8 +341,8 @@ const ShopPage = () => {
                 }}
                 className={`px-5 py-2.5 rounded text-[13px] font-semibold tracking-tight whitespace-nowrap border transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#f6f2ed] border-gold-600 text-gold-700 font-bold shadow-sm'
-                    : 'bg-white dark:bg-navy-800 border-gray-200 dark:border-navy-700 text-gray-700 dark:text-gray-300 hover:border-gold-500 hover:text-gold-500'
+                    ? 'bg-[#f6f2ed] border-primary-600 text-primary-700 font-bold shadow-sm'
+                    : 'bg-white dark:bg-surface-900 border-gray-200 dark:border-surface-800 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-500'
                 }`}
               >
                 {tag.label}
@@ -410,8 +410,8 @@ const ShopPage = () => {
                         onClick={() => applyFilter('page', pg)}
                         className={`w-10 h-10 rounded-xl font-medium text-sm transition-all ${
                           pagination.page === pg
-                            ? 'bg-gold-500 text-white shadow-gold'
-                            : 'bg-gray-100 dark:bg-navy-700 text-gray-600 dark:text-gray-300 hover:bg-gold-100'
+                            ? 'bg-primary-500 text-white shadow-brand'
+                            : 'bg-gray-100 dark:bg-surface-800 text-gray-600 dark:text-gray-300 hover:bg-primary-100'
                         }`}
                       >
                         {pg}
@@ -429,7 +429,7 @@ const ShopPage = () => {
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
-          <div className="absolute right-0 inset-y-0 w-80 bg-white dark:bg-navy-800 p-6 overflow-y-auto">
+          <div className="absolute right-0 inset-y-0 w-80 bg-white dark:bg-surface-900 p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-semibold text-gray-900 dark:text-white">Filters</h2>
               <button onClick={() => setSidebarOpen(false)}><X size={20} /></button>

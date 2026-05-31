@@ -18,10 +18,10 @@ const ToggleSwitch = ({ checked, onChange, disabled = false, size = 'md', label,
       className={`inline-flex items-center gap-2.5 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
     >
       <div
-        className={`relative ${s.track} rounded-full transition-all duration-200 focus-within:ring-2 focus-within:ring-gold-400 focus-within:ring-offset-1 ${
+        className={`relative ${s.track} rounded-full transition-all duration-200 focus-within:ring-2 focus-within:ring-primary-400 focus-within:ring-offset-1 ${
           checked
-            ? 'bg-gold-500 shadow-sm'
-            : 'bg-gray-200 dark:bg-navy-600'
+            ? 'bg-primary-500 shadow-sm'
+            : 'bg-gray-200 dark:bg-surface-700'
         }`}
       >
         <div

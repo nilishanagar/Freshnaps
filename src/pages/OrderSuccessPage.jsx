@@ -21,7 +21,7 @@ const OrderSuccessPage = () => {
   }, [id]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-navy-950 py-16 px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-16 px-4">
       <div className="max-w-2xl mx-auto">
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center mb-10">
           <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mx-auto mb-6">
@@ -29,7 +29,7 @@ const OrderSuccessPage = () => {
           </div>
           <h1 className="font-display text-4xl font-bold text-gray-900 dark:text-white mb-3">Order Placed!</h1>
           <p className="text-gray-500 text-lg">Thank you for your purchase. Your order is confirmed.</p>
-          {order && <p className="text-gold-500 font-medium mt-2">Order ID: #{order._id.slice(-8).toUpperCase()}</p>}
+          {order && <p className="text-primary-500 font-medium mt-2">Order ID: #{order._id.slice(-8).toUpperCase()}</p>}
         </motion.div>
 
         {order && (
@@ -42,13 +42,13 @@ const OrderSuccessPage = () => {
                 return (
                   <React.Fragment key={s}>
                     <div className="flex flex-col items-center gap-1.5 flex-shrink-0">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isDone ? 'bg-gold-500' : 'bg-gray-200 dark:bg-navy-700'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isDone ? 'bg-primary-500' : 'bg-gray-200 dark:bg-surface-800'}`}>
                         {isDone ? <CheckCircle size={16} className="text-white" /> : <span className="text-xs text-gray-400">{i+1}</span>}
                       </div>
-                      <span className={`text-xs capitalize ${isDone ? 'text-gold-500 font-medium' : 'text-gray-400'}`}>{s}</span>
+                      <span className={`text-xs capitalize ${isDone ? 'text-primary-500 font-medium' : 'text-gray-400'}`}>{s}</span>
                     </div>
                     {i < statusSteps.length - 1 && (
-                      <div className={`flex-1 h-0.5 mx-2 transition-all ${i < currentIdx ? 'bg-gold-500' : 'bg-gray-200 dark:bg-navy-700'}`} />
+                      <div className={`flex-1 h-0.5 mx-2 transition-all ${i < currentIdx ? 'bg-primary-500' : 'bg-gray-200 dark:bg-surface-800'}`} />
                     )}
                   </React.Fragment>
                 );
@@ -57,7 +57,7 @@ const OrderSuccessPage = () => {
 
             {/* Shipping info */}
             {order.shippingAddress && (
-              <div className="p-4 bg-cream-200 dark:bg-navy-800 rounded-xl mb-5">
+              <div className="p-4 bg-surface-200 dark:bg-surface-900 rounded-xl mb-5">
                 <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2"><Home size={14} /> Delivering to</p>
                 <p className="text-sm text-gray-600 dark:text-gray-300">{order.shippingAddress.name} • {order.shippingAddress.phone}</p>
                 <p className="text-sm text-gray-500">{order.shippingAddress.street}, {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}</p>
@@ -79,10 +79,10 @@ const OrderSuccessPage = () => {
             </div>
 
             {/* Totals */}
-            <div className="border-t border-gray-100 dark:border-navy-700 pt-4 space-y-2 text-sm">
+            <div className="border-t border-gray-100 dark:border-surface-800 pt-4 space-y-2 text-sm">
               <div className="flex justify-between text-gray-500"><span>Subtotal</span><span>{formatPrice(order.subtotal)}</span></div>
               <div className="flex justify-between text-gray-500"><span>Shipping</span><span className={order.shippingCharge === 0 ? 'text-green-500' : ''}>{order.shippingCharge === 0 ? 'FREE' : formatPrice(order.shippingCharge)}</span></div>
-              <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-navy-700">
+              <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-surface-800">
                 <span>Total Paid</span>
                 <span>{formatPrice(order.totalAmount)}</span>
               </div>

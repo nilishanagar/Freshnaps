@@ -259,19 +259,19 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-navy-950 py-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-10">
       <div className="container-custom max-w-5xl">
         {/* Header */}
         <div className="card p-6 mb-6 flex items-center gap-5 relative overflow-hidden">
-          <div className="w-16 h-16 rounded-full bg-gold-gradient flex items-center justify-center text-white font-display font-bold text-2xl z-10">
+          <div className="w-16 h-16 rounded-full bg-brand-gradient flex items-center justify-center text-white font-display font-bold text-2xl z-10">
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="z-10">
             <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-white">{user?.name}</h1>
             <p className="text-gray-500">{user?.email}</p>
-            <span className="badge bg-gold-100 dark:bg-gold-900/30 text-gold-700 dark:text-gold-400 mt-1 capitalize">{user?.role}</span>
+            <span className="badge bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 mt-1 capitalize">{user?.role}</span>
           </div>
-          <div className="absolute right-0 top-0 w-32 h-32 bg-gold-400/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 w-32 h-32 bg-primary-400/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
         </div>
 
         {/* Tabs */}
@@ -281,7 +281,7 @@ const ProfilePage = () => {
               key={id}
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
-                activeTab === id ? 'bg-gold-500 text-white shadow-gold' : 'bg-white dark:bg-navy-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-navy-700'
+                activeTab === id ? 'bg-primary-500 text-white shadow-brand' : 'bg-white dark:bg-surface-900 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-800'
               }`}
             >
               <Icon size={15} /> {label}
@@ -299,7 +299,7 @@ const ProfilePage = () => {
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Account Details</h2>
                   {!isEditingProfile && (
-                    <button onClick={() => setIsEditingProfile(true)} className="flex items-center gap-2 text-sm text-gold-600 font-medium hover:text-gold-700">
+                    <button onClick={() => setIsEditingProfile(true)} className="flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700">
                       <Edit size={16} /> Edit
                     </button>
                   )}
@@ -325,7 +325,7 @@ const ProfilePage = () => {
                       <button type="submit" disabled={savingProfile} className="btn-primary py-2 px-6">
                         {savingProfile ? 'Saving...' : 'Save Changes'}
                       </button>
-                      <button type="button" onClick={() => {setIsEditingProfile(false); setProfileErrors({});}} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-navy-600 dark:text-gray-300 dark:hover:bg-navy-700">
+                      <button type="button" onClick={() => {setIsEditingProfile(false); setProfileErrors({});}} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-surface-700 dark:text-gray-300 dark:hover:bg-surface-800">
                         Cancel
                       </button>
                     </div>
@@ -354,7 +354,7 @@ const ProfilePage = () => {
                 {loadingOrders ? (
                   <div className="flex justify-center py-16"><LoadingSpinner size="xl" /></div>
                 ) : orders.length === 0 ? (
-                  <div className="card p-12 text-center bg-white dark:bg-navy-600 border border-cream-200 dark:border-navy-700/60 rounded-3xl">
+                  <div className="card p-12 text-center bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-800/60 rounded-3xl">
                     <Package size={48} className="text-gray-300 mx-auto mb-4" />
                     <p className="text-gray-500">No orders yet. Start shopping!</p>
                   </div>
@@ -367,7 +367,7 @@ const ProfilePage = () => {
                       </div>
                       <button
                         onClick={() => navigate('/orders')}
-                        className="flex items-center gap-1.5 px-4 py-2 bg-cream-50 hover:bg-gold-500 hover:text-white dark:bg-navy-800 text-gold-600 dark:text-gold-400 rounded-xl text-xs font-bold transition-all border border-cream-200 dark:border-navy-700 shadow-sm cursor-pointer"
+                        className="flex items-center gap-1.5 px-4 py-2 bg-surface-50 hover:bg-primary-500 hover:text-white dark:bg-surface-900 text-primary-600 dark:text-primary-400 rounded-xl text-xs font-bold transition-all border border-surface-200 dark:border-surface-800 shadow-sm cursor-pointer"
                       >
                         View All Orders
                         <ArrowRight className="w-4 h-4" />
@@ -396,34 +396,34 @@ const ProfilePage = () => {
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Saved Addresses</h2>
                   {!isAddingAddress && (
-                    <button onClick={() => setIsAddingAddress(true)} className="flex items-center gap-2 text-sm text-gold-600 font-medium hover:text-gold-700">
+                    <button onClick={() => setIsAddingAddress(true)} className="flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700">
                       <Plus size={16} /> Add New
                     </button>
                   )}
                 </div>
 
                 {isAddingAddress ? (
-                  <form onSubmit={handleAddAddress} noValidate className="space-y-4 max-w-lg mb-8 p-6 bg-gray-50 dark:bg-navy-900 rounded-2xl border border-gray-100 dark:border-navy-800">
-                    <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-navy-700 pb-3">
+                  <form onSubmit={handleAddAddress} noValidate className="space-y-4 max-w-lg mb-8 p-6 bg-gray-50 dark:bg-surface-950 rounded-2xl border border-gray-100 dark:border-surface-900">
+                    <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-surface-800 pb-3">
                       <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                        <MapPin size={18} className="text-gold-500" /> New Address
+                        <MapPin size={18} className="text-primary-500" /> New Address
                       </h3>
                       <button type="button" onClick={() => {setIsAddingAddress(false); setAddressErrors({});}} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><X size={18} /></button>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Label (e.g. Home, Work)</label>
-                      <input type="text" value={addressData.label} onChange={e => {setAddressData({...addressData, label: e.target.value}); setAddressErrors({...addressErrors, label: null});}} className={`input bg-white dark:bg-navy-800 ${addressErrors.label ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="Home" />
+                      <input type="text" value={addressData.label} onChange={e => {setAddressData({...addressData, label: e.target.value}); setAddressErrors({...addressErrors, label: null});}} className={`input bg-white dark:bg-surface-900 ${addressErrors.label ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="Home" />
                       {addressErrors.label && <p className="text-red-500 text-xs mt-1.5">{addressErrors.label}</p>}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address</label>
-                      <textarea value={addressData.street} onChange={e => {setAddressData({...addressData, street: e.target.value}); setAddressErrors({...addressErrors, street: null});}} className={`input bg-white dark:bg-navy-800 ${addressErrors.street ? 'border-red-500 focus:ring-red-500' : ''}`} rows="2" placeholder="House/Flat No., Building, Area" />
+                      <textarea value={addressData.street} onChange={e => {setAddressData({...addressData, street: e.target.value}); setAddressErrors({...addressErrors, street: null});}} className={`input bg-white dark:bg-surface-900 ${addressErrors.street ? 'border-red-500 focus:ring-red-500' : ''}`} rows="2" placeholder="House/Flat No., Building, Area" />
                       {addressErrors.street && <p className="text-red-500 text-xs mt-1.5">{addressErrors.street}</p>}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
-                        <select value={addressData.state} onChange={handleStateChange} className={`input bg-white dark:bg-navy-800 appearance-none ${addressErrors.state ? 'border-red-500 focus:ring-red-500' : ''}`}>
+                        <select value={addressData.state} onChange={handleStateChange} className={`input bg-white dark:bg-surface-900 appearance-none ${addressErrors.state ? 'border-red-500 focus:ring-red-500' : ''}`}>
                           <option value="">Select State</option>
                           {statesList.map(state => (
                             <option key={state} value={state}>{state}</option>
@@ -433,7 +433,7 @@ const ProfilePage = () => {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
-                        <select value={addressData.city} onChange={e => {setAddressData({...addressData, city: e.target.value}); setAddressErrors({...addressErrors, city: null});}} disabled={!addressData.state} className={`input bg-white dark:bg-navy-800 appearance-none ${addressErrors.city ? 'border-red-500 focus:ring-red-500' : ''} ${!addressData.state ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        <select value={addressData.city} onChange={e => {setAddressData({...addressData, city: e.target.value}); setAddressErrors({...addressErrors, city: null});}} disabled={!addressData.state} className={`input bg-white dark:bg-surface-900 appearance-none ${addressErrors.city ? 'border-red-500 focus:ring-red-500' : ''} ${!addressData.state ? 'opacity-50 cursor-not-allowed' : ''}`}>
                           <option value="">Select City</option>
                           {addressData.state && indianStatesAndCities[addressData.state]?.map(city => (
                             <option key={city} value={city}>{city}</option>
@@ -444,11 +444,11 @@ const ProfilePage = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pincode</label>
-                      <input type="text" value={addressData.pincode} onChange={e => {setAddressData({...addressData, pincode: e.target.value}); setAddressErrors({...addressErrors, pincode: null});}} className={`input bg-white dark:bg-navy-800 ${addressErrors.pincode ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="6-digit PIN" maxLength="6" />
+                      <input type="text" value={addressData.pincode} onChange={e => {setAddressData({...addressData, pincode: e.target.value}); setAddressErrors({...addressErrors, pincode: null});}} className={`input bg-white dark:bg-surface-900 ${addressErrors.pincode ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="6-digit PIN" maxLength="6" />
                       {addressErrors.pincode && <p className="text-red-500 text-xs mt-1.5">{addressErrors.pincode}</p>}
                     </div>
                     <label className="flex items-center gap-2 cursor-pointer pt-2">
-                      <input type="checkbox" checked={addressData.isDefault} onChange={e => setAddressData({...addressData, isDefault: e.target.checked})} className="w-4 h-4 rounded text-gold-500 focus:ring-gold-500 dark:bg-navy-800 border-gray-300 dark:border-navy-600" />
+                      <input type="checkbox" checked={addressData.isDefault} onChange={e => setAddressData({...addressData, isDefault: e.target.checked})} className="w-4 h-4 rounded text-primary-500 focus:ring-primary-500 dark:bg-surface-900 border-gray-300 dark:border-surface-700" />
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Make this my default address</span>
                     </label>
                     <button type="submit" disabled={savingAddress} className="btn-primary w-full py-3 mt-2 text-base">
@@ -465,13 +465,13 @@ const ProfilePage = () => {
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2">
                     {user?.addresses?.map((addr, i) => (
-                      <div key={addr._id || i} className={`p-5 border ${addr.isDefault ? 'border-gold-300 bg-gold-50/30 dark:bg-gold-900/10' : 'border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800'} rounded-2xl relative group hover:border-gold-300 transition-colors`}>
+                      <div key={addr._id || i} className={`p-5 border ${addr.isDefault ? 'border-primary-300 bg-primary-50/30 dark:bg-primary-900/10' : 'border-gray-200 dark:border-surface-800 bg-white dark:bg-surface-900'} rounded-2xl relative group hover:border-primary-300 transition-colors`}>
                         <div className="flex justify-between items-start mb-2">
                           <p className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             {addr.label || `Address ${i + 1}`} 
-                            {addr.isDefault && <span className="badge bg-gold-100 text-gold-700 text-[10px] px-2 py-0.5">Default</span>}
+                            {addr.isDefault && <span className="badge bg-primary-100 text-primary-700 text-[10px] px-2 py-0.5">Default</span>}
                           </p>
-                          <button onClick={() => handleDeleteAddress(addr._id)} className="text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-1 bg-white dark:bg-navy-900 rounded-lg shadow-sm border border-gray-100 dark:border-navy-700">
+                          <button onClick={() => handleDeleteAddress(addr._id)} className="text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-1 bg-white dark:bg-surface-950 rounded-lg shadow-sm border border-gray-100 dark:border-surface-800">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -490,31 +490,31 @@ const ProfilePage = () => {
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Payment Methods</h2>
                   {!isAddingPayment && (
-                    <button onClick={() => setIsAddingPayment(true)} className="flex items-center gap-2 text-sm text-gold-600 font-medium hover:text-gold-700">
+                    <button onClick={() => setIsAddingPayment(true)} className="flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700">
                       <Plus size={16} /> Add Card
                     </button>
                   )}
                 </div>
 
                 {isAddingPayment ? (
-                  <form onSubmit={handleAddPayment} noValidate className="space-y-4 max-w-lg mb-8 p-6 bg-gray-50 dark:bg-navy-900 rounded-2xl border border-gray-100 dark:border-navy-800">
-                    <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-navy-700 pb-3">
+                  <form onSubmit={handleAddPayment} noValidate className="space-y-4 max-w-lg mb-8 p-6 bg-gray-50 dark:bg-surface-950 rounded-2xl border border-gray-100 dark:border-surface-900">
+                    <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-surface-800 pb-3">
                       <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                        <Lock size={18} className="text-gold-500" /> Secure Add Card
+                        <Lock size={18} className="text-primary-500" /> Secure Add Card
                       </h3>
                       <button type="button" onClick={() => {setIsAddingPayment(false); setPaymentErrors({});}} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><X size={18} /></button>
                     </div>
                     
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name on Card</label>
-                      <input type="text" value={paymentData.cardName} onChange={e => {setPaymentData({...paymentData, cardName: e.target.value}); setPaymentErrors({...paymentErrors, cardName: null});}} className={`input bg-white dark:bg-navy-800 ${paymentErrors.cardName ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="John Doe" />
+                      <input type="text" value={paymentData.cardName} onChange={e => {setPaymentData({...paymentData, cardName: e.target.value}); setPaymentErrors({...paymentErrors, cardName: null});}} className={`input bg-white dark:bg-surface-900 ${paymentErrors.cardName ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="John Doe" />
                       {paymentErrors.cardName && <p className="text-red-500 text-xs mt-1.5">{paymentErrors.cardName}</p>}
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Card Number</label>
                       <div className="relative">
-                        <input type="text" value={paymentData.cardNumber} onChange={handleCardNumberChange} maxLength="19" className={`input bg-white dark:bg-navy-800 pl-10 ${paymentErrors.cardNumber ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="XXXX XXXX XXXX XXXX" />
+                        <input type="text" value={paymentData.cardNumber} onChange={handleCardNumberChange} maxLength="19" className={`input bg-white dark:bg-surface-900 pl-10 ${paymentErrors.cardNumber ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="XXXX XXXX XXXX XXXX" />
                         <CreditCard size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                       </div>
                       {paymentErrors.cardNumber && <p className="text-red-500 text-xs mt-1.5">{paymentErrors.cardNumber}</p>}
@@ -523,12 +523,12 @@ const ProfilePage = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expiry Date</label>
-                        <input type="text" value={paymentData.expiry} onChange={handleExpiryChange} maxLength="5" className={`input bg-white dark:bg-navy-800 ${paymentErrors.expiry ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="MM/YY" />
+                        <input type="text" value={paymentData.expiry} onChange={handleExpiryChange} maxLength="5" className={`input bg-white dark:bg-surface-900 ${paymentErrors.expiry ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="MM/YY" />
                         {paymentErrors.expiry && <p className="text-red-500 text-xs mt-1.5">{paymentErrors.expiry}</p>}
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CVV</label>
-                        <input type="password" value={paymentData.cvv} onChange={e => {setPaymentData({...paymentData, cvv: e.target.value.replace(/\D/g,'')}); setPaymentErrors({...paymentErrors, cvv: null});}} maxLength="4" className={`input bg-white dark:bg-navy-800 ${paymentErrors.cvv ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="•••" />
+                        <input type="password" value={paymentData.cvv} onChange={e => {setPaymentData({...paymentData, cvv: e.target.value.replace(/\D/g,'')}); setPaymentErrors({...paymentErrors, cvv: null});}} maxLength="4" className={`input bg-white dark:bg-surface-900 ${paymentErrors.cvv ? 'border-red-500 focus:ring-red-500' : ''}`} placeholder="•••" />
                         {paymentErrors.cvv && <p className="text-red-500 text-xs mt-1.5">{paymentErrors.cvv}</p>}
                       </div>
                     </div>
@@ -546,7 +546,7 @@ const ProfilePage = () => {
 
                 {savedCards.length === 0 && !isAddingPayment ? (
                   <div className="text-center py-10 card p-8 max-w-2xl mx-auto border-none shadow-none">
-                    <div className="w-16 h-16 bg-gold-100 dark:bg-gold-900/30 rounded-full flex items-center justify-center mx-auto mb-5 text-gold-600">
+                    <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-5 text-primary-600">
                       <ShieldCheck size={32} />
                     </div>
                     <h2 className="font-display text-2xl font-bold text-gray-900 dark:text-white mb-3">No Saved Cards</h2>
@@ -560,8 +560,8 @@ const ProfilePage = () => {
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2">
                     {savedCards.map((card) => (
-                      <div key={card.id} className="p-5 border border-gray-200 dark:border-navy-700 rounded-2xl relative group bg-white dark:bg-navy-800 flex items-center gap-4">
-                        <div className="w-12 h-8 bg-gray-100 dark:bg-navy-900 rounded flex items-center justify-center font-bold text-[10px] text-gray-800 dark:text-gray-200 uppercase tracking-wider">
+                      <div key={card.id} className="p-5 border border-gray-200 dark:border-surface-800 rounded-2xl relative group bg-white dark:bg-surface-900 flex items-center gap-4">
+                        <div className="w-12 h-8 bg-gray-100 dark:bg-surface-950 rounded flex items-center justify-center font-bold text-[10px] text-gray-800 dark:text-gray-200 uppercase tracking-wider">
                           {card.brand}
                         </div>
                         <div className="flex-1">

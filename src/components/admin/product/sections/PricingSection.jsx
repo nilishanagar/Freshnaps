@@ -94,7 +94,7 @@ const PricingSection = ({ form, onChange }) => {
 
         {/* Premium live calculations widget */}
         {!form.hasVariants && (mrp > 0 || cost > 0) && (
-          <div className="p-3 bg-gray-50 dark:bg-navy-950 border border-gray-100 dark:border-navy-900 rounded-xl grid grid-cols-2 gap-2 text-xs">
+          <div className="p-3 bg-gray-50 dark:bg-surface-950 border border-gray-100 dark:border-surface-950 rounded-xl grid grid-cols-2 gap-2 text-xs">
             <div>
               <span className="text-gray-400 block">Margin</span>
               <span className={`font-semibold ${profitMargin < 15 ? 'text-red-500' : 'text-green-500'}`}>
@@ -103,7 +103,7 @@ const PricingSection = ({ form, onChange }) => {
             </div>
             <div>
               <span className="text-gray-400 block">Discount</span>
-              <span className="font-semibold text-gold-600 dark:text-gold-400">
+              <span className="font-semibold text-primary-600 dark:text-primary-400">
                 {discountPercent > 0 ? `${discountPercent}% Off` : 'None'}
               </span>
             </div>

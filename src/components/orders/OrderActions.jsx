@@ -23,9 +23,9 @@ const OrderActions = ({
     toast.success(msg, {
       icon: '✨',
       style: {
-        border: '1px solid #C9A96E',
+        border: '1px solid #7ED957',
         padding: '16px',
-        color: '#1A1A2E',
+        color: '#0B1220',
         background: '#FFFDFB',
       },
     });
@@ -50,7 +50,7 @@ const OrderActions = ({
         <button
           onClick={() => handleDummyAction('Address updated successfully in shipment details.')}
           disabled={actionLoading}
-          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-navy-500 hover:text-white bg-cream-50 hover:bg-navy-500 dark:text-gray-300 dark:bg-navy-700 dark:hover:bg-navy-800 rounded-xl border border-cream-200 dark:border-navy-700 transition-all duration-300 shadow-sm cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-surface-600 hover:text-white bg-surface-50 hover:bg-surface-600 dark:text-gray-300 dark:bg-surface-800 dark:hover:bg-surface-900 rounded-xl border border-surface-200 dark:border-surface-800 transition-all duration-300 shadow-sm cursor-pointer"
         >
           <MapPin className="w-3.5 h-3.5" />
           Change Address
@@ -62,7 +62,7 @@ const OrderActions = ({
         <button
           onClick={() => handleDummyAction('Payment method converted to Pre-paid. Razorpay initiated.')}
           disabled={actionLoading}
-          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-navy-500 hover:text-white bg-cream-50 hover:bg-navy-500 dark:text-gray-300 dark:bg-navy-700 dark:hover:bg-navy-800 rounded-xl border border-cream-200 dark:border-navy-700 transition-all duration-300 shadow-sm cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-surface-600 hover:text-white bg-surface-50 hover:bg-surface-600 dark:text-gray-300 dark:bg-surface-800 dark:hover:bg-surface-900 rounded-xl border border-surface-200 dark:border-surface-800 transition-all duration-300 shadow-sm cursor-pointer"
         >
           <CreditCard className="w-3.5 h-3.5" />
           Pay Online
@@ -74,7 +74,7 @@ const OrderActions = ({
         <button
           onClick={onInvoiceDownload}
           disabled={actionLoading}
-          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-navy-600 dark:text-gray-200 hover:text-white bg-cream-100 hover:bg-gold-500 dark:bg-navy-700 dark:hover:bg-gold-500/80 rounded-xl border border-cream-200/80 dark:border-navy-600 transition-all duration-300 shadow-sm cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-surface-700 dark:text-gray-200 hover:text-white bg-surface-100 hover:bg-primary-500 dark:bg-surface-800 dark:hover:bg-primary-500/80 rounded-xl border border-surface-200/80 dark:border-surface-700 transition-all duration-300 shadow-sm cursor-pointer disabled:opacity-50"
         >
           <Download className="w-3.5 h-3.5" />
           Download Invoice
@@ -98,7 +98,7 @@ const OrderActions = ({
         <button
           onClick={onReorder}
           disabled={actionLoading}
-          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-gold-gradient hover:opacity-90 rounded-xl transition-all duration-300 shadow-gold cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-brand-gradient hover:opacity-90 rounded-xl transition-all duration-300 shadow-brand cursor-pointer"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           Buy Again
@@ -120,7 +120,7 @@ const OrderActions = ({
       {/* 8. Help / Support Section */}
       <a
         href={`mailto:support@freshnaps.in?subject=Support Request for Order #${order?._id}`}
-        className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-gray-500 hover:text-navy-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gold-300 dark:hover:bg-navy-700/60 rounded-xl border border-gray-100 dark:border-navy-700 transition-all duration-300 shadow-sm"
+        className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-gray-500 hover:text-surface-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-primary-300 dark:hover:bg-surface-800/60 rounded-xl border border-gray-100 dark:border-surface-800 transition-all duration-300 shadow-sm"
       >
         <MessageSquare className="w-3.5 h-3.5" />
         Need Help?

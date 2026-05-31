@@ -70,8 +70,8 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
       return isActive ? 'bg-orange-500 text-white' : 'bg-orange-100 text-orange-500';
     }
 
-    if (isCompleted) return 'bg-gold-500 text-white border-gold-500';
-    if (isActive) return 'bg-navy-500 text-white border-navy-500 animate-pulse';
+    if (isCompleted) return 'bg-primary-500 text-white border-primary-500';
+    if (isActive) return 'bg-surface-600 text-white border-surface-600 animate-pulse';
     return 'bg-gray-100 text-gray-400 border-gray-200';
   };
 
@@ -95,7 +95,7 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
           {/* Connector Line */}
           <div className="absolute top-1/2 left-12 right-12 h-0.5 bg-gray-200 -translate-y-4 z-0">
             <div
-              className="h-full bg-gold-gradient transition-all duration-500"
+              className="h-full bg-brand-gradient transition-all duration-500"
               style={{
                 width: `${currentIndex >= 0 ? (currentIndex / (steps.length - 1)) * 100 : 0}%`,
               }}
@@ -120,7 +120,7 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
                 </div>
                 <span
                   className={`text-[11px] mt-2 font-semibold text-center ${
-                    isActive ? 'text-navy-500 dark:text-gold-300' : 'text-gray-500 dark:text-gray-400'
+                    isActive ? 'text-surface-600 dark:text-primary-300' : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
                   {getStepLabel(step)}
@@ -140,7 +140,7 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
 
   // Vertical layout (usually for Detail Page)
   return (
-    <div className="relative pl-6 border-l-2 border-gray-100 dark:border-navy-800 ml-4 py-2 space-y-8 z-10">
+    <div className="relative pl-6 border-l-2 border-gray-100 dark:border-surface-900 ml-4 py-2 space-y-8 z-10">
       {steps.map((step, idx) => {
         const isCompleted = idx < currentIndex;
         const isActive = idx === currentIndex;
@@ -164,7 +164,7 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
                 <h4
                   className={`text-sm font-semibold transition-all ${
                     isActive
-                      ? 'text-navy-500 dark:text-gold-400 font-bold'
+                      ? 'text-surface-600 dark:text-primary-400 font-bold'
                       : 'text-gray-700 dark:text-gray-300'
                   }`}
                 >
@@ -179,7 +179,7 @@ const OrderStatusTimeline = ({ status = 'placed', statusHistory = [], layout = '
                 </p>
               </div>
               {time && (
-                <div className="text-xs text-navy-400 dark:text-gold-500/80 font-medium md:text-right mt-1 md:mt-0">
+                <div className="text-xs text-surface-400 dark:text-primary-500/80 font-medium md:text-right mt-1 md:mt-0">
                   {time}
                 </div>
               )}

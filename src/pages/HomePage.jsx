@@ -154,10 +154,10 @@ const HomePage = () => {
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#fafaf9] dark:bg-navy-950">
+    <div className="overflow-x-hidden bg-[#fafaf9] dark:bg-surface-950">
 
       {/* ─── 1. HERO: LAYERED MATTRESSES AUTO-SLIDING CAROUSEL ─── */}
-      <section className="relative min-h-[92vh] flex items-center bg-[#FAF8F5] dark:bg-navy-900 border-b border-gray-100 dark:border-navy-850 pt-0 pb-0">
+      <section className="relative min-h-[92vh] flex items-center bg-[#F8FAFC] dark:bg-surface-950 border-b border-gray-100 dark:border-surface-900 pt-0 pb-0">
         <div className="container-custom py-4">
           <AnimatePresence mode="wait">
             <motion.div
@@ -170,15 +170,15 @@ const HomePage = () => {
             >
               {/* Text side */}
               <div className="lg:col-span-5 text-left">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#ece6db] text-gray-700 text-[10px] font-bold uppercase tracking-wider mb-6">
-                  <Sparkles size={11} className="text-gold-500 fill-gold-500" /> Advanced Sleep Tech
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#dcfce7] text-gray-700 text-[10px] font-bold uppercase tracking-wider mb-6">
+                  <Sparkles size={11} className="text-primary-500 fill-primary-500" /> Advanced Sleep Tech
                 </span>
                 
                 <h1 className="font-display text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white leading-[1.15] mb-4">
                   {HERO_CAROUSEL[heroIndex].title}
                 </h1>
                 
-                <p className="text-gold-500 text-xs font-bold uppercase tracking-widest block mb-4">
+                <p className="text-primary-500 text-xs font-bold uppercase tracking-widest block mb-4">
                   {HERO_CAROUSEL[heroIndex].tagline}
                 </p>
 
@@ -195,7 +195,7 @@ const HomePage = () => {
                   <Link to="/shop?category=mattress" className="btn-primary px-8 py-3.5 text-xs font-bold rounded">
                     Explore Mattresses
                   </Link>
-                  <a href="#mattresses-catalog" className="inline-flex items-center gap-2 px-8 py-3.5 rounded border border-gray-200 dark:border-navy-700 text-gray-700 dark:text-gray-300 text-xs font-bold hover:border-gold-500 hover:text-gold-500 transition-all bg-white dark:bg-navy-800 shadow-sm">
+                  <a href="#mattresses-catalog" className="inline-flex items-center gap-2 px-8 py-3.5 rounded border border-gray-200 dark:border-surface-800 text-gray-700 dark:text-gray-300 text-xs font-bold hover:border-primary-500 hover:text-primary-500 transition-all bg-white dark:bg-surface-900 shadow-sm">
                     Shop Catalog
                   </a>
                 </div>
@@ -203,7 +203,7 @@ const HomePage = () => {
 
               {/* Graphic Layered side */}
               <div className="lg:col-span-7 relative flex flex-col items-center">
-                <div className="w-full aspect-[1/0.60] rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-navy-800 bg-white dark:bg-navy-850">
+                <div className="w-full aspect-[1/0.60] rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-surface-900 bg-white dark:bg-surface-900">
                   <img
                     src={HERO_CAROUSEL[heroIndex].image}
                     alt={HERO_CAROUSEL[heroIndex].title}
@@ -212,15 +212,15 @@ const HomePage = () => {
                 </div>
 
                 {/* Layer Specifications Overlay Widget */}
-                <div className="absolute -bottom-6 -right-4 md:right-8 bg-white/95 dark:bg-navy-900/95 backdrop-blur shadow-2xl rounded-2xl p-5 border border-gold-100 dark:border-navy-700 max-w-xs md:max-w-sm">
-                  <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-3 flex items-center gap-1.5 border-b border-gray-100 dark:border-navy-800 pb-1.5">
-                    <Info size={13} className="text-gold-500" /> Anatomical Comfort Layers
+                <div className="absolute -bottom-6 -right-4 md:right-8 bg-white/95 dark:bg-surface-950/95 backdrop-blur shadow-2xl rounded-2xl p-5 border border-primary-100 dark:border-surface-800 max-w-xs md:max-w-sm">
+                  <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-3 flex items-center gap-1.5 border-b border-gray-100 dark:border-surface-900 pb-1.5">
+                    <Info size={13} className="text-primary-500" /> Anatomical Comfort Layers
                   </h4>
                   <div className="space-y-2">
                     {HERO_CAROUSEL[heroIndex].layers.map((layer, lIdx) => (
                       <div key={lIdx} className="flex justify-between items-center text-[10px] md:text-[11px] font-semibold text-gray-700 dark:text-gray-300">
                         <span className="truncate pr-4">{layer.name}</span>
-                        <span className="text-gold-500 bg-gold-50 dark:bg-navy-800 px-2 py-0.5 rounded font-mono text-[9px]">{layer.thickness}</span>
+                        <span className="text-primary-500 bg-primary-50 dark:bg-surface-900 px-2 py-0.5 rounded font-mono text-[9px]">{layer.thickness}</span>
                       </div>
                     ))}
                   </div>
@@ -235,7 +235,7 @@ const HomePage = () => {
               <button
                 key={dotIdx}
                 onClick={() => setHeroIndex(dotIdx)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${heroIndex === dotIdx ? 'w-8 bg-gold-500' : 'w-2.5 bg-gray-300 dark:bg-navy-800'}`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${heroIndex === dotIdx ? 'w-8 bg-primary-500' : 'w-2.5 bg-gray-300 dark:bg-surface-900'}`}
               />
             ))}
           </div>
@@ -243,7 +243,7 @@ const HomePage = () => {
       </section>
 
       {/* ─── 2. THE MATTRESS CATALOG SECTION (MATCHES SLEEPWELL IMAGES) ─── */}
-      <section id="mattresses-catalog" className="py-20 bg-white dark:bg-navy-950 border-b border-gray-100 dark:border-navy-900">
+      <section id="mattresses-catalog" className="py-20 bg-white dark:bg-surface-950 border-b border-gray-100 dark:border-surface-950">
         <div className="container-custom">
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-10">
@@ -258,7 +258,7 @@ const HomePage = () => {
 
           {/* Outline Filter Pills (Horizontal Scrollbar) */}
           <div className="flex justify-center overflow-x-auto pb-6 mb-10 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="flex border border-gray-200 dark:border-navy-800 rounded divide-x divide-gray-200 dark:divide-navy-800 bg-white dark:bg-navy-900 shadow-sm">
+            <div className="flex border border-gray-200 dark:border-surface-900 rounded divide-x divide-gray-200 dark:divide-surface-900 bg-white dark:bg-surface-950 shadow-sm">
               {[
                 { label: 'All Mattresses', val: '' },
                 { label: 'King Size', val: 'King' },
@@ -273,7 +273,7 @@ const HomePage = () => {
                   onClick={() => setSelectedSubtype(pill.val)}
                   className={`px-5 py-3 text-xs font-bold whitespace-nowrap transition-colors tracking-tight ${
                     selectedSubtype === pill.val
-                      ? 'bg-[#FAF8F5] text-gold-600 dark:bg-navy-800'
+                      ? 'bg-[#F8FAFC] text-primary-600 dark:bg-surface-900'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -284,7 +284,7 @@ const HomePage = () => {
           </div>
 
           {/* Sub-Filters Toolbar (Mattress specs, Pincode, Compare) */}
-          <div className="bg-[#FAF8F5] dark:bg-navy-900 border border-gray-100 dark:border-navy-850 rounded-2xl p-5 mb-8 flex flex-col lg:flex-row items-center justify-between gap-6 flex-wrap">
+          <div className="bg-[#F8FAFC] dark:bg-surface-950 border border-gray-100 dark:border-surface-900 rounded-2xl p-5 mb-8 flex flex-col lg:flex-row items-center justify-between gap-6 flex-wrap">
             {/* Spec Dropdowns */}
             <div className="flex flex-wrap gap-4 w-full lg:w-auto">
               {/* Length */}
@@ -292,7 +292,7 @@ const HomePage = () => {
                 <select
                   value={lengthFilter}
                   onChange={e => setLengthFilter(e.target.value)}
-                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 rounded px-3 py-2 outline-none focus:border-gold-500"
+                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded px-3 py-2 outline-none focus:border-primary-500"
                 >
                   <option value="">Mattress Length</option>
                   <option value="72">72 Inches</option>
@@ -306,7 +306,7 @@ const HomePage = () => {
                 <select
                   value={widthFilter}
                   onChange={e => setWidthFilter(e.target.value)}
-                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 rounded px-3 py-2 outline-none focus:border-gold-500"
+                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded px-3 py-2 outline-none focus:border-primary-500"
                 >
                   <option value="">Mattress Width</option>
                   <option value="36">36 Inches (Single)</option>
@@ -321,7 +321,7 @@ const HomePage = () => {
                 <select
                   value={thicknessFilter}
                   onChange={e => setThicknessFilter(e.target.value)}
-                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 rounded px-3 py-2 outline-none focus:border-gold-500"
+                  className="w-full text-xs font-bold text-gray-700 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded px-3 py-2 outline-none focus:border-primary-500"
                 >
                   <option value="">Thickness</option>
                   <option value="4">4 Inches</option>
@@ -335,7 +335,7 @@ const HomePage = () => {
             {/* Pincode and compare options */}
             <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto justify-between lg:justify-end">
               {/* Pincode search */}
-              <form onSubmit={handlePincodeCheck} className="flex bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 rounded overflow-hidden max-w-[240px] w-full">
+              <form onSubmit={handlePincodeCheck} className="flex bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded overflow-hidden max-w-[240px] w-full">
                 <input
                   type="text"
                   maxLength="6"
@@ -344,7 +344,7 @@ const HomePage = () => {
                   placeholder="Enter pincode"
                   className="px-3 py-2 text-xs font-bold outline-none bg-transparent w-full text-gray-700"
                 />
-                <button type="submit" className="bg-gold-500 hover:bg-gold-650 text-white font-bold text-xs px-4 py-2 border-l border-gold-500 transition-colors">
+                <button type="submit" className="bg-primary-500 hover:bg-primary-600 text-white font-bold text-xs px-4 py-2 border-l border-primary-500 transition-colors">
                   {pincodeStatus === 'checking' ? '...' : 'Check'}
                 </button>
               </form>
@@ -357,12 +357,12 @@ const HomePage = () => {
                 }}
                 className={`flex items-center gap-1.5 px-4 py-2 border text-xs font-bold rounded transition-colors ${
                   compareEnabled
-                    ? 'border-gold-600 bg-gold-50 text-gold-600 dark:bg-navy-800'
-                    : 'border-gray-200 dark:border-navy-700 text-gray-600 dark:text-gray-300'
+                    ? 'border-primary-600 bg-primary-50 text-primary-600 dark:bg-surface-900'
+                    : 'border-gray-200 dark:border-surface-800 text-gray-600 dark:text-gray-300'
                 }`}
               >
                 <span>Compare</span>
-                <span className={`w-3.5 h-3.5 rounded-full border border-gray-400 flex items-center justify-center text-[8px] font-bold ${compareEnabled ? 'bg-gold-500 text-white border-gold-500' : ''}`}>
+                <span className={`w-3.5 h-3.5 rounded-full border border-gray-400 flex items-center justify-center text-[8px] font-bold ${compareEnabled ? 'bg-primary-500 text-white border-primary-500' : ''}`}>
                   {compareEnabled ? '✓' : ''}
                 </span>
               </button>
@@ -373,7 +373,7 @@ const HomePage = () => {
                 <select
                   value={sortOption}
                   onChange={e => setSortOption(e.target.value)}
-                  className="text-xs font-bold text-gray-700 bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 rounded px-3 py-2 outline-none"
+                  className="text-xs font-bold text-gray-700 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-800 rounded px-3 py-2 outline-none"
                 >
                   <option value="best">Best Match</option>
                   <option value="low">Price: Low to High</option>
@@ -387,11 +387,11 @@ const HomePage = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {Array(3).fill(null).map((_, i) => (
-                <div key={i} className="card aspect-square animate-pulse bg-gray-100 dark:bg-navy-850 rounded-2xl" />
+                <div key={i} className="card aspect-square animate-pulse bg-gray-100 dark:bg-surface-900 rounded-2xl" />
               ))}
             </div>
           ) : filteredMattresses.length === 0 ? (
-            <div className="text-center py-16 bg-[#FAF8F5] dark:bg-navy-900 rounded-3xl border border-dashed border-gray-200 dark:border-navy-800">
+            <div className="text-center py-16 bg-[#F8FAFC] dark:bg-surface-950 rounded-3xl border border-dashed border-gray-200 dark:border-surface-900">
               <span className="text-4xl block mb-2">🛏️</span>
               <h4 className="font-bold text-gray-800 dark:text-white mb-1">No Mattresses Match Selected Filters</h4>
               <p className="text-xs text-gray-400">Try adjusting your thickness, length, or subtype pill selectors.</p>
@@ -407,17 +407,17 @@ const HomePage = () => {
       </section>
 
       {/* ─── 3. TABBED BEDDING MATERIALS SECTION (CUSHIONS, PILLOWS, COMFORTERS, PROTECTORS) ─── */}
-      <section className="py-20 bg-gray-50 dark:bg-navy-900 border-b border-gray-150 dark:border-navy-950">
+      <section className="py-20 bg-gray-50 dark:bg-surface-950 border-b border-gray-150 dark:border-surface-950">
         <div className="container-custom">
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-gold-500 text-xs font-bold uppercase tracking-widest">SLEEP COMPLEMENTS</span>
+            <span className="text-primary-500 text-xs font-bold uppercase tracking-widest">SLEEP COMPLEMENTS</span>
             <h2 className="section-title mt-2">Bedding &amp; Sleep Accessories</h2>
             <p className="text-gray-500 mt-2">Complete your mattress setup with our highly engineered pillows, breathable protectors, and high-TC bedding accessories.</p>
           </div>
 
           {/* Interactive Navigation Tabs */}
-          <div className="flex justify-center border-b border-gray-200 dark:border-navy-800 mb-10 overflow-x-auto no-scrollbar">
+          <div className="flex justify-center border-b border-gray-200 dark:border-surface-900 mb-10 overflow-x-auto no-scrollbar">
             <div className="flex gap-2">
               {[
                 { label: 'Luxury Pillows', val: 'pillow' },
@@ -430,7 +430,7 @@ const HomePage = () => {
                   onClick={() => setOtherActiveTab(tab.val)}
                   className={`px-6 py-3 text-xs md:text-sm font-bold border-b-2 transition-all whitespace-nowrap tracking-tight ${
                     otherActiveTab === tab.val
-                      ? 'border-gold-500 text-gold-600 dark:text-gold-450 font-bold'
+                      ? 'border-primary-500 text-primary-600 dark:text-primary-400 font-bold'
                       : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                   }`}
                 >
@@ -444,11 +444,11 @@ const HomePage = () => {
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array(4).fill(null).map((_, i) => (
-                <div key={i} className="card aspect-square animate-pulse bg-gray-100 dark:bg-navy-800 rounded-2xl" />
+                <div key={i} className="card aspect-square animate-pulse bg-gray-100 dark:bg-surface-900 rounded-2xl" />
               ))}
             </div>
           ) : tabbedProducts.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-navy-950 border rounded-2xl">
+            <div className="text-center py-16 bg-white dark:bg-surface-950 border rounded-2xl">
               <span className="text-3xl block mb-2">☁️</span>
               <h4 className="font-bold text-gray-800 dark:text-white">No products found in this category</h4>
               <p className="text-xs text-gray-400 mt-1">Try exploring other luxury bedding options above.</p>
@@ -464,10 +464,10 @@ const HomePage = () => {
       </section>
 
       {/* ─── 4. FRESHNAPS PROMISE & TESTIMONIALS ─── */}
-      <section className="py-20 bg-navy-900 dark:bg-navy-950 text-white">
+      <section className="py-20 bg-surface-950 dark:bg-surface-950 text-white">
         <div className="container-custom">
           <div className="text-center mb-14">
-            <span className="text-gold-400 text-xs font-bold uppercase tracking-widest">SLEEP SECURE</span>
+            <span className="text-primary-400 text-xs font-bold uppercase tracking-widest">SLEEP SECURE</span>
             <h2 className="font-display text-4xl font-bold mt-2">The Freshnaps Sleep Promise</h2>
           </div>
 
@@ -476,13 +476,13 @@ const HomePage = () => {
               { icon: Award,       iconColor: 'text-amber-400',  bg: 'bg-amber-400/10',  title: 'Premium Raw Materials',  desc: 'Contouring certified memory foams, natural GOLS latex, and organic cotton — only premium components.' },
               { icon: Truck,       iconColor: 'text-emerald-400', bg: 'bg-emerald-400/10', title: 'Fast Pan-India Delivery',   desc: 'Delivered securely in robust protective packaging in 3-5 business days.' },
               { icon: RotateCcw,   iconColor: 'text-blue-400',   bg: 'bg-blue-400/10',   title: '30-Night Trial & Returns',    desc: 'Hassle-free 30-night sleep trial. If you are not wowed, return it for a complete refund.' },
-              { icon: BadgeCheck,  iconColor: 'text-gold-400',   bg: 'bg-gold-400/10',   title: 'Up to 10-Year Warranty', desc: 'Sleep with peace of mind. Every mattress is built to retain thickness and posture shape.' },
+              { icon: BadgeCheck,  iconColor: 'text-primary-400',   bg: 'bg-primary-400/10',   title: 'Up to 10-Year Warranty', desc: 'Sleep with peace of mind. Every mattress is built to retain thickness and posture shape.' },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
                 <div
                   key={i}
-                  className="p-7 rounded-2xl bg-navy-800 dark:bg-navy-900 border border-navy-700 hover:border-gold-500/40 transition-all duration-300"
+                  className="p-7 rounded-2xl bg-surface-900 dark:bg-surface-950 border border-surface-800 hover:border-primary-500/40 transition-all duration-300"
                 >
                   <div className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center mb-5`}>
                     <Icon size={22} className={item.iconColor} strokeWidth={1.8} />
@@ -497,10 +497,10 @@ const HomePage = () => {
       </section>
 
       {/* ─── 5. SOCIAL REVIEWS & PROOF ─── */}
-      <section className="py-20 bg-cream-100 dark:bg-navy-900/40">
+      <section className="py-20 bg-surface-100 dark:bg-surface-950/40">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <span className="text-gold-500 text-xs font-bold uppercase tracking-widest">VERIFIED POSTURE RECOVERY</span>
+            <span className="text-primary-500 text-xs font-bold uppercase tracking-widest">VERIFIED POSTURE RECOVERY</span>
             <h2 className="text-3xl font-bold mt-2">What RESTED Customers Say</h2>
           </div>
           
@@ -510,7 +510,7 @@ const HomePage = () => {
                 <div>
                   <div className="flex gap-0.5 mb-3">
                     {[1,2,3,4,5].map(s => (
-                      <Star key={s} size={14} className="text-gold-400 fill-gold-400" />
+                      <Star key={s} size={14} className="text-primary-400 fill-primary-400" />
                     ))}
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed mb-6 font-sans">"{t.text}"</p>
@@ -529,9 +529,9 @@ const HomePage = () => {
       </section>
 
       {/* ─── 6. SLEEP SMART CLUB NEWSLETTER ─── */}
-      <section className="py-20 bg-white dark:bg-navy-950">
+      <section className="py-20 bg-white dark:bg-surface-950">
         <div className="container-custom">
-          <div className="relative rounded-3xl overflow-hidden bg-gold-gradient p-10 md:p-16 text-center shadow-gold-lg">
+          <div className="relative rounded-3xl overflow-hidden bg-brand-gradient p-10 md:p-16 text-center shadow-brand-lg">
             <div className="relative z-10 max-w-xl mx-auto">
               <span className="inline-block px-4 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold mb-4 uppercase tracking-wider">
                 Freshnaps Sleep Club
@@ -551,7 +551,7 @@ const HomePage = () => {
                   placeholder="Enter your email"
                   className="flex-1 px-5 py-3 rounded text-gray-900 placeholder-gray-400 outline-none text-sm"
                 />
-                <button type="submit" className="px-6 py-3 bg-navy-900 text-white font-semibold rounded hover:bg-navy-800 transition-colors text-sm">
+                <button type="submit" className="px-6 py-3 bg-surface-950 text-white font-semibold rounded hover:bg-surface-900 transition-colors text-sm">
                   Subscribe
                 </button>
               </form>

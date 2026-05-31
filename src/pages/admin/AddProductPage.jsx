@@ -102,12 +102,12 @@ const AddProductPage = ({ isEditMode = false }) => {
   return (
     <form onSubmit={handleFormSubmit} className="p-8 max-w-[1400px] mx-auto space-y-8">
       {/* Header Sticky Navbar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 dark:border-navy-700 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 dark:border-surface-800 pb-5">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => navigate('/admin/products')}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-navy-700 rounded-xl transition-all cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-xl transition-all cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft size={20} />
           </button>
@@ -128,7 +128,7 @@ const AddProductPage = ({ isEditMode = false }) => {
           <button
             type="submit"
             disabled={isSubmitting || isUploading}
-            className="btn-primary px-5 py-2.5 font-semibold text-sm flex items-center gap-2 cursor-pointer shadow-lg hover:shadow-gold-500/20"
+            className="btn-primary px-5 py-2.5 font-semibold text-sm flex items-center gap-2 cursor-pointer shadow-lg hover:shadow-primary-500/20"
           >
             {isSubmitting ? (
               <LoadingSpinner size="sm" />

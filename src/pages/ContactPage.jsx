@@ -17,11 +17,11 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900">
+    <div className="min-h-screen bg-white dark:bg-surface-950">
       {/* Hero */}
-      <section className="bg-cream-200 dark:bg-navy-800/50 py-16 text-center">
+      <section className="bg-surface-200 dark:bg-surface-900/50 py-16 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="text-gold-500 font-medium text-sm uppercase tracking-widest">Get in Touch</span>
+          <span className="text-primary-500 font-medium text-sm uppercase tracking-widest">Get in Touch</span>
           <h1 className="section-title mt-2">Contact Us</h1>
           <p className="section-subtitle">We'd love to hear from you. Our team is here to help!</p>
         </motion.div>
@@ -40,13 +40,13 @@ const ContactPage = () => {
                 { icon: Clock, title: 'Business Hours', lines: ['Mon–Sat: 9AM – 7PM', 'Sunday: 10AM – 5PM'] },
               ].map(({ icon: Icon, title, lines, href }) => (
                 <div key={title} className="flex gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gold-gradient flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center flex-shrink-0">
                     <Icon size={20} className="text-white" />
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900 dark:text-white">{title}</p>
                     {lines.map(l => href ? (
-                      <a key={l} href={href} className="block text-gray-500 hover:text-gold-500 text-sm">{l}</a>
+                      <a key={l} href={href} className="block text-gray-500 hover:text-primary-500 text-sm">{l}</a>
                     ) : (
                       <p key={l} className="text-gray-500 text-sm">{l}</p>
                     ))}

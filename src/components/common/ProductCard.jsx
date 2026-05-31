@@ -54,11 +54,11 @@ const ProductCard = ({ product }) => {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25 }}
-      className="group flex flex-col h-full bg-white dark:bg-navy-800 rounded-2xl overflow-hidden"
+      className="group flex flex-col h-full bg-white dark:bg-surface-900 rounded-2xl overflow-hidden"
     >
       <Link to={`/product/${product.slug}`} className="block h-full flex flex-col">
         {/* ── Visual Frame (Image area) ── */}
-        <div className="relative overflow-hidden bg-cream-100 dark:bg-navy-900 aspect-square w-full">
+        <div className="relative overflow-hidden bg-surface-100 dark:bg-surface-950 aspect-square w-full">
           <img
             src={product.images?.[0]?.url || product.images?.[0] || `https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800`}
             alt={product.name}
@@ -68,14 +68,14 @@ const ProductCard = ({ product }) => {
 
           {/* Warranty Badge (Top Left Overlay) */}
           <div className="absolute top-3 left-3">
-            <span className="inline-block bg-[#ece6db]/90 backdrop-blur-sm text-gray-700 dark:bg-navy-800/90 dark:text-gray-200 text-[10px] font-semibold px-2.5 py-1 rounded shadow-sm capitalize">
+            <span className="inline-block bg-[#dcfce7]/90 backdrop-blur-sm text-gray-700 dark:bg-surface-900/90 dark:text-gray-200 text-[10px] font-semibold px-2.5 py-1 rounded shadow-sm capitalize">
               {warrantyText.toLowerCase().replace('warranty', '').trim()} warranty
             </span>
           </div>
 
           {/* Rating Pill (Bottom Left Overlay) */}
           {product.rating > 0 && (
-            <div className="absolute bottom-3 left-3 bg-white/95 dark:bg-navy-800/95 backdrop-blur-sm px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+            <div className="absolute bottom-3 left-3 bg-white/95 dark:bg-surface-900/95 backdrop-blur-sm px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
               <span className="text-[10px] font-bold text-gray-800 dark:text-white">★</span>
               <span className="text-[10px] font-bold text-gray-800 dark:text-white">{product.rating.toFixed(1)}</span>
             </div>
@@ -95,7 +95,7 @@ const ProductCard = ({ product }) => {
         <div className="p-4 flex-1 flex flex-col justify-between">
           <div>
             {/* Title */}
-            <h3 className="font-medium text-gray-900 dark:text-white text-sm md:text-[14px] leading-snug tracking-tight mb-1 font-sans group-hover:text-gold-600 transition-colors line-clamp-2">
+            <h3 className="font-medium text-gray-900 dark:text-white text-sm md:text-[14px] leading-snug tracking-tight mb-1 font-sans group-hover:text-primary-600 transition-colors line-clamp-2">
               {product.name}
             </h3>
 

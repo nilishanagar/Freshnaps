@@ -36,7 +36,7 @@ const DescriptionSection = ({ form, onChange }) => {
         </div>
 
         {/* Tab Headers */}
-        <div className="flex border-b border-gray-100 dark:border-navy-700">
+        <div className="flex border-b border-gray-100 dark:border-surface-800">
           {[
             { id: 'description', label: 'Full Description' },
             { id: 'material', label: 'Material & Construction' },
@@ -49,7 +49,7 @@ const DescriptionSection = ({ form, onChange }) => {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
                 activeTab === tab.id
-                  ? 'border-gold-500 text-gold-600 dark:text-gold-400'
+                  ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
               }`}
             >

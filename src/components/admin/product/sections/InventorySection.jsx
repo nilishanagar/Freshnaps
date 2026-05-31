@@ -19,7 +19,7 @@ const InventorySection = ({ form, onChange }) => {
     >
       <div className="space-y-4">
         {/* Track Inventory Toggle */}
-        <div className="flex items-center justify-between pb-2 border-b border-gray-50 dark:border-navy-900">
+        <div className="flex items-center justify-between pb-2 border-b border-gray-50 dark:border-surface-950">
           <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
             Track Stock Levels
           </span>

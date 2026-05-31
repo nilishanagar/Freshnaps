@@ -84,15 +84,15 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900">
+    <div className="min-h-screen bg-white dark:bg-surface-950">
       {/* Breadcrumb */}
       <div className="container-custom pt-6 pb-2">
         <nav className="flex items-center gap-2 text-sm text-gray-400">
-          <Link to="/" className="hover:text-gold-500">Home</Link>
+          <Link to="/" className="hover:text-primary-500">Home</Link>
           <span>/</span>
-          <Link to="/shop" className="hover:text-gold-500">Shop</Link>
+          <Link to="/shop" className="hover:text-primary-500">Shop</Link>
           <span>/</span>
-          <Link to={`/shop?category=${product.category}`} className="hover:text-gold-500 capitalize">{product.category}</Link>
+          <Link to={`/shop?category=${product.category}`} className="hover:text-primary-500 capitalize">{product.category}</Link>
           <span>/</span>
           <span className="text-gray-600 dark:text-gray-300 line-clamp-1">{product.name}</span>
         </nav>
@@ -103,7 +103,7 @@ const ProductDetailPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image gallery */}
           <div>
-            <div className="relative aspect-square rounded-3xl overflow-hidden bg-cream-200 dark:bg-navy-800 mb-4">
+            <div className="relative aspect-square rounded-3xl overflow-hidden bg-surface-200 dark:bg-surface-900 mb-4">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={activeImg}
@@ -121,11 +121,11 @@ const ProductDetailPage = () => {
               {product.images?.length > 1 && (
                 <>
                   <button onClick={() => setActiveImg(i => (i - 1 + product.images.length) % product.images.length)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-navy-800/80 flex items-center justify-center shadow-md hover:bg-white transition-all">
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-surface-900/80 flex items-center justify-center shadow-md hover:bg-white transition-all">
                     <ChevronLeft size={18} />
                   </button>
                   <button onClick={() => setActiveImg(i => (i + 1) % product.images.length)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-navy-800/80 flex items-center justify-center shadow-md hover:bg-white transition-all">
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-surface-900/80 flex items-center justify-center shadow-md hover:bg-white transition-all">
                     <ChevronRight size={18} />
                   </button>
                 </>
@@ -134,7 +134,7 @@ const ProductDetailPage = () => {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
                 {hasDiscount && <span className="badge bg-red-500 text-white text-sm px-3">{discountPct}% OFF</span>}
-                {product.isBestseller && <span className="badge bg-gold-500 text-white text-sm px-3">Bestseller</span>}
+                {product.isBestseller && <span className="badge bg-primary-500 text-white text-sm px-3">Bestseller</span>}
               </div>
             </div>
 
@@ -146,7 +146,7 @@ const ProductDetailPage = () => {
                     key={i}
                     onClick={() => setActiveImg(i)}
                     className={`w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${
-                      activeImg === i ? 'border-gold-500' : 'border-transparent'
+                      activeImg === i ? 'border-primary-500' : 'border-transparent'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -158,7 +158,7 @@ const ProductDetailPage = () => {
 
           {/* Product Info */}
           <div>
-            <p className="text-gold-500 font-medium uppercase tracking-widest text-sm capitalize mb-2">{product.category}</p>
+            <p className="text-primary-500 font-medium uppercase tracking-widest text-sm capitalize mb-2">{product.category}</p>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">{product.name}</h1>
 
             {/* Rating */}
@@ -166,7 +166,7 @@ const ProductDetailPage = () => {
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex">
                   {[1,2,3,4,5].map(s => (
-                    <Star key={s} size={16} className={s <= Math.round(product.rating) ? 'text-gold-400 fill-gold-400' : 'text-gray-200 dark:text-navy-600'} />
+                    <Star key={s} size={16} className={s <= Math.round(product.rating) ? 'text-primary-400 fill-primary-400' : 'text-gray-200 dark:text-surface-700'} />
                   ))}
                 </div>
                 <span className="text-sm text-gray-500">{product.rating.toFixed(1)} ({product.numReviews} reviews)</span>
@@ -191,7 +191,7 @@ const ProductDetailPage = () => {
               <div className="mb-6">
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                   {product.variants[0]?.size ? 'Select Size' : 'Select Color'}:
-                  {selectedVariant && <span className="text-gold-500 ml-2">{selectedVariant.size || selectedVariant.color}</span>}
+                  {selectedVariant && <span className="text-primary-500 ml-2">{selectedVariant.size || selectedVariant.color}</span>}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.map((v, i) => (
@@ -206,8 +206,8 @@ const ProductDetailPage = () => {
                       }}
                       className={`px-4 py-2 rounded-xl text-sm font-medium border-2 transition-all flex items-center gap-2 ${
                         selectedVariant === v
-                          ? 'border-gold-500 bg-gold-50 dark:bg-gold-900/20 text-gold-700 dark:text-gold-400'
-                          : 'border-gray-200 dark:border-navy-600 text-gray-600 dark:text-gray-300 hover:border-gold-300'
+                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400'
+                          : 'border-gray-200 dark:border-surface-700 text-gray-600 dark:text-gray-300 hover:border-primary-300'
                       }`}
                     >
                       {v.image && (
@@ -225,12 +225,12 @@ const ProductDetailPage = () => {
             {/* Quantity */}
             <div className="flex items-center gap-4 mb-6">
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Quantity:</span>
-              <div className="flex items-center gap-2 bg-gray-100 dark:bg-navy-700 rounded-xl p-1">
-                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-9 h-9 rounded-lg hover:bg-white dark:hover:bg-navy-600 flex items-center justify-center transition-all">
+              <div className="flex items-center gap-2 bg-gray-100 dark:bg-surface-800 rounded-xl p-1">
+                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-9 h-9 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
                   <Minus size={16} />
                 </button>
                 <span className="w-8 text-center font-semibold">{quantity}</span>
-                <button onClick={() => setQuantity(q => Math.min(product.stock, q + 1))} className="w-9 h-9 rounded-lg hover:bg-white dark:hover:bg-navy-600 flex items-center justify-center transition-all">
+                <button onClick={() => setQuantity(q => Math.min(product.stock, q + 1))} className="w-9 h-9 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
                   <Plus size={16} />
                 </button>
               </div>
@@ -245,20 +245,20 @@ const ProductDetailPage = () => {
               <button onClick={handleBuyNow} className="btn-primary flex-1 py-3.5">
                 <Zap size={18} /> Buy Now
               </button>
-              <button onClick={handleWishlist} className={`p-3.5 rounded-xl border-2 transition-all ${isWishlisted ? 'border-red-300 bg-red-50 text-red-500' : 'border-gray-200 dark:border-navy-600 text-gray-400 hover:border-red-300 hover:text-red-500'}`}>
+              <button onClick={handleWishlist} className={`p-3.5 rounded-xl border-2 transition-all ${isWishlisted ? 'border-red-300 bg-red-50 text-red-500' : 'border-gray-200 dark:border-surface-700 text-gray-400 hover:border-red-300 hover:text-red-500'}`}>
                 <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
               </button>
             </div>
 
             {/* Guarantees */}
-            <div className="grid grid-cols-3 gap-3 p-4 bg-cream-200 dark:bg-navy-800 rounded-2xl text-center">
+            <div className="grid grid-cols-3 gap-3 p-4 bg-surface-200 dark:bg-surface-900 rounded-2xl text-center">
               {[
                 { icon: Truck, text: 'Free Delivery' },
                 { icon: RotateCcw, text: '30-Day Return' },
                 { icon: Shield, text: 'Warranty' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex flex-col items-center gap-1.5">
-                  <Icon size={18} className="text-gold-500" />
+                  <Icon size={18} className="text-primary-500" />
                   <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">{text}</span>
                 </div>
               ))}
@@ -268,7 +268,7 @@ const ProductDetailPage = () => {
 
         {/* Tabs */}
         <div className="mt-12">
-          <div className="flex gap-1 border-b border-gray-200 dark:border-navy-700 mb-8 overflow-x-auto">
+          <div className="flex gap-1 border-b border-gray-200 dark:border-surface-800 mb-8 overflow-x-auto">
             {[
               { id: 'description', label: 'Description' },
               product.material && { id: 'material', label: 'Material & Construction' },
@@ -281,7 +281,7 @@ const ProductDetailPage = () => {
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={`px-6 py-3 text-sm font-medium whitespace-nowrap transition-all border-b-2 -mb-px ${
-                  tab === t.id ? 'border-gold-500 text-gold-600 dark:text-gold-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                  tab === t.id ? 'border-primary-500 text-primary-600 dark:text-primary-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
                 {t.label}
@@ -310,7 +310,7 @@ const ProductDetailPage = () => {
                 <ul className="space-y-3 max-w-xl">
                   {product.features?.map((f, i) => (
                     <li key={i} className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
-                      <span className="w-5 h-5 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 flex items-center justify-center text-xs font-bold">✓</span>
+                      <span className="w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 flex items-center justify-center text-xs font-bold">✓</span>
                       {f}
                     </li>
                   ))}
@@ -326,7 +326,7 @@ const ProductDetailPage = () => {
                             <div>
                               <p className="font-semibold text-gray-900 dark:text-white">{r.name}</p>
                               <div className="flex gap-0.5 mt-1">
-                                {[1,2,3,4,5].map(s => <Star key={s} size={12} className={s <= r.rating ? 'text-gold-400 fill-gold-400' : 'text-gray-200'} />)}
+                                {[1,2,3,4,5].map(s => <Star key={s} size={12} className={s <= r.rating ? 'text-primary-400 fill-primary-400' : 'text-gray-200'} />)}
                               </div>
                             </div>
                             <span className="text-xs text-gray-400">{new Date(r.createdAt).toLocaleDateString()}</span>
@@ -339,7 +339,7 @@ const ProductDetailPage = () => {
                     <p className="text-gray-500">No reviews yet. Be the first to review!</p>
                   )}
                   {!user && (
-                    <p className="mt-6 text-sm text-gray-500"><Link to="/login" className="text-gold-500 hover:underline">Login</Link> to write a review.</p>
+                    <p className="mt-6 text-sm text-gray-500"><Link to="/login" className="text-primary-500 hover:underline">Login</Link> to write a review.</p>
                   )}
                 </div>
               )}

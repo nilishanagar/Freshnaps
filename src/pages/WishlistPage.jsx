@@ -27,7 +27,7 @@ const WishlistPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-navy-950 py-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-10">
       <div className="container-custom">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -43,7 +43,7 @@ const WishlistPage = () => {
           <div className="flex justify-center py-20"><LoadingSpinner size="lg" /></div>
         ) : wishlistItems.length === 0 ? (
           <div className="card p-16 text-center max-w-2xl mx-auto mt-10">
-            <Heart size={64} className="mx-auto text-gray-300 dark:text-navy-600 mb-6" />
+            <Heart size={64} className="mx-auto text-gray-300 dark:text-surface-700 mb-6" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Your wishlist is empty</h2>
             <p className="text-gray-500 mb-8">You haven't saved any items yet. Start exploring our collections and save your favorite products!</p>
             <Link to="/shop" className="btn-primary inline-flex">

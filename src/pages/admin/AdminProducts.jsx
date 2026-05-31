@@ -52,11 +52,11 @@ const AdminProducts = () => {
       {loading ? (
         <div className="flex justify-center py-20"><LoadingSpinner size="xl" /></div>
       ) : (
-        <div className="bg-white dark:bg-navy-800 rounded-2xl shadow-card overflow-hidden">
+        <div className="bg-white dark:bg-surface-900 rounded-2xl shadow-card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
-              <thead className="bg-gray-50 dark:bg-navy-700 text-xs font-semibold text-gray-400 uppercase">
-                <tr className="border-b border-gray-100 dark:border-navy-600">
+              <thead className="bg-gray-50 dark:bg-surface-800 text-xs font-semibold text-gray-400 uppercase">
+                <tr className="border-b border-gray-100 dark:border-surface-700">
                   <th className="p-4 font-semibold">Product</th>
                   <th className="p-4 font-semibold">SKU / Barcode</th>
                   <th className="p-4 font-semibold">Category</th>
@@ -66,9 +66,9 @@ const AdminProducts = () => {
                   <th className="p-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-navy-700">
+              <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
                 {products.map(p => (
-                  <tr key={p._id} className="hover:bg-gray-50 dark:hover:bg-navy-700/50">
+                  <tr key={p._id} className="hover:bg-gray-50 dark:hover:bg-surface-800/50">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <img 
@@ -103,7 +103,7 @@ const AdminProducts = () => {
                         p.status === 'published' 
                           ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400' 
                           : p.status === 'archived'
-                          ? 'bg-gray-150 text-gray-600 dark:bg-navy-900 dark:text-gray-400'
+                          ? 'bg-gray-150 text-gray-600 dark:bg-surface-950 dark:text-gray-400'
                           : 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400'
                       }`}>
                         {p.status || 'draft'}
@@ -111,7 +111,7 @@ const AdminProducts = () => {
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => navigate(`/admin/products/${p._id}/edit`)} className="p-2 text-gray-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-navy-600 rounded-lg transition-all cursor-pointer"><Edit size={15} /></button>
+                        <button onClick={() => navigate(`/admin/products/${p._id}/edit`)} className="p-2 text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-surface-700 rounded-lg transition-all cursor-pointer"><Edit size={15} /></button>
                         <button onClick={() => handleDeleteClick(p._id)} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all cursor-pointer"><Trash2 size={15} /></button>
                       </div>
                     </td>
@@ -126,7 +126,7 @@ const AdminProducts = () => {
       {/* Premium Custom Confirm Delete Modal */}
       {deletingId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white dark:bg-navy-800 rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-150 dark:border-navy-700 text-center space-y-4">
+          <div className="bg-white dark:bg-surface-900 rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-150 dark:border-surface-800 text-center space-y-4">
             <h3 className="font-display text-lg font-bold text-gray-900 dark:text-white">Delete Product?</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">Are you sure you want to delete this product? This action will archive it from active catalog visibility.</p>
             <div className="flex gap-3 pt-2">

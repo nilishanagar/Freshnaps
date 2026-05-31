@@ -26,17 +26,17 @@ const SectionCard = ({
 
   return (
     <div
-      className={`bg-white dark:bg-navy-800 rounded-2xl shadow-card border border-gray-100 dark:border-navy-700 overflow-hidden transition-shadow duration-200 hover:shadow-card-hover ${className}`}
+      className={`bg-white dark:bg-surface-900 rounded-2xl shadow-card border border-gray-100 dark:border-surface-800 overflow-hidden transition-shadow duration-200 hover:shadow-card-hover ${className}`}
     >
       {/* Header */}
       <div
-        className={`flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-navy-700 ${collapsible ? 'cursor-pointer select-none' : ''}`}
+        className={`flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-surface-800 ${collapsible ? 'cursor-pointer select-none' : ''}`}
         onClick={collapsible ? () => setOpen((p) => !p) : undefined}
       >
         <div className="flex items-center gap-3">
           {Icon && (
-            <div className="w-8 h-8 rounded-lg bg-gold-50 dark:bg-gold-500/10 flex items-center justify-center flex-shrink-0">
-              <Icon size={16} className="text-gold-600 dark:text-gold-400" />
+            <div className="w-8 h-8 rounded-lg bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon size={16} className="text-primary-600 dark:text-primary-400" />
             </div>
           )}
           <div>

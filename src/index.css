@@ -1,85 +1,195 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ═══════════════════════════════════════════════════════════════
+   FRESHNAPS DESIGN SYSTEM — CENTRALIZED CSS VARIABLES
+   Change colors here to retheme the ENTIRE application.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Brand Colors ── */
+  --color-primary: #7ED957;
+  --color-primary-dark: #00733F;
+  --color-accent: #2F4EB4;
+  --color-accent-light: #4D6DFF;
+
+  /* ── Backgrounds ── */
+  --bg-body: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-alt: #F1F5F9;
+  --bg-elevated: #FFFFFF;
+
+  /* ── Text ── */
+  --text-heading: #0F172A;
+  --text-body: #334155;
+  --text-muted: #64748B;
+
+  /* ── Borders ── */
+  --border-default: #E2E8F0;
+  --border-subtle: #F1F5F9;
+
+  /* ── Brand Gradient ── */
+  --gradient-brand: linear-gradient(135deg, #2F4EB4 0%, #00733F 100%);
+  --gradient-brand-hover: linear-gradient(135deg, #2541a0 0%, #005c32 100%);
+
+  /* ── Semantic Status ── */
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+  --color-info: #3B82F6;
+}
+
+.dark {
+  --color-primary: #7ED957;
+  --color-primary-dark: #00A85A;
+  --color-accent: #4D6DFF;
+  --color-accent-light: #6B8AFF;
+
+  --bg-body: #0B1220;
+  --bg-surface: #111827;
+  --bg-surface-alt: #1E293B;
+  --bg-elevated: #1E293B;
+
+  --text-heading: #F8FAFC;
+  --text-body: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  --border-default: #334155;
+  --border-subtle: #1E293B;
+
+  --gradient-brand: linear-gradient(135deg, #4D6DFF 0%, #00A85A 100%);
+  --gradient-brand-hover: linear-gradient(135deg, #3B5BF0 0%, #008a48 100%);
+
+  --color-success: #34D399;
+  --color-error: #F87171;
+  --color-warning: #FBBF24;
+  --color-info: #60A5FA;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TAILWIND @THEME — Maps tokens to CSS variables
+   Components use these token names (e.g. bg-primary-500)
+   ═══════════════════════════════════════════════════════════════ */
+
 @theme {
-  --color-gold-50: #fdf9f0;
-  --color-gold-100: #f9efd8;
-  --color-gold-200: #f2d9a6;
-  --color-gold-300: #e8c06e;
-  --color-gold-400: #dda83e;
-  --color-gold-500: #C9A96E;
-  --color-gold-600: #b8924a;
-  --color-gold-700: #9a7839;
-  --color-gold-800: #7d6133;
-  --color-gold-900: #654f2c;
+  /* ── Primary (Green) Scale ── */
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #7ED957;
+  --color-primary-600: #00733F;
+  --color-primary-700: #15803d;
+  --color-primary-800: #166534;
+  --color-primary-900: #14532d;
 
-  --color-navy-50: #f0f0f8;
-  --color-navy-100: #d8d8ed;
-  --color-navy-200: #b0b0da;
-  --color-navy-300: #8585c2;
-  --color-navy-400: #5e5ea8;
-  --color-navy-500: #1A1A2E;
-  --color-navy-600: #151527;
-  --color-navy-700: #101020;
-  --color-navy-800: #0c0c18;
-  --color-navy-900: #080810;
+  /* ── Accent (Blue) Scale ── */
+  --color-accent-50: #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #2F4EB4;
+  --color-accent-600: #1e40af;
+  --color-accent-700: #1d3994;
+  --color-accent-800: #1e3a8a;
+  --color-accent-900: #172554;
 
-  --color-cream-50: #fefdfb;
-  --color-cream-100: #fdf9f2;
-  --color-cream-200: #F5F0E8;
-  --color-cream-300: #ede3d0;
-  --color-cream-400: #e0d3b4;
-  --color-cream-500: #d0bd97;
+  /* ── Surface (Neutral) Scale — for backgrounds & dark mode ── */
+  --color-surface-50: #F8FAFC;
+  --color-surface-100: #F1F5F9;
+  --color-surface-200: #E2E8F0;
+  --color-surface-300: #CBD5E1;
+  --color-surface-400: #94A3B8;
+  --color-surface-500: #64748B;
+  --color-surface-600: #475569;
+  --color-surface-700: #334155;
+  --color-surface-800: #1E293B;
+  --color-surface-900: #111827;
+  --color-surface-950: #0B1220;
 
-  --font-display: Playfair Display, Georgia, serif;
+  /* ── Typography ── */
+  --font-display: Outfit, Inter, system-ui, sans-serif;
   --font-sans: Inter, system-ui, sans-serif;
 
-  --background-image-gold-gradient: linear-gradient(135deg, #C9A96E 0%, #e8c06e 50%, #b8924a 100%);
-  --background-image-dark-gradient: linear-gradient(135deg, #0F0F1A 0%, #1A1A2E 100%);
+  /* ── Gradients ── */
+  --background-image-brand-gradient: var(--gradient-brand);
+  --background-image-dark-gradient: linear-gradient(135deg, #0B1220 0%, #111827 100%);
 
+  /* ── Animations ── */
   --animate-fade-in: fadeIn 0.5s ease-in-out;
   --animate-slide-up: slideUp 0.5s ease-out;
   --animate-slide-in: slideIn 0.4s ease-out;
   --animate-float: float 3s ease-in-out infinite;
-  --animate-pulse-slow: pulse 3s cubic-bezier(0.4,0,0.6,1) infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
+  /* ── Spacing ── */
   --height-18: 4.5rem;
 
-  --shadow-gold: 0 4px 14px rgba(201, 169, 110, 0.30);
-  --shadow-gold-lg: 0 8px 30px rgba(201, 169, 110, 0.45);
-  --shadow-gold-xl: 0 16px 48px rgba(201, 169, 110, 0.55);
+  /* ── Shadows ── */
+  --shadow-brand: 0 4px 14px rgba(126, 217, 87, 0.25);
+  --shadow-brand-lg: 0 8px 30px rgba(126, 217, 87, 0.35);
+  --shadow-brand-xl: 0 16px 48px rgba(47, 78, 180, 0.30);
   --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.07);
   --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.14);
-  --shadow-inner-gold: inset 0 1px 0 rgba(255,255,255,0.15);
+  --shadow-inner-brand: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
   @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
+
   @keyframes slideUp {
-    0% { transform: translateY(30px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
+
   @keyframes slideIn {
-    0% { transform: translateX(-20px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
+    0% {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
+
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
-@layer base {
-  :root {
-    --gold: #C9A96E;
-    --navy: #1A1A2E;
-    --cream: #F5F0E8;
-  }
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════ */
 
+@layer base {
   * {
     @apply box-border;
   }
@@ -89,48 +199,58 @@
   }
 
   body {
-    @apply font-sans bg-white dark:bg-navy-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    @apply font-sans bg-white dark:bg-surface-950 text-gray-900 dark:text-gray-100 transition-colors duration-300;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     @apply font-display;
   }
 
-  h3, h4, h5, h6 {
-    @apply font-sans;
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-semibold;
   }
 
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-navy-800;
+    @apply bg-gray-100 dark:bg-surface-800;
   }
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-gold-500 rounded-full;
+    @apply bg-primary-500 rounded-full;
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENT STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold-gradient text-white font-semibold rounded-xl shadow-gold hover:shadow-gold-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-gold;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand-gradient text-white font-semibold rounded-xl shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-brand;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-gold-500 text-gold-600 dark:text-gold-400 font-semibold rounded-xl hover:bg-gold-500 hover:text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-primary-500 text-primary-600 dark:text-primary-400 font-semibold rounded-xl hover:bg-primary-500 hover:text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-60;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-navy-700 transition-all duration-200 active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800 transition-all duration-200 active:scale-[0.97];
   }
 
   .card {
-    @apply bg-white dark:bg-navy-800 rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300;
+    @apply bg-white dark:bg-surface-900 rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300;
   }
 
   .input {
-    @apply w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-navy-600 bg-white dark:bg-navy-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all duration-200;
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
   }
 
   .badge {
@@ -145,8 +265,8 @@
     @apply text-gray-500 dark:text-gray-400 mt-3 text-lg;
   }
 
-  .gold-text {
-    @apply text-gold-500;
+  .primary-text {
+    @apply text-primary-500;
   }
 
   .container-custom {
@@ -154,25 +274,40 @@
   }
 
   .skeleton {
-    @apply animate-pulse bg-gray-100 dark:bg-navy-700 rounded-xl;
+    @apply animate-pulse bg-gray-100 dark:bg-surface-800 rounded-xl;
   }
 
   .divider {
-    @apply border-t border-gray-100 dark:border-navy-700;
+    @apply border-t border-gray-100 dark:border-surface-800;
   }
 
   .glass {
-    @apply bg-white/80 dark:bg-navy-800/80 backdrop-blur-md border border-white/20 dark:border-navy-700/50;
+    @apply bg-white/80 dark:bg-surface-900/80 backdrop-blur-md border border-white/20 dark:border-surface-800/50;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY STYLES
+   ═══════════════════════════════════════════════════════════════ */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  .animate-delay-100 { animation-delay: 100ms; }
-  .animate-delay-200 { animation-delay: 200ms; }
-  .animate-delay-300 { animation-delay: 300ms; }
-  .animate-delay-400 { animation-delay: 400ms; }
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
 }

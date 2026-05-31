@@ -26,11 +26,11 @@ const OrderFilters = ({ activeTab = 'all', onTabChange, onSearch, initialSearch 
   }, [searchValue]);
 
   return (
-    <div className="bg-white dark:bg-navy-600 rounded-2xl shadow-card border border-cream-200 dark:border-navy-700/60 p-4 md:p-6 mb-6 transition-all duration-300">
+    <div className="bg-white dark:bg-surface-700 rounded-2xl shadow-card border border-surface-200 dark:border-surface-800/60 p-4 md:p-6 mb-6 transition-all duration-300">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         
         {/* Status Tabs */}
-        <div className="flex items-center overflow-x-auto gap-2 pb-2 lg:pb-0 select-none scrollbar-thin scrollbar-thumb-cream-300">
+        <div className="flex items-center overflow-x-auto gap-2 pb-2 lg:pb-0 select-none scrollbar-thin scrollbar-thumb-surface-300">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -39,8 +39,8 @@ const OrderFilters = ({ activeTab = 'all', onTabChange, onSearch, initialSearch 
                 onClick={() => onTabChange(tab.id)}
                 className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-300 whitespace-nowrap cursor-pointer ${
                   isSelected
-                    ? 'bg-gold-gradient text-white border-transparent shadow-gold'
-                    : 'bg-cream-50 hover:bg-cream-100/60 text-gray-600 border-cream-200 dark:bg-navy-700 dark:hover:bg-navy-800 dark:text-gray-300 dark:border-navy-700'
+                    ? 'bg-brand-gradient text-white border-transparent shadow-brand'
+                    : 'bg-surface-50 hover:bg-surface-100/60 text-gray-600 border-surface-200 dark:bg-surface-800 dark:hover:bg-surface-900 dark:text-gray-300 dark:border-surface-800'
                 }`}
               >
                 {tab.label}
@@ -59,7 +59,7 @@ const OrderFilters = ({ activeTab = 'all', onTabChange, onSearch, initialSearch 
             placeholder="Search by Order ID or Product Name..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-cream-300 dark:border-navy-700 bg-cream-50/30 dark:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-gold-400 dark:focus:ring-gold-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all placeholder-gray-400 dark:placeholder-gray-500"
+            className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-surface-300 dark:border-surface-800 bg-surface-50/30 dark:bg-surface-900 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:focus:ring-primary-500 focus:border-transparent text-gray-700 dark:text-gray-200 transition-all placeholder-gray-400 dark:placeholder-gray-500"
           />
         </div>
         

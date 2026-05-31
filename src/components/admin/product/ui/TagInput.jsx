@@ -25,17 +25,17 @@ const TagInput = ({ tags = [], onChange, placeholder = 'Add tag...' }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap gap-2 p-2 border border-gray-200 dark:border-navy-700 bg-gray-50/50 dark:bg-navy-900 rounded-xl focus-within:ring-2 focus-within:ring-gold-400 focus-within:border-transparent min-h-[46px] items-center">
+      <div className="flex flex-wrap gap-2 p-2 border border-gray-200 dark:border-surface-800 bg-gray-50/50 dark:bg-surface-950 rounded-xl focus-within:ring-2 focus-within:ring-primary-400 focus-within:border-transparent min-h-[46px] items-center">
         {tags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-gold-800 dark:text-gold-200 bg-gold-50 dark:bg-gold-500/10 rounded-lg"
+            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-primary-800 dark:text-primary-200 bg-primary-50 dark:bg-primary-500/10 rounded-lg"
           >
             {tag}
             <button
               type="button"
               onClick={() => removeTag(tag)}
-              className="text-gold-600 dark:text-gold-400 hover:text-gold-950 dark:hover:text-white transition-colors"
+              className="text-primary-600 dark:text-primary-400 hover:text-primary-900 dark:hover:text-white transition-colors"
             >
               <X size={12} />
             </button>

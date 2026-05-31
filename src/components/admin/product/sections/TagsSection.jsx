@@ -32,7 +32,7 @@ const TagsSection = ({ form, onChange }) => {
         </div>
 
         {/* Store badges (Featured, Bestseller, Trending, New Arrival) */}
-        <div className="space-y-3 pt-3 border-t border-gray-100 dark:border-navy-700">
+        <div className="space-y-3 pt-3 border-t border-gray-100 dark:border-surface-800">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
               Featured Product

@@ -126,7 +126,7 @@ const OrdersPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cream-50/40 dark:bg-navy-900 py-10 px-4 md:px-8 select-none">
+    <div className="min-h-screen bg-surface-50/40 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* Page Header */}
@@ -134,12 +134,12 @@ const OrdersPage = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/profile')}
-              className="p-2 hover:bg-cream-100 dark:hover:bg-navy-800 rounded-2xl text-gray-500 hover:text-navy-500 dark:text-gray-300 dark:hover:text-gold-400 transition-all border border-cream-200 dark:border-navy-800 bg-white dark:bg-navy-900 cursor-pointer"
+              className="p-2 hover:bg-surface-100 dark:hover:bg-surface-900 rounded-2xl text-gray-500 hover:text-surface-600 dark:text-gray-300 dark:hover:text-primary-400 transition-all border border-surface-200 dark:border-surface-900 bg-white dark:bg-surface-950 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
-              <h1 className="text-xl md:text-2xl font-extrabold text-navy-500 dark:text-gold-300">My Orders</h1>
+              <h1 className="text-xl md:text-2xl font-extrabold text-surface-600 dark:text-primary-300">My Orders</h1>
               <p className="text-xs text-gray-400 font-semibold mt-0.5">Track, cancel, return and review your sleep purchases</p>
             </div>
           </div>
@@ -156,7 +156,7 @@ const OrdersPage = () => {
         {/* Loading State */}
         {loading && orders.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 space-y-3">
-            <RefreshCw className="w-8 h-8 text-gold-500 animate-spin" />
+            <RefreshCw className="w-8 h-8 text-primary-500 animate-spin" />
             <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">Syncing Orders...</span>
           </div>
         ) : error ? (
@@ -167,15 +167,15 @@ const OrdersPage = () => {
             <p className="text-xs text-gray-400 leading-relaxed">{error}</p>
             <button
               onClick={() => dispatch(fetchOrders())}
-              className="mt-2 px-4 py-2 text-xs font-bold text-white bg-gold-gradient rounded-xl cursor-pointer"
+              className="mt-2 px-4 py-2 text-xs font-bold text-white bg-brand-gradient rounded-xl cursor-pointer"
             >
               Retry Sync
             </button>
           </div>
         ) : orders.length === 0 ? (
           /* Empty State */
-          <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-12 text-center shadow-card max-w-md mx-auto space-y-4">
-            <div className="w-16 h-16 rounded-full bg-cream-50 dark:bg-navy-700 flex items-center justify-center mx-auto border border-cream-200 dark:border-navy-600 text-gold-500">
+          <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-12 text-center shadow-card max-w-md mx-auto space-y-4">
+            <div className="w-16 h-16 rounded-full bg-surface-50 dark:bg-surface-800 flex items-center justify-center mx-auto border border-surface-200 dark:border-surface-700 text-primary-500">
               <ShoppingBag className="w-7 h-7" />
             </div>
             <div>
@@ -188,7 +188,7 @@ const OrdersPage = () => {
             </div>
             <button
               onClick={() => navigate('/products')}
-              className="px-5 py-2.5 text-xs font-bold text-white bg-gold-gradient rounded-xl shadow-gold cursor-pointer"
+              className="px-5 py-2.5 text-xs font-bold text-white bg-brand-gradient rounded-xl shadow-brand cursor-pointer"
             >
               Explore Products
             </button>

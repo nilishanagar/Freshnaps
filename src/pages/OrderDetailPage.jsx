@@ -34,8 +34,8 @@ const OrderDetailPage = () => {
 
   if (loading && !order) {
     return (
-      <div className="flex flex-col items-center justify-center py-40 space-y-3 bg-cream-50/40 dark:bg-navy-900 min-h-screen">
-        <RefreshCw className="w-8 h-8 text-gold-500 animate-spin" />
+      <div className="flex flex-col items-center justify-center py-40 space-y-3 bg-surface-50/40 dark:bg-surface-950 min-h-screen">
+        <RefreshCw className="w-8 h-8 text-primary-500 animate-spin" />
         <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">Syncing Order details...</span>
       </div>
     );
@@ -43,13 +43,13 @@ const OrderDetailPage = () => {
 
   if (error || !order) {
     return (
-      <div className="flex flex-col items-center justify-center py-40 space-y-4 bg-cream-50/40 dark:bg-navy-900 min-h-screen text-center px-4">
+      <div className="flex flex-col items-center justify-center py-40 space-y-4 bg-surface-50/40 dark:bg-surface-950 min-h-screen text-center px-4">
         <AlertCircle className="w-12 h-12 text-rose-500" />
         <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">Failed to load order details</h3>
         <p className="text-xs text-gray-400 max-w-sm">{error || 'Order not found.'}</p>
         <button
           onClick={() => navigate('/orders')}
-          className="px-5 py-2.5 text-xs font-bold text-white bg-gold-gradient rounded-xl shadow-gold cursor-pointer"
+          className="px-5 py-2.5 text-xs font-bold text-white bg-brand-gradient rounded-xl shadow-brand cursor-pointer"
         >
           Back to Orders
         </button>
@@ -159,7 +159,7 @@ const OrderDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cream-50/40 dark:bg-navy-900 py-10 px-4 md:px-8 select-none">
+    <div className="min-h-screen bg-surface-50/40 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* Detail Header / Navigation */}
@@ -167,13 +167,13 @@ const OrderDetailPage = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/orders')}
-              className="p-2 hover:bg-cream-100 dark:hover:bg-navy-800 rounded-2xl text-gray-500 hover:text-navy-500 dark:text-gray-300 dark:hover:text-gold-400 transition-all border border-cream-200 dark:border-navy-800 bg-white dark:bg-navy-900 cursor-pointer"
+              className="p-2 hover:bg-surface-100 dark:hover:bg-surface-900 rounded-2xl text-gray-500 hover:text-surface-600 dark:text-gray-300 dark:hover:text-primary-400 transition-all border border-surface-200 dark:border-surface-900 bg-white dark:bg-surface-950 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl md:text-2xl font-extrabold text-navy-500 dark:text-gold-300">
+                <h1 className="text-xl md:text-2xl font-extrabold text-surface-600 dark:text-primary-300">
                   Order Details
                 </h1>
                 <OrderStatusBadge status={order.orderStatus} />
@@ -203,24 +203,24 @@ const OrderDetailPage = () => {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Status vertical timeline stepper */}
-            <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-5 md:p-6 shadow-card transition-all duration-300">
-              <h3 className="text-sm font-extrabold text-navy-500 dark:text-gold-300 uppercase tracking-wider mb-5 flex items-center gap-2">
-                <CheckCircle2 className="w-4.5 h-4.5 text-gold-500" />
+            <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-5 md:p-6 shadow-card transition-all duration-300">
+              <h3 className="text-sm font-extrabold text-surface-600 dark:text-primary-300 uppercase tracking-wider mb-5 flex items-center gap-2">
+                <CheckCircle2 className="w-4.5 h-4.5 text-primary-500" />
                 Order Tracking Status
               </h3>
               <OrderStatusTimeline status={order.orderStatus} statusHistory={order.statusHistory} layout="vertical" />
             </div>
 
             {/* Products cards listing */}
-            <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-5 md:p-6 shadow-card transition-all duration-300">
-              <h3 className="text-sm font-extrabold text-navy-500 dark:text-gold-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <FileText className="w-4.5 h-4.5 text-gold-500" />
+            <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-5 md:p-6 shadow-card transition-all duration-300">
+              <h3 className="text-sm font-extrabold text-surface-600 dark:text-primary-300 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <FileText className="w-4.5 h-4.5 text-primary-500" />
                 Items Ordered
               </h3>
-              <div className="divide-y divide-cream-100 dark:divide-navy-700">
+              <div className="divide-y divide-surface-100 dark:divide-surface-800">
                 {(order.orderItems || []).map((item, idx) => (
                   <div key={idx} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-cream-200 dark:border-navy-700">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-surface-200 dark:border-surface-800">
                       <img
                         src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop"
                         alt={item.name}
@@ -244,7 +244,7 @@ const OrderDetailPage = () => {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs md:text-sm font-extrabold text-navy-500 dark:text-gold-400">
+                      <span className="text-xs md:text-sm font-extrabold text-surface-600 dark:text-primary-400">
                         INR {(item.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
@@ -273,7 +273,7 @@ const OrderDetailPage = () => {
           <div className="space-y-6">
             
             {/* Order Summary Pricing Table */}
-            <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-5 md:p-6 shadow-card transition-all duration-300">
+            <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-5 md:p-6 shadow-card transition-all duration-300">
               <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
                 Price Summary
               </h3>
@@ -296,7 +296,7 @@ const OrderDetailPage = () => {
 
                 {/* Dynamic taxes breakdown */}
                 {order.taxAmount > 0 && (
-                  <div className="space-y-1.5 pt-1 border-t border-dashed border-cream-200 dark:border-navy-700">
+                  <div className="space-y-1.5 pt-1 border-t border-dashed border-surface-200 dark:border-surface-800">
                     <span className="block text-[9px] text-gray-400 uppercase font-bold tracking-wider">GST Breakdown (18%)</span>
                     {order.taxBreakdown?.igst > 0 ? (
                       <div className="flex justify-between text-[11px] text-gray-500 dark:text-gray-400">
@@ -318,7 +318,7 @@ const OrderDetailPage = () => {
                   </div>
                 )}
 
-                <div className="flex justify-between text-navy-500 dark:text-gold-300 font-extrabold text-sm border-t border-cream-200 dark:border-navy-700 pt-3 mt-1">
+                <div className="flex justify-between text-surface-600 dark:text-primary-300 font-extrabold text-sm border-t border-surface-200 dark:border-surface-800 pt-3 mt-1">
                   <span>Grand Total</span>
                   <span>INR {(order.totalAmount || 0).toFixed(2)}</span>
                 </div>
@@ -326,7 +326,7 @@ const OrderDetailPage = () => {
             </div>
 
             {/* Billing & Shipping Address Cards */}
-            <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-5 md:p-6 shadow-card space-y-4 transition-all duration-300">
+            <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-5 md:p-6 shadow-card space-y-4 transition-all duration-300">
               <div>
                 <h4 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                   Delivery Address
@@ -341,7 +341,7 @@ const OrderDetailPage = () => {
               </div>
 
               {order.billingAddress && (
-                <div className="border-t border-cream-100 dark:border-navy-700 pt-4">
+                <div className="border-t border-surface-100 dark:border-surface-800 pt-4">
                   <h4 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                     Billing Address
                   </h4>
@@ -357,14 +357,14 @@ const OrderDetailPage = () => {
             </div>
 
             {/* Payment Meta block */}
-            <div className="bg-white dark:bg-navy-600 rounded-3xl border border-cream-200 dark:border-navy-700/60 p-5 md:p-6 shadow-card space-y-3 transition-all duration-300">
+            <div className="bg-white dark:bg-surface-700 rounded-3xl border border-surface-200 dark:border-surface-800/60 p-5 md:p-6 shadow-card space-y-3 transition-all duration-300">
               <div>
                 <h4 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                   Payment Info
                 </h4>
                 <div className="flex items-center justify-between text-xs mt-1">
                   <span className="font-semibold text-gray-600 dark:text-gray-300">Method</span>
-                  <span className="font-bold text-navy-500 dark:text-gold-300">{order.paymentMethod}</span>
+                  <span className="font-bold text-surface-600 dark:text-primary-300">{order.paymentMethod}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs mt-1">
                   <span className="font-semibold text-gray-600 dark:text-gray-300">Status</span>
@@ -373,7 +373,7 @@ const OrderDetailPage = () => {
                   }`}>{order.paymentStatus}</span>
                 </div>
                 {order.transactionId && (
-                  <div className="flex items-center justify-between text-[10px] mt-1.5 border-t border-cream-100 dark:border-navy-700 pt-1.5">
+                  <div className="flex items-center justify-between text-[10px] mt-1.5 border-t border-surface-100 dark:border-surface-800 pt-1.5">
                     <span className="font-semibold text-gray-400">Txn ID</span>
                     <span className="font-mono font-bold text-gray-600 dark:text-gray-300 truncate max-w-[130px]">{order.transactionId}</span>
                   </div>
@@ -398,8 +398,8 @@ const OrderDetailPage = () => {
             </div>
 
             {/* Corporate support card */}
-            <div className="bg-cream-50 dark:bg-navy-700/30 border border-cream-200 dark:border-navy-700/60 rounded-3xl p-5 md:p-6 text-center space-y-4">
-              <div className="flex items-center gap-2 justify-center text-gold-600">
+            <div className="bg-surface-50 dark:bg-surface-800/30 border border-surface-200 dark:border-surface-800/60 rounded-3xl p-5 md:p-6 text-center space-y-4">
+              <div className="flex items-center gap-2 justify-center text-primary-600">
                 <HelpCircle className="w-5 h-5" />
                 <h4 className="text-sm font-extrabold">Freshnaps Sleep Support</h4>
               </div>
@@ -409,14 +409,14 @@ const OrderDetailPage = () => {
               <div className="flex flex-col gap-2.5">
                 <a
                   href="tel:+919876543210"
-                  className="flex items-center justify-center gap-1.5 py-2 bg-white dark:bg-navy-800 hover:bg-cream-50 dark:hover:bg-navy-700 border border-cream-200 dark:border-navy-700 rounded-xl text-xs font-bold text-navy-500 dark:text-gray-300 transition-all cursor-pointer"
+                  className="flex items-center justify-center gap-1.5 py-2 bg-white dark:bg-surface-900 hover:bg-surface-50 dark:hover:bg-surface-800 border border-surface-200 dark:border-surface-800 rounded-xl text-xs font-bold text-surface-600 dark:text-gray-300 transition-all cursor-pointer"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   Call Support
                 </a>
                 <a
                   href="mailto:support@freshnaps.in"
-                  className="flex items-center justify-center gap-1.5 py-2 bg-white dark:bg-navy-800 hover:bg-cream-50 dark:hover:bg-navy-700 border border-cream-200 dark:border-navy-700 rounded-xl text-xs font-bold text-navy-500 dark:text-gray-300 transition-all cursor-pointer"
+                  className="flex items-center justify-center gap-1.5 py-2 bg-white dark:bg-surface-900 hover:bg-surface-50 dark:hover:bg-surface-800 border border-surface-200 dark:border-surface-800 rounded-xl text-xs font-bold text-surface-600 dark:text-gray-300 transition-all cursor-pointer"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   Email support@freshnaps.in

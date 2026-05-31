@@ -121,25 +121,25 @@ const RegisterPage = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cream-50/20 dark:bg-navy-950 px-4 py-20 select-none">
+    <div className="min-h-screen flex items-center justify-center bg-surface-50/20 dark:bg-surface-950 px-4 py-20 select-none">
       <div className="w-full max-w-md space-y-6">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.4 }}
-          className="bg-white dark:bg-navy-900 border border-cream-200 dark:border-navy-800 shadow-card p-6 md:p-8 rounded-3xl"
+          className="bg-white dark:bg-surface-950 border border-surface-200 dark:border-surface-900 shadow-card p-6 md:p-8 rounded-3xl"
         >
           {/* Header Brand */}
           <div className="text-center mb-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-gold-gradient flex items-center justify-center shadow-gold">
+              <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center shadow-brand">
                 <span className="text-white font-display font-bold text-sm">FN</span>
               </div>
-              <span className="font-display font-bold text-xl text-navy-900 dark:text-gold-300">
-                Fresh<span className="text-gold-500">naps</span>
+              <span className="font-display font-bold text-xl text-surface-950 dark:text-primary-300">
+                Fresh<span className="text-primary-500">naps</span>
               </span>
             </Link>
-            <h1 className="font-display text-xl md:text-2xl font-extrabold text-navy-500 dark:text-white">
+            <h1 className="font-display text-xl md:text-2xl font-extrabold text-surface-600 dark:text-white">
               {verificationStep ? 'Verify Your Email' : 'Create Account'}
             </h1>
             <p className="text-gray-400 text-xs font-semibold mt-0.5">
@@ -252,7 +252,7 @@ const RegisterPage = () => {
                   <button 
                     type="submit" 
                     disabled={isLoading} 
-                    className="btn-primary w-full py-3.5 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-gold mt-2 select-none cursor-pointer"
+                    className="btn-primary w-full py-3.5 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-brand mt-2 select-none cursor-pointer"
                   >
                     {isLoading ? <LoadingSpinner size="sm" /> : (
                       <>
@@ -265,16 +265,16 @@ const RegisterPage = () => {
 
                 {/* SSO Separator */}
                 <div className="relative flex py-4 items-center">
-                  <div className="flex-grow border-t border-cream-200/60 dark:border-navy-800"></div>
+                  <div className="flex-grow border-t border-surface-200/60 dark:border-surface-900"></div>
                   <span className="flex-shrink mx-4 text-gray-400 text-[10px] font-extrabold uppercase tracking-widest">Or Register With</span>
-                  <div className="flex-grow border-t border-cream-200/60 dark:border-navy-800"></div>
+                  <div className="flex-grow border-t border-surface-200/60 dark:border-surface-900"></div>
                 </div>
 
                 {/* Google SSO */}
                 <button
                   type="button"
                   onClick={() => googleSignUp()}
-                  className="w-full py-3.5 border border-cream-200 dark:border-navy-800 bg-white hover:bg-cream-50/50 dark:bg-navy-950 dark:hover:bg-navy-850 text-xs font-extrabold text-navy-500 dark:text-gray-300 rounded-xl transition-all flex items-center justify-center gap-2 select-none cursor-pointer"
+                  className="w-full py-3.5 border border-surface-200 dark:border-surface-900 bg-white hover:bg-surface-50/50 dark:bg-surface-950 dark:hover:bg-surface-900 text-xs font-extrabold text-surface-600 dark:text-gray-300 rounded-xl transition-all flex items-center justify-center gap-2 select-none cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.9h6.69c-.29 1.5-.1.85-2.22 2.27v2.54h3.58c2.1-1.9 3.69-4.7 3.69-6.64z"/>
@@ -296,11 +296,11 @@ const RegisterPage = () => {
               >
                 <form onSubmit={handleOtpSubmit(onVerifyOtp)} className="space-y-4">
                   {/* Info Banner */}
-                  <div className="p-3 bg-cream-50/20 dark:bg-navy-950 border border-cream-100 dark:border-navy-850 rounded-2xl text-[11px] leading-relaxed text-gray-500 flex gap-2">
-                    <ShieldCheck className="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" />
+                  <div className="p-3 bg-surface-50/20 dark:bg-surface-950 border border-surface-100 dark:border-surface-900 rounded-2xl text-[11px] leading-relaxed text-gray-500 flex gap-2">
+                    <ShieldCheck className="w-4 h-4 text-primary-500 mt-0.5 flex-shrink-0" />
                     <div>
-                      We've sent a <span className="font-extrabold text-navy-500 dark:text-gold-400">6-digit verification code</span> to{' '}
-                      <span className="font-extrabold text-navy-500 dark:text-gold-400">{registeredEmail}</span>. 
+                      We've sent a <span className="font-extrabold text-surface-600 dark:text-primary-400">6-digit verification code</span> to{' '}
+                      <span className="font-extrabold text-surface-600 dark:text-primary-400">{registeredEmail}</span>. 
                       Check your inbox (and spam folder).
                     </div>
                   </div>
@@ -328,7 +328,7 @@ const RegisterPage = () => {
                     <button
                       type="button"
                       onClick={() => { setVerificationStep(false); setRegisteredEmail(''); }}
-                      className="text-gray-400 font-extrabold hover:text-navy-500 uppercase tracking-wider text-[10px] cursor-pointer flex items-center gap-1"
+                      className="text-gray-400 font-extrabold hover:text-surface-600 uppercase tracking-wider text-[10px] cursor-pointer flex items-center gap-1"
                       disabled={verifyingOtp}
                     >
                       <ArrowLeft size={12} />
@@ -337,13 +337,13 @@ const RegisterPage = () => {
 
                     {otpTimer > 0 ? (
                       <span className="text-gray-400 font-bold">
-                        Resend in <span className="font-mono text-gold-500 font-extrabold">{otpTimer}s</span>
+                        Resend in <span className="font-mono text-primary-500 font-extrabold">{otpTimer}s</span>
                       </span>
                     ) : (
                       <button
                         type="button"
                         onClick={handleResendOtp}
-                        className="text-gold-600 hover:text-gold-700 font-extrabold uppercase tracking-wider text-[10px] cursor-pointer"
+                        className="text-primary-600 hover:text-primary-700 font-extrabold uppercase tracking-wider text-[10px] cursor-pointer"
                         disabled={verifyingOtp}
                       >
                         Resend OTP
@@ -355,7 +355,7 @@ const RegisterPage = () => {
                   <button 
                     type="submit" 
                     disabled={verifyingOtp} 
-                    className="btn-primary w-full py-3.5 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-gold select-none cursor-pointer"
+                    className="btn-primary w-full py-3.5 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-brand select-none cursor-pointer"
                   >
                     {verifyingOtp ? <LoadingSpinner size="sm" /> : (
                       <>
@@ -371,7 +371,7 @@ const RegisterPage = () => {
 
           <p className="text-center text-xs font-semibold text-gray-500 mt-6">
             Already have an account?{' '}
-            <Link to="/login" className="text-gold-600 font-extrabold hover:underline uppercase tracking-wide">Sign in</Link>
+            <Link to="/login" className="text-primary-600 font-extrabold hover:underline uppercase tracking-wide">Sign in</Link>
           </p>
         </motion.div>
       </div>

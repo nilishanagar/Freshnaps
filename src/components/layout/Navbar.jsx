@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ShoppingCart, Heart, User, Search, Sun, Moon, Menu, X,
-  Crown, ChevronDown, Package, LogOut, Truck, Tag,
-  Activity, Cloud, Shield, Leaf, Sparkles, Wind, ArrowRight,
+  Leaf, ChevronDown, Package, LogOut, Truck, Tag,
+  Activity, Cloud, Shield, Sparkles, Wind, ArrowRight,
   Compass, Zap, Thermometer
 } from 'lucide-react';
 import { toggleTheme } from '../../store/slices/uiSlice';
@@ -13,6 +13,7 @@ import { logout } from '../../store/slices/authSlice';
 import { selectCartCount } from '../../store/slices/cartSlice';
 import { authService } from '../../services';
 import toast from 'react-hot-toast';
+import freshNapsLogo from '../../assets/freshnaps-logo.png';
 
 const categories = [
   { label: 'Mattresses', slug: 'mattress' },
@@ -27,8 +28,8 @@ const categories = [
 const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Mattress', to: '/shop?category=mattress' },
-  { label: 'Pillows & Protectors', to: '/shop?category=pillow' },
-  { label: 'Luxury Bedding', to: '/shop?category=bedsheet' },
+  { label: 'Accessories', to: '/shop?category=pillow' },
+  { label: 'Protectors', to: '/shop?category=accessory&search=Protector' },
   { label: 'Shop All', to: '/shop' }
 ];
 
@@ -48,8 +49,8 @@ const Navbar = () => {
   
   // Custom sleep navigation menus
   const [mattressMenuOpen, setMattressMenuOpen] = useState(false);
-  const [pillowsMenuOpen, setPillowsMenuOpen] = useState(false);
-  const [beddingMenuOpen, setBeddingMenuOpen] = useState(false);
+  const [accessoriesMenuOpen, setAccessoriesMenuOpen] = useState(false);
+  const [protectorsMenuOpen, setProtectorsMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -102,45 +103,44 @@ const Navbar = () => {
     <>
       {/* Announcement bar */}
       {!scrolled && (
-        <div className="fixed top-0 inset-x-0 z-50 bg-navy-950 text-white text-[11px] font-medium tracking-wide py-2 text-center flex items-center justify-center gap-8 px-4 border-b border-navy-850/50">
+        <div className="fixed top-0 inset-x-0 z-50 bg-surface-950 text-white text-[11px] font-medium tracking-wide py-2 text-center flex items-center justify-center gap-8 px-4 border-b border-surface-900/50">
           <span className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <Truck size={12} className="text-gold-400 animate-pulse" />
+            <Truck size={12} className="text-primary-400 animate-pulse" />
             Free Shipping &amp; White Glove Installation on Mattresses
           </span>
           <span className="hidden sm:flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <Tag size={12} className="text-gold-400" />
-            Use code <span className="font-bold text-gold-400 px-1.5 py-0.5 rounded bg-navy-900 border border-navy-800 ml-0.5">FRESH10</span> for 10% off
+            <Tag size={12} className="text-primary-400" />
+            Use code <span className="font-bold text-primary-400 px-1.5 py-0.5 rounded bg-surface-950 border border-surface-900 ml-0.5">FRESH10</span> for 10% off
           </span>
         </div>
       )}
 
       <header className={`fixed inset-x-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'top-0 bg-white/90 dark:bg-navy-950/90 backdrop-blur-xl shadow-xl border-b border-gold-200/20 dark:border-navy-800/80 py-2'
-          : 'top-8 bg-white/95 dark:bg-navy-950/95 backdrop-blur-lg border-b border-gray-100 dark:border-navy-900/50 py-3'
+          ? 'top-0 bg-white/90 dark:bg-surface-950/90 backdrop-blur-xl shadow-xl border-b border-primary-200/20 dark:border-surface-900/80 py-2'
+          : 'top-8 bg-white/95 dark:bg-surface-950/95 backdrop-blur-lg border-b border-gray-100 dark:border-surface-950/50 py-3'
       }`}>
         <nav className="container-custom flex items-center justify-between gap-4">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0 group">
-            <div className="w-10 h-10 rounded-2xl bg-gold-gradient flex items-center justify-center shadow-gold group-hover:shadow-gold-lg transition-all duration-300 group-hover:scale-105">
-              <Moon size={18} className="text-white transform group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.5} />
-            </div>
-            <span className="font-display font-extrabold text-2xl text-navy-900 dark:text-white tracking-tight">
-              Fresh<span className="text-gold-500">naps</span>
-            </span>
+          <Link to="/" className="flex items-center flex-shrink-0 group">
+            <img
+              src={freshNapsLogo}
+              alt="FreshNaps Mattress"
+              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Nav: Focused strictly on Mattresses & Bedding */}
           <div className="hidden md:flex items-center justify-center gap-2.5 flex-1 z-50">
-            <NavLink to="/" end className={({ isActive }) => `relative px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap ${isActive ? 'text-gold-500 bg-cream-100/50 dark:bg-navy-900/50' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500 hover:bg-cream-50/30 dark:hover:bg-navy-900/20'}`}>
+            <NavLink to="/" end className={({ isActive }) => `relative px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap ${isActive ? 'text-primary-500 bg-surface-100/50 dark:bg-surface-950/50' : 'text-gray-700 dark:text-gray-300 hover:text-primary-500 hover:bg-surface-50/30 dark:hover:bg-surface-950/20'}`}>
               Home
             </NavLink>
 
             {/* Mattress Mega Dropdown on Hover */}
             <div className="relative" onMouseEnter={() => setMattressMenuOpen(true)} onMouseLeave={() => setMattressMenuOpen(false)}>
-              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-cream-50/30 dark:hover:bg-navy-900/20 hover:text-gold-500 dark:text-gray-300 ${mattressMenuOpen ? 'text-gold-500 bg-cream-100/50 dark:bg-navy-900/50' : 'text-gray-700'}`}>
-                Mattress <ChevronDown size={14} className={`transition-transform duration-300 ${mattressMenuOpen ? 'rotate-180 text-gold-500' : ''}`} />
+              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-surface-50/30 dark:hover:bg-surface-950/20 hover:text-primary-500 dark:text-gray-300 ${mattressMenuOpen ? 'text-primary-500 bg-surface-100/50 dark:bg-surface-950/50' : 'text-gray-700'}`}>
+                Mattress <ChevronDown size={14} className={`transition-transform duration-300 ${mattressMenuOpen ? 'rotate-180 text-primary-500' : ''}`} />
               </button>
 
               <AnimatePresence>
@@ -150,15 +150,15 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 15, scale: 0.98 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute top-full left-1/2 -translate-x-[45%] mt-3.5 w-[760px] bg-white dark:bg-navy-950 rounded-3xl shadow-2xl border border-gold-200/20 dark:border-navy-800/80 p-8 grid grid-cols-4 gap-6 z-[100] overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-[45%] mt-1 w-[760px] bg-white dark:bg-surface-950 rounded-3xl shadow-2xl border border-primary-200/20 dark:border-surface-900/80 p-8 grid grid-cols-4 gap-6 z-[100] overflow-hidden"
                   >
                     {/* Decorative subtle border top accent */}
-                    <div className="absolute top-0 inset-x-0 h-1 bg-gold-gradient" />
+                    <div className="absolute top-0 inset-x-0 h-1 bg-brand-gradient" />
 
                     {/* Column 1: Shop by Need */}
                     <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-navy-850 flex items-center gap-1.5">
-                        <Activity size={12} className="text-gold-500" />
+                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                        <Activity size={12} className="text-primary-500" />
                         Shop By Need
                       </h4>
                       <ul className="space-y-3">
@@ -169,7 +169,7 @@ const Navbar = () => {
                         ].map((item, idx) => (
                           <li key={idx} className="group/item">
                             <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
-                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-gold-500 transition-colors">
+                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
                                 {item.label}
                               </span>
                               <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
@@ -183,8 +183,8 @@ const Navbar = () => {
 
                     {/* Column 2: Shop by Tech */}
                     <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-navy-850 flex items-center gap-1.5">
-                        <Zap size={12} className="text-gold-500" />
+                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                        <Zap size={12} className="text-primary-500" />
                         Shop By Tech
                       </h4>
                       <ul className="space-y-3">
@@ -195,7 +195,7 @@ const Navbar = () => {
                         ].map((item, idx) => (
                           <li key={idx} className="group/item">
                             <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
-                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-gold-500 transition-colors">
+                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
                                 {item.label}
                               </span>
                               <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
@@ -209,16 +209,16 @@ const Navbar = () => {
 
                     {/* Column 3: Shop by Size */}
                     <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-navy-850 flex items-center gap-1.5">
-                        <Package size={12} className="text-gold-500" />
+                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                        <Package size={12} className="text-primary-500" />
                         Shop By Size
                       </h4>
                       <ul className="space-y-2">
-                        {['King Size', 'Queen Size', 'Single Size', 'Double Size'].map((size, idx) => (
+                        {['King Size', 'Queen Size', 'Single Size', 'Double Size', 'Custom Size'].map((size, idx) => (
                           <li key={idx}>
-                            <Link to={`/shop?category=mattress&search=${size.split(' ')[0]}`} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-gold-500 py-1 transition-colors">
+                            <Link to={`/shop?category=mattress&search=${size.split(' ')[0]}`} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-primary-500 py-1 transition-colors">
                               <span>{size} Mattress</span>
-                              <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-gold-500" />
+                              <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-500" />
                             </Link>
                           </li>
                         ))}
@@ -226,14 +226,14 @@ const Navbar = () => {
                     </div>
 
                     {/* Column 4: Premium Sleep Advisor Card */}
-                    <div className="bg-[#FAF8F5] dark:bg-navy-900/60 rounded-2xl p-5 border border-gold-100/50 dark:border-navy-800/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card">
-                      <div className="absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-gold-200/10 dark:bg-gold-500/5 blur-xl group-hover/card:scale-125 transition-transform duration-500" />
+                    <div className="bg-[#F8FAFC] dark:bg-surface-950/60 rounded-2xl p-5 border border-primary-100/50 dark:border-surface-900/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card">
+                      <div className="absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-primary-200/10 dark:bg-primary-500/5 blur-xl group-hover/card:scale-125 transition-transform duration-500" />
                       <div>
-                        <span className="text-[9px] font-extrabold text-gold-600 dark:text-gold-400 uppercase tracking-widest block mb-1">AI Advisor</span>
+                        <span className="text-[9px] font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-widest block mb-1">AI Advisor</span>
                         <h4 className="font-bold text-gray-900 dark:text-white text-sm leading-tight mb-2">Find Your Mattress</h4>
                         <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-normal">Answer 4 quick sleep behavior questions to unlock your custom recommendation.</p>
                       </div>
-                      <Link to="/" className="w-full text-center mt-4 px-4 py-2.5 bg-gold-500 hover:bg-gold-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-gold hover:shadow-gold-lg hover:-translate-y-0.5">
+                      <Link to="/" className="w-full text-center mt-4 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5">
                         Start Advisor
                       </Link>
                     </div>
@@ -242,29 +242,30 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            {/* PILLOWS & PROTECTORS Dropdown */}
-            <div className="relative" onMouseEnter={() => setPillowsMenuOpen(true)} onMouseLeave={() => setPillowsMenuOpen(false)}>
-              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-cream-50/30 dark:hover:bg-navy-900/20 hover:text-gold-500 dark:text-gray-300 ${pillowsMenuOpen ? 'text-gold-500 bg-cream-100/50 dark:bg-navy-900/50' : 'text-gray-700'}`}>
-                Pillows &amp; Protectors <ChevronDown size={14} className={`transition-transform duration-300 ${pillowsMenuOpen ? 'rotate-180 text-gold-500' : ''}`} />
+            {/* ACCESSORIES Dropdown */}
+            <div className="relative" onMouseEnter={() => setAccessoriesMenuOpen(true)} onMouseLeave={() => setAccessoriesMenuOpen(false)}>
+              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-surface-50/30 dark:hover:bg-surface-950/20 hover:text-primary-500 dark:text-gray-300 ${accessoriesMenuOpen ? 'text-primary-500 bg-surface-100/50 dark:bg-surface-950/50' : 'text-gray-700'}`}>
+                Accessories <ChevronDown size={14} className={`transition-transform duration-300 ${accessoriesMenuOpen ? 'rotate-180 text-primary-500' : ''}`} />
               </button>
 
               <AnimatePresence>
-                {pillowsMenuOpen && (
+                {accessoriesMenuOpen && (
                   <motion.div
                     initial={{ opacity: 0, y: 15, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 15, scale: 0.98 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute top-full left-0 w-64 bg-white dark:bg-navy-950 rounded-2xl shadow-2xl border border-gold-200/20 dark:border-navy-800/80 py-3.5 z-[100] overflow-hidden"
+                    className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-surface-950 rounded-2xl shadow-2xl border border-primary-200/20 dark:border-surface-900/80 py-3.5 z-[100] overflow-hidden"
                   >
-                    <div className="absolute top-0 inset-x-0 h-0.5 bg-gold-gradient" />
+                    <div className="absolute top-0 inset-x-0 h-0.5 bg-brand-gradient" />
                     {[
-                      { label: 'Responsive Bed Pillows', to: '/shop?category=pillow' },
-                      { label: 'Waterproof Mattress Protectors', to: '/shop?category=accessory&search=Protector' },
-                      { label: 'Supportive Cushions', to: '/shop?category=cushion' },
-                      { label: 'Luxury Toppers', to: '/shop?category=accessory&search=Topper' }
+                      { label: 'Pillows', to: '/shop?category=pillow' },
+                      { label: 'Bedsheets', to: '/shop?category=bedsheet' },
+                      { label: 'Comforters', to: '/shop?category=comforter' },
+                      { label: 'Blankets', to: '/shop?category=blanket' },
+                      { label: 'Dohar', to: '/shop?category=accessory&search=Dohar' }
                     ].map((item, idx) => (
-                      <Link key={idx} to={item.to} className="block px-5 py-3 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-cream-100/50 dark:hover:bg-navy-900/55 hover:text-gold-600 transition-colors">
+                      <Link key={idx} to={item.to} className="block px-5 py-3 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-surface-100/50 dark:hover:bg-surface-950/55 hover:text-primary-600 transition-colors">
                         {item.label}
                       </Link>
                     ))}
@@ -273,28 +274,29 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            {/* LUXURY BEDDING Dropdown */}
-            <div className="relative" onMouseEnter={() => setBeddingMenuOpen(true)} onMouseLeave={() => setBeddingMenuOpen(false)}>
-              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-cream-50/30 dark:hover:bg-navy-900/20 hover:text-gold-500 dark:text-gray-300 ${beddingMenuOpen ? 'text-gold-500 bg-cream-100/50 dark:bg-navy-900/50' : 'text-gray-700'}`}>
-                Luxury Bedding <ChevronDown size={14} className={`transition-transform duration-300 ${beddingMenuOpen ? 'rotate-180 text-gold-500' : ''}`} />
+            {/* PROTECTORS Dropdown */}
+            <div className="relative" onMouseEnter={() => setProtectorsMenuOpen(true)} onMouseLeave={() => setProtectorsMenuOpen(false)}>
+              <button className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap hover:bg-surface-50/30 dark:hover:bg-surface-950/20 hover:text-primary-500 dark:text-gray-300 ${protectorsMenuOpen ? 'text-primary-500 bg-surface-100/50 dark:bg-surface-950/50' : 'text-gray-700'}`}>
+                Protectors <ChevronDown size={14} className={`transition-transform duration-300 ${protectorsMenuOpen ? 'rotate-180 text-primary-500' : ''}`} />
               </button>
 
               <AnimatePresence>
-                {beddingMenuOpen && (
+                {protectorsMenuOpen && (
                   <motion.div
                     initial={{ opacity: 0, y: 15, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 15, scale: 0.98 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute top-full left-0 w-60 bg-white dark:bg-navy-950 rounded-2xl shadow-2xl border border-gold-200/20 dark:border-navy-800/80 py-3.5 z-[100] overflow-hidden"
+                    className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-surface-950 rounded-2xl shadow-2xl border border-primary-200/20 dark:border-surface-900/80 py-3.5 z-[100] overflow-hidden"
                   >
-                    <div className="absolute top-0 inset-x-0 h-0.5 bg-gold-gradient" />
+                    <div className="absolute top-0 inset-x-0 h-0.5 bg-brand-gradient" />
                     {[
-                      { label: 'Egyptian Cotton Bedsheets', to: '/shop?category=bedsheet' },
-                      { label: 'All-Season Comforters', to: '/shop?category=comforter' },
-                      { label: 'Warm Weighted Blankets', to: '/shop?category=blanket' }
+                      { label: 'Mattress Protectors', to: '/shop?category=accessory&search=Mattress Protector' },
+                      { label: 'Pillow Protectors', to: '/shop?category=accessory&search=Pillow Protector' },
+                      { label: 'Waterproof Protectors', to: '/shop?category=accessory&search=Waterproof' },
+                      { label: 'Anti-Dust Mite Covers', to: '/shop?category=accessory&search=Anti-Dust' }
                     ].map((item, idx) => (
-                      <Link key={idx} to={item.to} className="block px-5 py-3 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-cream-100/50 dark:hover:bg-navy-900/55 hover:text-gold-600 transition-colors">
+                      <Link key={idx} to={item.to} className="block px-5 py-3 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-surface-100/50 dark:hover:bg-surface-950/55 hover:text-primary-600 transition-colors">
                         {item.label}
                       </Link>
                     ))}
@@ -303,7 +305,7 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            <NavLink to="/shop" className={({ isActive }) => `px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap ${isActive ? 'text-gold-500 bg-cream-100/50 dark:bg-navy-900/50' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500 hover:bg-cream-50/30 dark:hover:bg-navy-900/20'}`}>
+            <NavLink to="/shop" className={({ isActive }) => `px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-350 whitespace-nowrap ${isActive ? 'text-primary-500 bg-surface-100/50 dark:bg-surface-950/50' : 'text-gray-700 dark:text-gray-300 hover:text-primary-500 hover:bg-surface-50/30 dark:hover:bg-surface-950/20'}`}>
               Shop All
             </NavLink>
           </div>
@@ -313,7 +315,7 @@ const Navbar = () => {
             {/* Search */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-navy-800/80 transition-all hover:scale-105"
+              className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-surface-900/80 transition-all hover:scale-105"
               aria-label="Search"
             >
               <Search size={19} />
@@ -322,14 +324,14 @@ const Navbar = () => {
             {/* Theme toggle */}
             <button
               onClick={() => dispatch(toggleTheme())}
-              className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-navy-800/80 transition-all hover:scale-105"
+              className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-surface-900/80 transition-all hover:scale-105"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
             </button>
 
             {/* Wishlist */}
-            <Link to="/wishlist" className="relative p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-navy-800/80 transition-all hover:scale-105" aria-label="Wishlist">
+            <Link to="/wishlist" className="relative p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-surface-900/80 transition-all hover:scale-105" aria-label="Wishlist">
               <Heart size={19} />
               {wishlistCount > 0 && (
                 <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center font-extrabold animate-bounce">
@@ -339,10 +341,10 @@ const Navbar = () => {
             </Link>
 
             {/* Cart */}
-            <Link to="/cart" className="relative p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-navy-800/80 transition-all hover:scale-105" aria-label="Cart">
+            <Link to="/cart" className="relative p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-surface-900/80 transition-all hover:scale-105" aria-label="Cart">
               <ShoppingCart size={19} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 min-w-[17px] h-[17px] bg-gold-500 text-white text-[10px] rounded-full flex items-center justify-center font-extrabold px-0.5">
+                <span className="absolute top-1 right-1 min-w-[17px] h-[17px] bg-primary-500 text-white text-[10px] rounded-full flex items-center justify-center font-extrabold px-0.5">
                   {cartCount}
                 </span>
               )}
@@ -352,7 +354,7 @@ const Navbar = () => {
             <div className="relative hidden md:block">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-navy-800/80 transition-all hover:scale-105"
+                className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-surface-900/80 transition-all hover:scale-105"
                 aria-label="User menu"
               >
                 {user?.avatar ? (
@@ -368,23 +370,23 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 12, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 12, scale: 0.95 }}
-                    className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-navy-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-navy-800 overflow-hidden py-2.5 z-50"
+                    className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-surface-950 rounded-2xl shadow-2xl border border-gray-100 dark:border-surface-900 overflow-hidden py-2.5 z-50"
                   >
                     {user ? (
                       <>
-                        <div className="px-4 py-3 border-b border-gray-50 dark:border-navy-800">
+                        <div className="px-4 py-3 border-b border-gray-50 dark:border-surface-900">
                           <p className="font-bold text-sm text-gray-900 dark:text-white leading-tight">{user.name}</p>
                           <p className="text-xs text-gray-400 truncate mt-0.5">{user.email}</p>
                         </div>
-                        <Link to="/profile" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-cream-100/60 dark:hover:bg-navy-850 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                        <Link to="/profile" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <User size={15} className="text-gray-400" /> My Profile
                         </Link>
-                        <Link to="/profile?tab=orders" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-cream-100/60 dark:hover:bg-navy-850 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                        <Link to="/profile?tab=orders" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <Package size={15} className="text-gray-400" /> My Orders
                         </Link>
                         {user.role === 'admin' && (
-                          <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-extrabold text-gold-600 dark:text-gold-400 hover:bg-cream-100/60 dark:hover:bg-navy-850 transition-colors" onClick={() => setUserMenuOpen(false)}>
-                            <Crown size={15} /> Admin Panel
+                          <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-extrabold text-primary-600 dark:text-primary-400 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                            <Leaf size={15} /> Admin Panel
                           </Link>
                         )}
                         <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
@@ -393,11 +395,11 @@ const Navbar = () => {
                       </>
                     ) : (
                       <>
-                        <Link to="/login" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-cream-100/60 dark:hover:bg-navy-850 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                        <Link to="/login" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <User size={15} className="text-gray-400" /> Login
                         </Link>
-                        <Link to="/register" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-extrabold text-gold-600 dark:text-gold-400 hover:bg-cream-100/60 dark:hover:bg-navy-850 transition-colors" onClick={() => setUserMenuOpen(false)}>
-                          <Crown size={15} /> Register
+                        <Link to="/register" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-extrabold text-primary-600 dark:text-primary-400 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                          <Leaf size={15} /> Register
                         </Link>
                       </>
                     )}
@@ -411,16 +413,16 @@ const Navbar = () => {
               href={ROYAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-gold-gradient text-white text-[13px] font-extrabold rounded-2xl shadow-gold hover:shadow-gold-lg transition-all duration-300 hover:-translate-y-0.5"
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-brand-gradient text-white text-[13px] font-extrabold rounded-2xl shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-0.5"
             >
-              <Crown size={14} className="animate-pulse" />
+              <Leaf size={14} className="animate-pulse" />
               Royal Marwadi
             </a>
 
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-navy-800 transition-colors"
+              className="md:hidden p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-900 transition-colors"
               aria-label="Menu"
             >
               {mobileOpen ? <X size={21} /> : <Menu size={21} />}
@@ -436,7 +438,7 @@ const Navbar = () => {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-gray-100 dark:border-navy-800 bg-white dark:bg-navy-950 overflow-hidden"
+              className="md:hidden border-t border-gray-100 dark:border-surface-900 bg-white dark:bg-surface-950 overflow-hidden"
             >
               <div className="container-custom py-4 space-y-1.5">
                 {navLinks.map(link => (
@@ -447,7 +449,7 @@ const Navbar = () => {
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
                       `block px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${
-                        isActive ? 'bg-cream-100 text-gold-600 dark:bg-navy-900 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-navy-900/60'
+                        isActive ? 'bg-surface-100 text-primary-600 dark:bg-surface-950 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-surface-950/60'
                       }`
                     }
                   >
@@ -455,20 +457,20 @@ const Navbar = () => {
                   </NavLink>
                 ))}
 
-                <div className="border-t border-gray-100 dark:border-navy-850 pt-4 mt-3 space-y-1.5">
+                <div className="border-t border-gray-100 dark:border-surface-900 pt-4 mt-3 space-y-1.5">
                   {user ? (
                     <>
-                      <Link to="/profile" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-navy-900/60 rounded-2xl">My Profile</Link>
+                      <Link to="/profile" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-surface-950/60 rounded-2xl">My Profile</Link>
                       <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-2xl">Logout</button>
                     </>
                   ) : (
                     <>
-                      <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-navy-900/60 rounded-2xl">Login</Link>
-                      <Link to="/register" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-extrabold text-gold-600 dark:text-gold-400 hover:bg-cream-100 dark:hover:bg-navy-900/60 rounded-2xl">Register</Link>
+                      <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-surface-950/60 rounded-2xl">Login</Link>
+                      <Link to="/register" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-extrabold text-primary-600 dark:text-primary-400 hover:bg-surface-100 dark:hover:bg-surface-950/60 rounded-2xl">Register</Link>
                     </>
                   )}
-                  <a href={ROYAL_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3.5 text-sm font-extrabold text-white bg-gold-gradient rounded-2xl shadow-gold mt-2">
-                    <Crown size={14} /> Royal Marwadi
+                  <a href={ROYAL_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3.5 text-sm font-extrabold text-white bg-brand-gradient rounded-2xl shadow-brand mt-2">
+                    <Leaf size={14} /> Royal Marwadi
                   </a>
                 </div>
               </div>
@@ -484,7 +486,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-navy-950/70 backdrop-blur-md flex items-start justify-center pt-24 px-4"
+            className="fixed inset-0 z-50 bg-surface-950/70 backdrop-blur-md flex items-start justify-center pt-24 px-4"
             onClick={() => setSearchOpen(false)}
           >
             <motion.form
@@ -495,7 +497,7 @@ const Navbar = () => {
               onClick={e => e.stopPropagation()}
               className="w-full max-w-2xl"
             >
-              <div className="flex gap-2 bg-white dark:bg-navy-900 rounded-3xl p-2.5 shadow-2xl border border-gold-200/20 dark:border-navy-800">
+              <div className="flex gap-2 bg-white dark:bg-surface-950 rounded-3xl p-2.5 shadow-2xl border border-primary-200/20 dark:border-surface-900">
                 <input
                   autoFocus
                   type="text"
@@ -504,7 +506,7 @@ const Navbar = () => {
                   placeholder="Search mattresses, pillows, sleep tech..."
                   className="flex-1 px-5 py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 outline-none text-lg font-medium"
                 />
-                <button type="submit" className="px-7 py-3 bg-gold-500 hover:bg-gold-600 text-white font-extrabold rounded-2xl shadow-gold transition-colors flex items-center justify-center">
+                <button type="submit" className="px-7 py-3 bg-primary-500 hover:bg-primary-600 text-white font-extrabold rounded-2xl shadow-brand transition-colors flex items-center justify-center">
                   <Search size={19} />
                 </button>
                 <button type="button" onClick={() => setSearchOpen(false)} className="p-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">

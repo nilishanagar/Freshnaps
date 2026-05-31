@@ -60,8 +60,8 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write product descript
       disabled={disabled}
       className={`p-1.5 rounded-lg transition-colors ${
         active
-          ? 'bg-gold-50 dark:bg-gold-500/10 text-gold-600 dark:text-gold-400'
-          : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-navy-700 hover:text-gray-700 dark:hover:text-white'
+          ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+          : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-surface-800 hover:text-gray-700 dark:hover:text-white'
       } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       {children}
@@ -69,9 +69,9 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write product descript
   );
 
   return (
-    <div className="border border-gray-200 dark:border-navy-700 rounded-xl overflow-hidden bg-white dark:bg-navy-800">
+    <div className="border border-gray-200 dark:border-surface-800 rounded-xl overflow-hidden bg-white dark:bg-surface-900">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-1 p-2 bg-gray-50 dark:bg-navy-900 border-b border-gray-200 dark:border-navy-700">
+      <div className="flex flex-wrap gap-1 p-2 bg-gray-50 dark:bg-surface-950 border-b border-gray-200 dark:border-surface-800">
         <MenuButton
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive('bold')}
@@ -91,7 +91,7 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write product descript
           <UnderlineIcon size={16} />
         </MenuButton>
 
-        <div className="w-px h-6 bg-gray-200 dark:bg-navy-700 mx-1 align-self-center" />
+        <div className="w-px h-6 bg-gray-200 dark:bg-surface-800 mx-1 align-self-center" />
 
         <MenuButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -106,7 +106,7 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write product descript
           <ListOrdered size={16} />
         </MenuButton>
 
-        <div className="w-px h-6 bg-gray-200 dark:bg-navy-700 mx-1 align-self-center" />
+        <div className="w-px h-6 bg-gray-200 dark:bg-surface-800 mx-1 align-self-center" />
 
         <MenuButton
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
@@ -127,7 +127,7 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write product descript
           <AlignRight size={16} />
         </MenuButton>
 
-        <div className="w-px h-6 bg-gray-200 dark:bg-navy-700 mx-1 align-self-center" />
+        <div className="w-px h-6 bg-gray-200 dark:bg-surface-800 mx-1 align-self-center" />
 
         <MenuButton
           onClick={() => {

@@ -120,16 +120,16 @@ const AdminDashboard = () => {
 
       toast.success(
         <div className="flex flex-col gap-1">
-          <span className="font-bold flex items-center gap-1"><Sparkles className="w-3.5 h-3.5 text-gold-500 animate-pulse" /> Real-time Payment Success!</span>
+          <span className="font-bold flex items-center gap-1"><Sparkles className="w-3.5 h-3.5 text-primary-500 animate-pulse" /> Real-time Payment Success!</span>
           <span className="text-[11px] text-gray-300">Order #{orderAlert.invoiceNumber} paid by {orderAlert.name}. Amount: {formatPrice(orderAlert.amount)}</span>
         </div>,
         {
           duration: 10000,
           position: 'top-right',
           style: {
-            background: '#1A1A2E',
+            background: '#0B1220',
             color: '#ffffff',
-            border: '1px solid #C9A96E',
+            border: '1px solid #7ED957',
             padding: '12px',
             borderRadius: '16px'
           }
@@ -209,22 +209,22 @@ const AdminDashboard = () => {
       label: 'Total Revenue',
       value: formatPrice(stats.totalRevenue),
       icon: IndianRupee,
-      gradient: 'from-gold-500 to-gold-600',
-      bg: 'bg-gold-50 dark:bg-gold-900/20',
-      text: 'text-gold-600 dark:text-gold-400',
+      gradient: 'from-primary-500 to-primary-600',
+      bg: 'bg-primary-50 dark:bg-primary-900/20',
+      text: 'text-primary-600 dark:text-primary-400',
       change: '+18%',
     },
   ];
 
   return (
-    <div className="p-6 md:p-8 min-h-screen bg-gray-50 dark:bg-navy-950 select-none">
+    <div className="p-6 md:p-8 min-h-screen bg-gray-50 dark:bg-surface-950 select-none">
 
       {/* Page Header banner */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             Admin Panel
-            <span className="text-xs font-normal text-gray-400 font-mono bg-cream-100/50 dark:bg-navy-800 px-2.5 py-1 rounded-xl">v1.2.0</span>
+            <span className="text-xs font-normal text-gray-400 font-mono bg-surface-100/50 dark:bg-surface-900 px-2.5 py-1 rounded-xl">v1.2.0</span>
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
             {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
@@ -232,9 +232,9 @@ const AdminDashboard = () => {
         </div>
 
         {/* Live Socket Monitor status */}
-        <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-navy-900 border border-cream-200 dark:border-navy-800 rounded-2xl shadow-sm w-fit">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-950 border border-surface-200 dark:border-surface-900 rounded-2xl shadow-sm w-fit">
           <span className={`w-2.5 h-2.5 rounded-full ${socketConnected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-          <span className="text-xs font-bold text-navy-500 dark:text-gray-300">
+          <span className="text-xs font-bold text-surface-600 dark:text-gray-300">
             {socketConnected ? 'WebSocket Channel Active' : 'Disconnected (Offline)'}
           </span>
         </div>
@@ -254,7 +254,7 @@ const AdminDashboard = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-white dark:bg-navy-800 rounded-3xl border border-cream-200 dark:border-navy-800/80 p-6 shadow-card hover:shadow-card-hover transition-all duration-300"
+                className="bg-white dark:bg-surface-900 rounded-3xl border border-surface-200 dark:border-surface-900/80 p-6 shadow-card hover:shadow-card-hover transition-all duration-300"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className={`w-12 h-12 rounded-2xl ${bg} flex items-center justify-center`}>
@@ -275,9 +275,9 @@ const AdminDashboard = () => {
 
         {/* Live Real-time Activity Ticker */}
         <div className="xl:col-span-4">
-          <div className="bg-white dark:bg-navy-900 rounded-3xl border border-cream-200 dark:border-navy-800 shadow-card p-5 h-full space-y-4">
-            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2 border-b border-cream-100 dark:border-navy-800 pb-3">
-              <BellRing size={16} className="text-gold-500 animate-swing" />
+          <div className="bg-white dark:bg-surface-950 rounded-3xl border border-surface-200 dark:border-surface-900 shadow-card p-5 h-full space-y-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2 border-b border-surface-100 dark:border-surface-900 pb-3">
+              <BellRing size={16} className="text-primary-500 animate-swing" />
               Live Order Alerts
             </h3>
             
@@ -320,14 +320,14 @@ const AdminDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35 }}
-        className="bg-white dark:bg-navy-800 rounded-3xl border border-cream-200 dark:border-navy-800/80 shadow-card overflow-hidden"
+        className="bg-white dark:bg-surface-900 rounded-3xl border border-surface-200 dark:border-surface-900/80 shadow-card overflow-hidden"
       >
-        <div className="px-6 py-4 border-b border-cream-100 dark:border-navy-700 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between">
           <h2 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-            <Clock size={17} className="text-gold-500" />
+            <Clock size={17} className="text-primary-500" />
             Recent Orders
           </h2>
-          <span className="text-xs font-bold text-gray-400 bg-cream-50 dark:bg-navy-700 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-gray-400 bg-surface-50 dark:bg-surface-800 px-3 py-1 rounded-full">
             Last {recentOrders.length} orders
           </span>
         </div>
@@ -341,7 +341,7 @@ const AdminDashboard = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-cream-50/20 dark:bg-navy-750">
+                <tr className="bg-surface-50/20 dark:bg-surface-800">
                   <th className="text-left px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-gray-400">Order ID</th>
                   <th className="text-left px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-gray-400">Customer</th>
                   <th className="text-left px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-gray-400">Amount</th>
@@ -349,7 +349,7 @@ const AdminDashboard = () => {
                   <th className="text-left px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-gray-400">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-cream-100 dark:divide-navy-750">
+              <tbody className="divide-y divide-surface-100 dark:divide-surface-800">
                 {recentOrders.map((order, i) => {
                   const cfg = statusConfig[order.orderStatus] || { cls: 'bg-gray-100 text-gray-600', dot: 'bg-gray-400' };
                   return (
@@ -358,9 +358,9 @@ const AdminDashboard = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.4 + i * 0.05 }}
-                      className="hover:bg-cream-50/10 dark:hover:bg-navy-700/40 transition-colors"
+                      className="hover:bg-surface-50/10 dark:hover:bg-surface-800/40 transition-colors"
                     >
-                      <td className="px-6 py-4 font-mono text-xs font-extrabold text-gold-600 dark:text-gold-400">
+                      <td className="px-6 py-4 font-mono text-xs font-extrabold text-primary-600 dark:text-primary-400">
                         #{order._id.slice(-8).toUpperCase()}
                       </td>
                       <td className="px-6 py-4 text-xs font-bold text-gray-700 dark:text-gray-300">

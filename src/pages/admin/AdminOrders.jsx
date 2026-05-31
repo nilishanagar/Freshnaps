@@ -33,7 +33,7 @@ const statusColors = {
   out_for_delivery: 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400 border border-amber-200',
   delivered: 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400 border border-green-200',
   cancelled: 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 border border-red-200',
-  returned: 'bg-gray-100 text-gray-700 dark:bg-navy-900 dark:text-gray-400 border border-gray-200',
+  returned: 'bg-gray-100 text-gray-700 dark:bg-surface-950 dark:text-gray-400 border border-gray-200',
   refunded: 'bg-teal-50 text-teal-700 dark:bg-teal-900/20 dark:text-teal-400 border border-teal-200',
 };
 
@@ -175,7 +175,7 @@ const AdminOrders = () => {
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sales */}
-        <div className="bg-white dark:bg-navy-800 p-6 rounded-2xl border border-gray-100 dark:border-navy-700 shadow-sm flex items-center gap-4">
+        <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl border border-gray-100 dark:border-surface-800 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 bg-green-50 dark:bg-green-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
             <DollarSign className="text-green-600 dark:text-green-400" size={24} />
           </div>
@@ -186,7 +186,7 @@ const AdminOrders = () => {
         </div>
 
         {/* Total Orders */}
-        <div className="bg-white dark:bg-navy-800 p-6 rounded-2xl border border-gray-100 dark:border-navy-700 shadow-sm flex items-center gap-4">
+        <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl border border-gray-100 dark:border-surface-800 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
             <ShoppingBag className="text-blue-600 dark:text-blue-400" size={24} />
           </div>
@@ -197,7 +197,7 @@ const AdminOrders = () => {
         </div>
 
         {/* Pending Shipments */}
-        <div className="bg-white dark:bg-navy-800 p-6 rounded-2xl border border-gray-100 dark:border-navy-700 shadow-sm flex items-center gap-4">
+        <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl border border-gray-100 dark:border-surface-800 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 bg-amber-50 dark:bg-amber-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
             <Clock className="text-amber-600 dark:text-amber-400" size={24} />
           </div>
@@ -208,7 +208,7 @@ const AdminOrders = () => {
         </div>
 
         {/* Average value */}
-        <div className="bg-white dark:bg-navy-800 p-6 rounded-2xl border border-gray-100 dark:border-navy-700 shadow-sm flex items-center gap-4">
+        <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl border border-gray-100 dark:border-surface-800 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
             <TrendingUp className="text-indigo-600 dark:text-indigo-400" size={24} />
           </div>
@@ -220,9 +220,9 @@ const AdminOrders = () => {
       </div>
 
       {/* Main Table Controls Container */}
-      <div className="bg-white dark:bg-navy-800 rounded-2xl border border-gray-100 dark:border-navy-700 shadow-card overflow-hidden">
+      <div className="bg-white dark:bg-surface-900 rounded-2xl border border-gray-100 dark:border-surface-800 shadow-card overflow-hidden">
         {/* Tabs & Search */}
-        <div className="p-6 border-b border-gray-100 dark:border-navy-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-6 border-b border-gray-100 dark:border-surface-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
           {/* Filtering Tabs */}
           <div className="flex gap-2 flex-wrap">
             {[
@@ -237,8 +237,8 @@ const AdminOrders = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-2 text-xs font-semibold rounded-xl tracking-wider transition-all cursor-pointer ${
                   activeTab === tab.id
-                    ? 'bg-gold-500 text-white shadow-md'
-                    : 'bg-gray-50 dark:bg-navy-900 text-gray-600 dark:text-gray-300 hover:bg-gray-100'
+                    ? 'bg-primary-500 text-white shadow-md'
+                    : 'bg-gray-50 dark:bg-surface-950 text-gray-600 dark:text-gray-300 hover:bg-gray-100'
                 }`}
               >
                 {tab.label}
@@ -269,8 +269,8 @@ const AdminOrders = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
-              <thead className="bg-gray-50 dark:bg-navy-900 text-xs font-semibold text-gray-400 uppercase">
-                <tr className="border-b border-gray-100 dark:border-navy-700">
+              <thead className="bg-gray-50 dark:bg-surface-950 text-xs font-semibold text-gray-400 uppercase">
+                <tr className="border-b border-gray-100 dark:border-surface-800">
                   <th className="p-4 font-semibold">Order ID</th>
                   <th className="p-4 font-semibold">Date</th>
                   <th className="p-4 font-semibold">Customer</th>
@@ -280,11 +280,11 @@ const AdminOrders = () => {
                   <th className="p-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-navy-700">
+              <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
                 {filteredOrders.map((order) => (
-                  <tr key={order._id} className="hover:bg-gray-50/50 dark:hover:bg-navy-700/30 transition-colors">
+                  <tr key={order._id} className="hover:bg-gray-50/50 dark:hover:bg-surface-800/30 transition-colors">
                     <td className="p-4">
-                      <span className="font-mono text-xs font-bold text-gold-600 uppercase">
+                      <span className="font-mono text-xs font-bold text-primary-600 uppercase">
                         #{order._id.slice(-8).toUpperCase()}
                       </span>
                     </td>
@@ -326,7 +326,7 @@ const AdminOrders = () => {
                           setTrackingIdInput(order.trackingId || '');
                           setDeliveryPartnerInput(order.deliveryPartner || '');
                         }}
-                        className="p-2 hover:bg-gold-50 dark:hover:bg-navy-700 text-gray-500 hover:text-gold-500 rounded-xl transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold ml-auto border border-gray-100 dark:border-navy-700 shadow-sm"
+                        className="p-2 hover:bg-primary-50 dark:hover:bg-surface-800 text-gray-500 hover:text-primary-500 rounded-xl transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold ml-auto border border-gray-100 dark:border-surface-800 shadow-sm"
                       >
                         <Eye size={14} /> View Details
                       </button>
@@ -342,12 +342,12 @@ const AdminOrders = () => {
       {/* Comprehensive Order Details Side Modal/Drawer */}
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-start justify-end p-0 bg-black/60 backdrop-blur-sm transition-opacity">
-          <div className="w-full max-w-2xl h-full bg-white dark:bg-navy-800 shadow-2xl flex flex-col border-l border-gray-100 dark:border-navy-700 animate-slide-in">
+          <div className="w-full max-w-2xl h-full bg-white dark:bg-surface-900 shadow-2xl flex flex-col border-l border-gray-100 dark:border-surface-800 animate-slide-in">
             {/* Header */}
-            <div className="p-6 border-b border-gray-100 dark:border-navy-700 flex items-center justify-between bg-gray-50 dark:bg-navy-900">
+            <div className="p-6 border-b border-gray-100 dark:border-surface-800 flex items-center justify-between bg-gray-50 dark:bg-surface-950">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-lg font-bold text-gold-600 uppercase">
+                  <span className="font-mono text-lg font-bold text-primary-600 uppercase">
                     Order #{selectedOrder._id.slice(-8).toUpperCase()}
                   </span>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${statusColors[selectedOrder.orderStatus]}`}>
@@ -363,7 +363,7 @@ const AdminOrders = () => {
                     href={`http://localhost:5000/api/orders/${selectedOrder._id}/invoice`}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 border border-gray-200 dark:border-navy-700 hover:bg-gold-50 dark:hover:bg-navy-700 text-gray-600 dark:text-gray-300 hover:text-gold-500 rounded-xl shadow-sm transition-all flex items-center gap-1.5 text-xs font-semibold"
+                    className="p-2 border border-gray-200 dark:border-surface-800 hover:bg-primary-50 dark:hover:bg-surface-800 text-gray-600 dark:text-gray-300 hover:text-primary-500 rounded-xl shadow-sm transition-all flex items-center gap-1.5 text-xs font-semibold"
                   >
                     <Download size={14} /> Invoice PDF
                   </a>
@@ -371,7 +371,7 @@ const AdminOrders = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="p-2 hover:bg-gray-150 dark:hover:bg-navy-700 rounded-xl transition-all cursor-pointer text-gray-400"
+                  className="p-2 hover:bg-gray-150 dark:hover:bg-surface-800 rounded-xl transition-all cursor-pointer text-gray-400"
                 >
                   <X size={20} />
                 </button>
@@ -381,13 +381,13 @@ const AdminOrders = () => {
             {/* Scrollable details area */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {/* Order Status Timeline Tracker */}
-              <div className="bg-gray-50 dark:bg-navy-900/50 border border-gray-100 dark:border-navy-700 rounded-2xl p-6">
+              <div className="bg-gray-50 dark:bg-surface-950/50 border border-gray-100 dark:border-surface-800 rounded-2xl p-6">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">Fulfillment Status Timeline</span>
                 <div className="flex items-center justify-between relative">
                   {/* Timeline bar */}
-                  <div className="absolute top-[18px] left-[5%] right-[5%] h-1 bg-gray-200 dark:bg-navy-700 z-0" />
+                  <div className="absolute top-[18px] left-[5%] right-[5%] h-1 bg-gray-200 dark:bg-surface-800 z-0" />
                   <div
-                    className="absolute top-[18px] left-[5%] h-1 bg-gold-500 z-0 transition-all duration-300"
+                    className="absolute top-[18px] left-[5%] h-1 bg-primary-500 z-0 transition-all duration-300"
                     style={{
                       width: `${
                         getStepIndex(selectedOrder.orderStatus) !== -1
@@ -409,8 +409,8 @@ const AdminOrders = () => {
                           }}
                           className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shadow-md border-2 cursor-pointer transition-all ${
                             isDone
-                              ? 'bg-gold-500 border-gold-400 text-white'
-                              : 'bg-white dark:bg-navy-800 border-gray-200 dark:border-navy-700 text-gray-400'
+                              ? 'bg-primary-500 border-primary-400 text-white'
+                              : 'bg-white dark:bg-surface-900 border-gray-200 dark:border-surface-800 text-gray-400'
                           }`}
                         >
                           {idx + 1}
@@ -439,7 +439,7 @@ const AdminOrders = () => {
                   <button
                     type="button"
                     onClick={() => handleUpdateStatus(selectedOrder._id, 'returned')}
-                    className="px-3.5 py-1.5 border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 dark:hover:bg-navy-900 rounded-xl text-xs font-semibold cursor-pointer transition-all"
+                    className="px-3.5 py-1.5 border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 dark:hover:bg-surface-950 rounded-xl text-xs font-semibold cursor-pointer transition-all"
                   >
                     Mark Returned
                   </button>
@@ -447,11 +447,11 @@ const AdminOrders = () => {
               </div>
 
               {/* Items Breakdown Table */}
-              <div className="border border-gray-100 dark:border-navy-700 rounded-2xl overflow-hidden shadow-sm">
-                <div className="bg-gray-50 dark:bg-navy-900 p-4 font-semibold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100 dark:border-navy-700">
+              <div className="border border-gray-100 dark:border-surface-800 rounded-2xl overflow-hidden shadow-sm">
+                <div className="bg-gray-50 dark:bg-surface-950 p-4 font-semibold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100 dark:border-surface-800">
                   Cart Items & Purchased Options
                 </div>
-                <div className="divide-y divide-gray-100 dark:divide-navy-700">
+                <div className="divide-y divide-gray-100 dark:divide-surface-800">
                   {selectedOrder.orderItems.map((item, idx) => (
                     <div key={idx} className="p-4 flex gap-4 items-center">
                       <img
@@ -464,14 +464,14 @@ const AdminOrders = () => {
                           {item.name}
                         </span>
                         {item.variant && (item.variant.size || item.variant.color) && (
-                          <div className="flex gap-2 text-[10px] text-gold-600 mt-1">
+                          <div className="flex gap-2 text-[10px] text-primary-600 mt-1">
                             {item.variant.size && (
-                              <span className="px-2 py-0.5 bg-gold-50 dark:bg-gold-500/10 rounded">
+                              <span className="px-2 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded">
                                 Size: {item.variant.size}
                               </span>
                             )}
                             {item.variant.color && (
-                              <span className="px-2 py-0.5 bg-gold-50 dark:bg-gold-500/10 rounded">
+                              <span className="px-2 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded">
                                 Color: {item.variant.color}
                               </span>
                             )}
@@ -494,9 +494,9 @@ const AdminOrders = () => {
               {/* Grid block for Customer Addresses & Payments */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Shipping info */}
-                <div className="border border-gray-100 dark:border-navy-700 rounded-2xl p-5 space-y-3 shadow-sm">
+                <div className="border border-gray-100 dark:border-surface-800 rounded-2xl p-5 space-y-3 shadow-sm">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block flex items-center gap-1">
-                    <MapPin size={14} className="text-gold-500" /> Shipping Destination
+                    <MapPin size={14} className="text-primary-500" /> Shipping Destination
                   </span>
                   <div className="text-sm font-semibold text-gray-800 dark:text-white">
                     {selectedOrder.shippingAddress?.name}
@@ -511,9 +511,9 @@ const AdminOrders = () => {
                 </div>
 
                 {/* Billing & Payment */}
-                <div className="border border-gray-100 dark:border-navy-700 rounded-2xl p-5 space-y-3 shadow-sm">
+                <div className="border border-gray-100 dark:border-surface-800 rounded-2xl p-5 space-y-3 shadow-sm">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block flex items-center gap-1">
-                    <CreditCard size={14} className="text-gold-500" /> Payment & Billing
+                    <CreditCard size={14} className="text-primary-500" /> Payment & Billing
                   </span>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-gray-400 font-medium">Method</span>
@@ -527,7 +527,7 @@ const AdminOrders = () => {
                       {selectedOrder.paymentStatus}
                     </span>
                   </div>
-                  <div className="border-t border-gray-100 dark:border-navy-700 pt-2 flex justify-between items-center text-xs">
+                  <div className="border-t border-gray-100 dark:border-surface-800 pt-2 flex justify-between items-center text-xs">
                     <span className="text-gray-400 font-medium">Reserved stock</span>
                     <span className="font-semibold text-gray-800 dark:text-white">Fulfillment ready</span>
                   </div>
@@ -535,9 +535,9 @@ const AdminOrders = () => {
               </div>
 
               {/* Order Logistics Tracking Editor Form */}
-              <form onSubmit={handleAddTrackingEvent} className="border border-dashed border-gray-200 dark:border-navy-700 rounded-2xl p-5 space-y-4 bg-gray-50/50 dark:bg-navy-900/50">
+              <form onSubmit={handleAddTrackingEvent} className="border border-dashed border-gray-200 dark:border-surface-800 rounded-2xl p-5 space-y-4 bg-gray-50/50 dark:bg-surface-950/50">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block flex items-center gap-1">
-                  <Truck size={14} className="text-gold-500" /> Logistics Courier & Shipment Updates
+                  <Truck size={14} className="text-primary-500" /> Logistics Courier & Shipment Updates
                 </span>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -567,7 +567,7 @@ const AdminOrders = () => {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-100 dark:border-navy-700 pt-3 space-y-3">
+                <div className="border-t border-gray-100 dark:border-surface-800 pt-3 space-y-3">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Add Real-time Tracking Event</span>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -603,19 +603,19 @@ const AdminOrders = () => {
 
               {/* Tracking Event Timeline History */}
               {selectedOrder.trackingHistory && selectedOrder.trackingHistory.length > 0 && (
-                <div className="space-y-3 border-t border-gray-100 dark:border-navy-700 pt-4">
+                <div className="space-y-3 border-t border-gray-100 dark:border-surface-800 pt-4">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Shipment Location Log History</span>
-                  <div className="space-y-3 relative pl-4 border-l-2 border-gold-300">
+                  <div className="space-y-3 relative pl-4 border-l-2 border-primary-300">
                     {selectedOrder.trackingHistory.map((event, idx) => (
                       <div key={idx} className="relative text-xs">
-                        <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-gold-500 border border-white" />
+                        <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-primary-500 border border-white" />
                         <div className="flex justify-between items-start">
                           <div>
                             <span className="font-semibold text-gray-800 dark:text-white capitalize mr-2">
                               {event.status}
                             </span>
                             {event.location && (
-                              <span className="px-2 py-0.5 bg-gray-100 dark:bg-navy-900 rounded font-semibold text-[10px]">
+                              <span className="px-2 py-0.5 bg-gray-100 dark:bg-surface-950 rounded font-semibold text-[10px]">
                                 {event.location}
                               </span>
                             )}
@@ -638,7 +638,7 @@ const AdminOrders = () => {
             </div>
 
             {/* Sticky summary footer */}
-            <div className="p-6 border-t border-gray-100 dark:border-navy-700 bg-gray-50 dark:bg-navy-900 grid grid-cols-3 gap-4 text-center">
+            <div className="p-6 border-t border-gray-100 dark:border-surface-800 bg-gray-50 dark:bg-surface-950 grid grid-cols-3 gap-4 text-center">
               <div>
                 <span className="text-[10px] font-semibold text-gray-400 block uppercase">Subtotal</span>
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-300 block mt-0.5">
@@ -653,7 +653,7 @@ const AdminOrders = () => {
               </div>
               <div>
                 <span className="text-[10px] font-semibold text-gray-400 block uppercase">Total Amount</span>
-                <span className="text-sm font-extrabold text-gold-600 block mt-0.5">
+                <span className="text-sm font-extrabold text-primary-600 block mt-0.5">
                   {formatPrice(selectedOrder.totalAmount)}
                 </span>
               </div>

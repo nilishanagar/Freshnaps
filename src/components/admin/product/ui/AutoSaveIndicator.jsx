@@ -16,10 +16,10 @@ const AutoSaveIndicator = ({ isSaving, lastSaved, isDirty }) => {
   };
 
   return (
-    <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 dark:bg-navy-900 border border-gray-100 dark:border-navy-700 rounded-full text-xs font-medium">
+    <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 dark:bg-surface-950 border border-gray-100 dark:border-surface-800 rounded-full text-xs font-medium">
       {isSaving ? (
         <>
-          <Loader2 className="w-3.5 h-3.5 text-gold-500 animate-spin" />
+          <Loader2 className="w-3.5 h-3.5 text-primary-500 animate-spin" />
           <span className="text-gray-500 dark:text-gray-400">Saving draft...</span>
         </>
       ) : isDirty ? (

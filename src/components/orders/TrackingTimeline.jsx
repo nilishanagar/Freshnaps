@@ -7,7 +7,7 @@ const TrackingTimeline = ({ tracking }) => {
 
   if (!tracking || !tracking.trackingId) {
     return (
-      <div className="bg-cream-50 dark:bg-navy-700/30 border border-cream-200 dark:border-navy-700/60 rounded-2xl p-6 text-center">
+      <div className="bg-surface-50 dark:bg-surface-800/30 border border-surface-200 dark:border-surface-800/60 rounded-2xl p-6 text-center">
         <Truck className="w-8 h-8 mx-auto text-gray-300 mb-2 animate-bounce" />
         <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Shipment Details Pending</h4>
         <p className="text-xs text-gray-400 mt-1">Our warehouse is processing your package. Tracking ID will update shortly.</p>
@@ -25,12 +25,12 @@ const TrackingTimeline = ({ tracking }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-navy-600 border border-cream-200 dark:border-navy-700/60 rounded-2xl p-5 md:p-6 shadow-card transition-all duration-300">
+    <div className="bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-800/60 rounded-2xl p-5 md:p-6 shadow-card transition-all duration-300">
       
       {/* Courier Partner Block */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-cream-200 dark:border-navy-700 mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-surface-200 dark:border-surface-800 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gold-50 dark:bg-navy-700 flex items-center justify-center border border-gold-200 dark:border-navy-600 text-gold-500">
+          <div className="w-10 h-10 rounded-xl bg-primary-50 dark:bg-surface-800 flex items-center justify-center border border-primary-200 dark:border-surface-700 text-primary-500">
             <Truck className="w-5 h-5" />
           </div>
           <div>
@@ -39,10 +39,10 @@ const TrackingTimeline = ({ tracking }) => {
             </h4>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="text-xs text-gray-400">Tracking ID:</span>
-              <span className="text-xs font-semibold text-navy-500 dark:text-gold-300">{trackingId}</span>
+              <span className="text-xs font-semibold text-surface-600 dark:text-primary-300">{trackingId}</span>
               <button
                 onClick={handleCopy}
-                className="p-1 hover:bg-cream-100 dark:hover:bg-navy-700 rounded transition-all text-gray-400 hover:text-gold-500 cursor-pointer"
+                className="p-1 hover:bg-surface-100 dark:hover:bg-surface-800 rounded transition-all text-gray-400 hover:text-primary-500 cursor-pointer"
                 title="Copy Tracking ID"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -52,8 +52,8 @@ const TrackingTimeline = ({ tracking }) => {
         </div>
 
         {estimatedDelivery && (
-          <div className="flex items-center gap-2 bg-cream-50 dark:bg-navy-700/50 border border-cream-100 dark:border-navy-700 px-4 py-2 rounded-xl">
-            <Calendar className="w-4 h-4 text-gold-500" />
+          <div className="flex items-center gap-2 bg-surface-50 dark:bg-surface-800/50 border border-surface-100 dark:border-surface-800 px-4 py-2 rounded-xl">
+            <Calendar className="w-4 h-4 text-primary-500" />
             <div>
               <span className="block text-[10px] text-gray-400 uppercase font-bold tracking-wider">Est. Delivery</span>
               <span className="text-xs font-bold text-gray-700 dark:text-gray-200">
@@ -69,7 +69,7 @@ const TrackingTimeline = ({ tracking }) => {
       </div>
 
       {/* Shipment Milestones Logging */}
-      <div className="relative pl-6 border-l-2 border-cream-200 dark:border-navy-700 ml-4 py-1 space-y-6">
+      <div className="relative pl-6 border-l-2 border-surface-200 dark:border-surface-800 ml-4 py-1 space-y-6">
         {trackingHistory.length === 0 ? (
           <div className="text-xs text-gray-400 pl-2">No shipment tracking history recorded yet.</div>
         ) : (
@@ -82,8 +82,8 @@ const TrackingTimeline = ({ tracking }) => {
                 <div
                   className={`absolute -left-[35px] top-0.5 w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
                     isLatest
-                      ? 'bg-gold-500 text-white border-gold-500 ring-4 ring-gold-100 dark:ring-gold-950/40 animate-pulse'
-                      : 'bg-cream-100 text-gray-400 border-cream-300 dark:bg-navy-700 dark:border-navy-600'
+                      ? 'bg-primary-500 text-white border-primary-500 ring-4 ring-primary-100 dark:ring-primary-900/40 animate-pulse'
+                      : 'bg-surface-100 text-gray-400 border-surface-300 dark:bg-surface-800 dark:border-surface-700'
                   }`}
                 >
                   {isLatest ? <Clock className="w-3 h-3" /> : <MapPin className="w-3 h-3" />}
@@ -94,7 +94,7 @@ const TrackingTimeline = ({ tracking }) => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <h5
                       className={`text-xs font-bold transition-all ${
-                        isLatest ? 'text-gold-600 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300'
+                        isLatest ? 'text-primary-600 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       {item.description}
@@ -109,7 +109,7 @@ const TrackingTimeline = ({ tracking }) => {
                     </span>
                   </div>
                   <div className="flex items-center gap-1 mt-1 text-[11px] text-gray-400 dark:text-gray-500 font-semibold">
-                    <MapPin className="w-3 h-3 text-gold-400" />
+                    <MapPin className="w-3 h-3 text-primary-400" />
                     <span>{item.location || 'Transit Hub'}</span>
                   </div>
                 </div>
