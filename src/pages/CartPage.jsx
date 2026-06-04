@@ -41,7 +41,10 @@ const CartPage = () => {
           <div className="lg:col-span-2 space-y-4">
             <AnimatePresence>
               {items.map(item => {
-                const price = item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price;
+                const discountAmount = item.product.discountPrice > 0 ? (item.product.price - item.product.discountPrice) : 0;
+                const price = item.variant?.isCustom 
+                  ? item.variant.price 
+                  : (item.variant?.price ? (item.variant.price - discountAmount) : (item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price));
                 return (
                   <motion.div
                     key={item.key}

@@ -51,7 +51,15 @@ export const selectCartItems = (state) => state.cart.items;
 export const selectCartCount = (state) => state.cart.items.reduce((acc, i) => acc + i.quantity, 0);
 export const selectCartSubtotal = (state) =>
   state.cart.items.reduce((acc, i) => {
-    const price = i.product.discountPrice > 0 ? i.product.discountPrice : i.product.price;
+    let price = i.product.discountPrice > 0 ? i.product.discountPrice : i.product.price;
+    if (i.variant) {
+      if (i.variant.isCustom) {
+        price = i.variant.price;
+      } else if (i.variant.price) {
+        const discountAmount = i.product.discountPrice > 0 ? (i.product.price - i.product.discountPrice) : 0;
+        price = i.variant.price - discountAmount;
+      }
+    }
     return acc + price * i.quantity;
   }, 0);
 

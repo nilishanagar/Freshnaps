@@ -214,14 +214,19 @@ const Navbar = () => {
                         Shop By Size
                       </h4>
                       <ul className="space-y-2">
-                        {['King Size', 'Queen Size', 'Single Size', 'Double Size', 'Custom Size'].map((size, idx) => (
-                          <li key={idx}>
-                            <Link to={`/shop?category=mattress&search=${size.split(' ')[0]}`} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-primary-500 py-1 transition-colors">
-                              <span>{size} Mattress</span>
-                              <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-500" />
-                            </Link>
-                          </li>
-                        ))}
+                        {['All Mattresses', 'King Size', 'Queen Size', 'Single Size', 'Double Size', 'Custom Size'].map((size, idx) => {
+                          const isAll = size === 'All Mattresses';
+                          const toUrl = isAll ? '/shop?category=mattress' : `/shop?category=mattress&search=${size.split(' ')[0]}`;
+                          const displayLabel = isAll ? size : `${size} Mattress`;
+                          return (
+                            <li key={idx}>
+                              <Link to={toUrl} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-primary-500 py-1 transition-colors">
+                                <span>{displayLabel}</span>
+                                <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-500" />
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
 
