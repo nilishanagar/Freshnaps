@@ -150,96 +150,105 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 15, scale: 0.98 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute top-full left-1/2 -translate-x-[45%] mt-1 w-[760px] bg-white dark:bg-surface-950 rounded-3xl shadow-2xl border border-primary-200/20 dark:border-surface-900/80 p-8 grid grid-cols-4 gap-6 z-[100] overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-[45%] mt-1 w-[760px] bg-white dark:bg-surface-950 rounded-3xl shadow-2xl border border-primary-200/20 dark:border-surface-900/80 p-8 z-[100] overflow-hidden flex flex-col gap-6"
                   >
                     {/* Decorative subtle border top accent */}
                     <div className="absolute top-0 inset-x-0 h-1 bg-brand-gradient" />
 
-                    {/* Column 1: Shop by Need */}
-                    <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
-                        <Activity size={12} className="text-primary-500" />
-                        Shop By Need
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          { label: 'Orthopedic Back Support', val: 'Orthopedic', icon: Shield, desc: 'Aligns your spine naturally' },
-                          { label: 'Plush & Cozy Soft Feel', val: 'Cloud', icon: Cloud, desc: 'Sink-in luxurious comfort' },
-                          { label: 'Zero Motion Partner Relief', val: 'OrthoRest', icon: Sparkles, desc: 'Undisturbed deep sleep' }
-                        ].map((item, idx) => (
-                          <li key={idx} className="group/item">
-                            <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
-                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
-                                {item.label}
-                              </span>
-                              <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
-                                {item.desc}
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Column 2: Shop by Tech */}
-                    <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
-                        <Zap size={12} className="text-primary-500" />
-                        Shop By Tech
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          { label: 'Natural Open-Cell Latex', val: 'Latex', icon: Leaf, desc: 'Organic breathability & bounce' },
-                          { label: 'CoolGel Memory Foam', val: 'Foam', icon: Thermometer, desc: 'Pulls heat away from body' },
-                          { label: 'Orthorest Pocket Springs', val: 'Spring', icon: Compass, desc: 'Active body contouring support' }
-                        ].map((item, idx) => (
-                          <li key={idx} className="group/item">
-                            <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
-                              <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
-                                {item.label}
-                              </span>
-                              <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
-                                {item.desc}
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Column 3: Shop by Size */}
-                    <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
-                        <Package size={12} className="text-primary-500" />
-                        Shop By Size
-                      </h4>
-                      <ul className="space-y-2">
-                        {['All Mattresses', 'King Size', 'Queen Size', 'Single Size', 'Double Size', 'Custom Size'].map((size, idx) => {
-                          const isAll = size === 'All Mattresses';
-                          const toUrl = isAll ? '/shop?category=mattress' : `/shop?category=mattress&search=${size.split(' ')[0]}`;
-                          const displayLabel = isAll ? size : `${size} Mattress`;
-                          return (
-                            <li key={idx}>
-                              <Link to={toUrl} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-primary-500 py-1 transition-colors">
-                                <span>{displayLabel}</span>
-                                <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-500" />
+                    <div className="grid grid-cols-4 gap-6">
+                      {/* Column 1: Shop by Need */}
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                          <Activity size={12} className="text-primary-500" />
+                          Shop By Need
+                        </h4>
+                        <ul className="space-y-3">
+                          {[
+                            { label: 'Orthopedic Back Support', val: 'Orthopedic', icon: Shield, desc: 'Aligns your spine naturally' },
+                            { label: 'Plush & Cozy Soft Feel', val: 'Cloud', icon: Cloud, desc: 'Sink-in luxurious comfort' },
+                            { label: 'Zero Motion Partner Relief', val: 'OrthoRest', icon: Sparkles, desc: 'Undisturbed deep sleep' }
+                          ].map((item, idx) => (
+                            <li key={idx} className="group/item">
+                              <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
+                                <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
+                                  {item.label}
+                                </span>
+                                <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
+                                  {item.desc}
+                                </span>
                               </Link>
                             </li>
-                          );
-                        })}
-                      </ul>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Column 2: Shop by Tech */}
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                          <Zap size={12} className="text-primary-500" />
+                          Shop By Tech
+                        </h4>
+                        <ul className="space-y-3">
+                          {[
+                            { label: 'Natural Open-Cell Latex', val: 'Latex', icon: Leaf, desc: 'Organic breathability & bounce' },
+                            { label: 'CoolGel Memory Foam', val: 'Foam', icon: Thermometer, desc: 'Pulls heat away from body' },
+                            { label: 'Orthorest Pocket Springs', val: 'Spring', icon: Compass, desc: 'Active body contouring support' }
+                          ].map((item, idx) => (
+                            <li key={idx} className="group/item">
+                              <Link to={`/shop?category=mattress&search=${item.val}`} className="block">
+                                <span className="flex items-center gap-1 text-[13px] font-bold text-gray-800 dark:text-gray-200 group-hover/item:text-primary-500 transition-colors">
+                                  {item.label}
+                                </span>
+                                <span className="block text-[10px] text-gray-400 group-hover/item:text-gray-500 font-medium transition-colors">
+                                  {item.desc}
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Column 3: Shop by Size */}
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-gray-100 dark:border-surface-900 flex items-center gap-1.5">
+                          <Package size={12} className="text-primary-500" />
+                          Shop By Size
+                        </h4>
+                        <ul className="space-y-2">
+                          {['King Size', 'Queen Size', 'Single Size', 'Double Size', 'Custom Size'].map((size, idx) => {
+                            const toUrl = `/shop?category=mattress&search=${size.split(' ')[0]}`;
+                            const displayLabel = `${size} Mattress`;
+                            return (
+                              <li key={idx}>
+                                <Link to={toUrl} className="flex items-center justify-between text-[13px] font-semibold text-gray-600 dark:text-gray-400 hover:text-primary-500 py-1 transition-colors">
+                                  <span>{displayLabel}</span>
+                                  <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-500" />
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+
+                      {/* Column 4: Premium Sleep Advisor Card */}
+                      <div className="bg-[#F8FAFC] dark:bg-surface-950/60 rounded-2xl p-5 border border-primary-100/50 dark:border-surface-900/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card">
+                        <div className="absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-primary-200/10 dark:bg-primary-500/5 blur-xl group-hover/card:scale-125 transition-transform duration-500" />
+                        <div>
+                          <span className="text-[9px] font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-widest block mb-1">AI Advisor</span>
+                          <h4 className="font-bold text-gray-900 dark:text-white text-sm leading-tight mb-2">Find Your Mattress</h4>
+                          <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-normal">Answer 4 quick sleep behavior questions to unlock your custom recommendation.</p>
+                        </div>
+                        <Link to="/" className="w-full text-center mt-4 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5">
+                          Start Advisor
+                        </Link>
+                      </div>
                     </div>
 
-                    {/* Column 4: Premium Sleep Advisor Card */}
-                    <div className="bg-[#F8FAFC] dark:bg-surface-950/60 rounded-2xl p-5 border border-primary-100/50 dark:border-surface-900/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card">
-                      <div className="absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-primary-200/10 dark:bg-primary-500/5 blur-xl group-hover/card:scale-125 transition-transform duration-500" />
-                      <div>
-                        <span className="text-[9px] font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-widest block mb-1">AI Advisor</span>
-                        <h4 className="font-bold text-gray-900 dark:text-white text-sm leading-tight mb-2">Find Your Mattress</h4>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-normal">Answer 4 quick sleep behavior questions to unlock your custom recommendation.</p>
-                      </div>
-                      <Link to="/" className="w-full text-center mt-4 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5">
-                        Start Advisor
+                    {/* Bottom-Center "All Mattresses" blue button */}
+                    <div className="flex justify-center border-t border-gray-100 dark:border-surface-900/50 pt-4">
+                      <Link to="/shop?category=mattress" onClick={() => setMattressMenuOpen(false)} className="inline-flex items-center gap-2 px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
+                        <span>All Mattresses</span>
+                        <ArrowRight size={14} />
                       </Link>
                     </div>
                   </motion.div>

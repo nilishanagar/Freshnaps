@@ -211,7 +211,7 @@ const ProductDetailPage = () => {
               />
 
               {/* ── 3. USP Icons (2x2) ── */}
-              <ProductUSPs features={product.features} />
+              <ProductUSPs features={product.features} warranty={product.warranty} />
 
               {/* ── 4. Variant Selectors (numbered steps) ── */}
               {(product.variants?.length > 0 || isMattress) && (
