@@ -2,21 +2,57 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag, Heart } from 'lucide-react';
 import { removeFromCart, updateQuantity, selectCartItems, selectCartSubtotal } from '../store/slices/cartSlice';
+import { toggleWishlistItem } from '../store/slices/wishlistSlice';
+import { userService } from '../services';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
+
+const getSizeDimensions = (sizeName) => {
+  if (!sizeName || sizeName.includes('(')) return '';
+  const s = sizeName.toLowerCase();
+  if (s.includes('single')) return ' (72" × 36" / 182 × 91 cm)';
+  if (s.includes('double')) return ' (72" × 48" / 182 × 122 cm)';
+  if (s.includes('queen')) return ' (72" × 60" / 182 × 152 cm)';
+  if (s.includes('king')) return ' (72" × 72" / 182 × 182 cm)';
+  return '';
+};
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const items = useSelector(selectCartItems);
   const subtotal = useSelector(selectCartSubtotal);
+  const { user } = useSelector(s => s.auth);
+  const wishlistItems = useSelector(s => s.wishlist.items);
   const [coupon, setCoupon] = React.useState('');
+  const [activeRemoveKey, setActiveRemoveKey] = React.useState(null);
 
   const shippingCharge = subtotal >= 999 ? 0 : 99;
   const total = subtotal + shippingCharge;
+
+  const handleMoveToWishlist = async (item) => {
+    if (!user) {
+      toast.error('Please login to move items to your wishlist');
+      return;
+    }
+    const isInWishlist = wishlistItems.includes(item.product._id);
+    if (!isInWishlist) {
+      dispatch(toggleWishlistItem(item.product._id));
+      try {
+        await userService.toggleWishlist(item.product._id);
+      } catch (err) {
+        dispatch(toggleWishlistItem(item.product._id)); // Revert if API fails
+        toast.error('Failed to update wishlist');
+        return;
+      }
+    }
+    dispatch(removeFromCart(item.key));
+    toast.success('Moved to wishlist ❤️');
+    setActiveRemoveKey(null);
+  };
 
   if (items.length === 0) {
     return (
@@ -52,43 +88,106 @@ const CartPage = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="card p-5 flex gap-4"
+                    className="card p-5 flex flex-col gap-4"
                   >
-                    <Link to={`/product/${item.product.slug}`}>
-                      <img
-                        src={item.product.images?.[0] || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=200'}
-                        alt={item.product.name}
-                        className="w-24 h-24 object-cover rounded-xl flex-shrink-0"
-                      />
-                    </Link>
+                    <div className="flex gap-4">
+                      <Link to={`/product/${item.product.slug}`}>
+                        <img
+                          src={item.product.images?.[0]?.url || item.product.images?.[0] || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=200'}
+                          alt={item.product.name}
+                          className="w-24 h-24 object-cover rounded-xl flex-shrink-0"
+                        />
+                      </Link>
 
-                    <div className="flex-1 min-w-0">
-                      <Link to={`/product/${item.product.slug}`} className="font-semibold text-gray-900 dark:text-white hover:text-primary-500 transition-colors line-clamp-2">{item.product.name}</Link>
-                      {item.variant && (
-                        <p className="text-xs text-gray-400 mt-1">{item.variant.size && `Size: ${item.variant.size}`} {item.variant.color && `Color: ${item.variant.color}`}</p>
-                      )}
-                      <div className="flex items-center justify-between mt-3 flex-wrap gap-3">
-                        <div className="flex items-center gap-2 bg-gray-100 dark:bg-surface-800 rounded-xl p-1">
-                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity - 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
-                            <Minus size={14} />
-                          </button>
-                          <span className="w-6 text-center font-semibold text-sm">{item.quantity}</span>
-                          <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity + 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
-                            <Plus size={14} />
-                          </button>
+                      <div className="flex-1 min-w-0">
+                        <Link to={`/product/${item.product.slug}`} className="font-semibold text-gray-900 dark:text-white hover:text-primary-500 transition-colors line-clamp-2">{item.product.name}</Link>
+                        
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-xs text-gray-400">
+                          {item.variant?.size && <span>Size: {item.variant.size}{getSizeDimensions(item.variant.size)}</span>}
+                          {item.variant?.color && <span>Color: {item.variant.color}</span>}
+                          {item.quantity > 1 && (
+                            <span className="text-gray-400/80">({formatPrice(price)} each)</span>
+                          )}
                         </div>
 
-                        <div className="flex items-center gap-4">
-                          <span className="font-bold text-gray-900 dark:text-white">{formatPrice(price * item.quantity)}</span>
-                          <button
-                            onClick={() => { dispatch(removeFromCart(item.key)); toast.success('Removed from cart'); }}
-                            className="text-gray-400 hover:text-red-500 transition-colors"
-                          >
-                            <Trash2 size={18} />
-                          </button>
+                        {/* Stock status and Free Shipping badges */}
+                        <div className="flex items-center gap-2 mt-2 text-[11px] font-semibold flex-wrap">
+                          <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            In Stock
+                          </span>
+                          <span className="text-gray-300 dark:text-gray-700">•</span>
+                          <span className="text-gray-455 dark:text-gray-400">✓ Free Shipping & Installation</span>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-3 flex-wrap gap-3">
+                          <div className="flex items-center gap-2 bg-gray-100 dark:bg-surface-800 rounded-xl p-1">
+                            <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity - 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
+                              <Minus size={14} />
+                            </button>
+                            <span className="w-6 text-center font-semibold text-sm">{item.quantity}</span>
+                            <button onClick={() => dispatch(updateQuantity({ key: item.key, quantity: item.quantity + 1 }))} className="w-8 h-8 rounded-lg hover:bg-white dark:hover:bg-surface-700 flex items-center justify-center transition-all">
+                              <Plus size={14} />
+                            </button>
+                          </div>
+
+                          <div className="flex items-center gap-4">
+                            <span className="font-bold text-gray-900 dark:text-white">{formatPrice(price * item.quantity)}</span>
+                            <button
+                              onClick={() => {
+                                if (activeRemoveKey === item.key) {
+                                  setActiveRemoveKey(null);
+                                } else {
+                                  setActiveRemoveKey(item.key);
+                                }
+                              }}
+                              className={`transition-colors ${activeRemoveKey === item.key ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
+
+                    {/* Inline remove options dropdown */}
+                    {activeRemoveKey === item.key && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="p-3.5 bg-gray-50 dark:bg-surface-900 rounded-xl border border-gray-150 dark:border-surface-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
+                      >
+                        <div className="font-semibold text-gray-700 dark:text-gray-300">
+                          Remove this item or move it to your wishlist?
+                        </div>
+                        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                          <button
+                            onClick={() => {
+                              dispatch(removeFromCart(item.key));
+                              toast.success('Removed from cart');
+                              setActiveRemoveKey(null);
+                            }}
+                            className="px-3.5 py-2 bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 font-extrabold rounded-lg transition-all cursor-pointer"
+                          >
+                            Remove
+                          </button>
+                          <button
+                            onClick={() => handleMoveToWishlist(item)}
+                            className="px-3.5 py-2 bg-primary-50 hover:bg-primary-100 text-primary-600 dark:text-primary-450 font-extrabold rounded-lg flex items-center gap-1 transition-all cursor-pointer"
+                          >
+                            <Heart size={12} className="fill-current" />
+                            Move to Wishlist
+                          </button>
+                          <button
+                            onClick={() => setActiveRemoveKey(null)}
+                            className="px-3.5 py-2 bg-gray-250 hover:bg-gray-200 dark:bg-surface-800 dark:hover:bg-surface-700 text-gray-650 dark:text-gray-350 font-extrabold rounded-lg transition-all cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.div>
                 );
               })}

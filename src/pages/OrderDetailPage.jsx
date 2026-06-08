@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Calendar, FileText, CheckCircle2, AlertCircle, Phone, Mail, HelpCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -218,38 +218,60 @@ const OrderDetailPage = () => {
                 Items Ordered
               </h3>
               <div className="divide-y divide-surface-100 dark:divide-surface-800">
-                {(order.orderItems || []).map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-surface-200 dark:border-surface-800">
-                      <img
-                        src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop"
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs md:text-sm font-bold text-gray-800 dark:text-gray-200 truncate">
-                        {item.name}
-                      </h4>
-                      {item.variant && Object.keys(item.variant).length > 0 && (
-                        <p className="text-[10px] text-gray-400 font-semibold mt-0.5">
-                          {Object.entries(item.variant)
-                            .filter(([_, val]) => !!val)
-                            .map(([key, val]) => `${key}: ${val}`)
-                            .join(', ')}
+                {(order.orderItems || []).map((item, idx) => {
+                  const hasProductLink = !!item.product?.slug;
+                  const productLinkUrl = `/product/${item.product?.slug}`;
+                  const itemImage = item.image || "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=200&auto=format&fit=crop";
+
+                  return (
+                    <div key={idx} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
+                      <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-surface-200 dark:border-surface-800">
+                        {hasProductLink ? (
+                          <Link to={productLinkUrl} className="block w-full h-full">
+                            <img
+                              src={itemImage}
+                              alt={item.name}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                          </Link>
+                        ) : (
+                          <img
+                            src={itemImage}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs md:text-sm font-bold text-gray-800 dark:text-gray-200 truncate">
+                          {hasProductLink ? (
+                            <Link to={productLinkUrl} className="hover:text-primary-500 transition-colors">
+                              {item.name}
+                            </Link>
+                          ) : (
+                            item.name
+                          )}
+                        </h4>
+                        {item.variant && Object.keys(item.variant).length > 0 && (
+                          <p className="text-[10px] text-gray-400 font-semibold mt-0.5">
+                            {Object.entries(item.variant)
+                              .filter(([_, val]) => !!val)
+                              .map(([key, val]) => `${key}: ${val}`)
+                              .join(', ')}
+                          </p>
+                        )}
+                        <p className="text-xs text-gray-400 mt-1">
+                          INR {item.price.toFixed(2)} × {item.quantity}
                         </p>
-                      )}
-                      <p className="text-xs text-gray-400 mt-1">
-                        INR {item.price.toFixed(2)} × {item.quantity}
-                      </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xs md:text-sm font-extrabold text-surface-600 dark:text-primary-400">
+                          INR {(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <span className="text-xs md:text-sm font-extrabold text-surface-600 dark:text-primary-400">
-                        INR {(item.price * item.quantity).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
