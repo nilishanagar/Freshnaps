@@ -41,7 +41,7 @@ const CustomSizeConfig = ({
           </div>
         </div>
         <span className="text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 px-2.5 py-1 rounded-full">
-          +₹{customSurcharge.toLocaleString('en-IN')}
+          +5% surcharge
         </span>
       </div>
 
@@ -55,7 +55,7 @@ const CustomSizeConfig = ({
                 onClick={() => applyPreset(preset, idx)}
                 className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all ${
                   activePreset === idx
-                    ? 'border-gray-900 dark:border-white bg-gray-900 dark:bg-white text-white dark:text-gray-900'
+                    ? 'border-primary-600 dark:border-primary-500 bg-primary-50 dark:bg-primary-950/20 text-primary-700 dark:text-primary-400 shadow-sm font-bold'
                     : 'border-gray-300 dark:border-surface-600 text-gray-500 dark:text-gray-400 hover:border-gray-500'
                 }`}
               >

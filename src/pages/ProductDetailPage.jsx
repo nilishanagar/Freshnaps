@@ -101,7 +101,8 @@ const ProductDetailPage = () => {
   const isMattress = (product.category?.slug || product.categoryLegacy || product.category) === 'mattress';
   const categorySlug = product.category?.slug || product.categoryLegacy || product.category || '';
 
-  const customSurcharge = 2500;
+  const customSurchargePercent = 5;
+  const customSurcharge = Math.round(((product.discountPrice || product.price) * customSurchargePercent) / 100);
   const basePrice = isCustomSize
     ? (product.price + customSurcharge)
     : (selectedVariant?.price || product.price);
@@ -256,7 +257,7 @@ const ProductDetailPage = () => {
               {/* ── 6. Quantity ── */}
               <div className="flex items-center gap-3">
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  <span className="text-gray-400 mr-1">{(product.variants?.length > 0 || isMattress) ? (product.variants?.some(v => v.color) ? '3.' : '2.') : '1.'}</span> Quantity
+                <span className="text-gray-400 mr-1">{isMattress ? (isCustomSize ? '2.' : '4.') : (product.variants?.length > 0 ? (product.variants?.some(v => v.color) ? '3.' : '2.') : '1.')}</span> Quantity
                 </span>
                 <div className="flex items-center border border-gray-300 dark:border-surface-600 rounded-full overflow-hidden">
                   <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-9 h-9 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-surface-800 transition-colors text-gray-600 dark:text-gray-300">

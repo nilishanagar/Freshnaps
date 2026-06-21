@@ -28,7 +28,7 @@ const PricingSection = ({ displayPrice, basePrice, hasDiscount, discountAmount, 
 
       {isCustomSize && (
         <p className="text-[11px] text-gray-400 mt-1.5 font-medium">
-          Includes custom manufacturing surcharge of ₹{customSurcharge?.toLocaleString('en-IN')}
+          Includes 5% custom manufacturing surcharge (+₹{customSurcharge?.toLocaleString('en-IN')})
         </p>
       )}
 
