@@ -15,6 +15,7 @@ const ProductAccordion = ({ product }) => {
     { label: 'Material', value: product.material },
     { label: 'Weight', value: product.weight ? `${product.weight} kg` : null },
     { label: 'Dimensions', value: product.dimensions?.length ? `${product.dimensions.length}" × ${product.dimensions.width}" × ${product.dimensions.height}"` : null },
+    { label: 'Warranty', value: product.warranty },
     { label: 'Country of Origin', value: 'India' },
     { label: 'Tags', value: product.tags?.length > 0 ? product.tags.join(', ') : null },
   ].filter(r => r.value);

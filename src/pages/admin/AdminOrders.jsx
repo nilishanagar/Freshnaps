@@ -154,7 +154,7 @@ const AdminOrders = () => {
 
     if (activeTab === 'all') return true;
     if (activeTab === 'pending') return ['placed', 'confirmed', 'packed'].includes(order.orderStatus);
-    if (activeTab === 'shipped') return order.orderStatus === 'shipped';
+    if (activeTab === 'returned') return ['returned', 'refunded'].includes(order.orderStatus);
     if (activeTab === 'delivered') return order.orderStatus === 'delivered';
     if (activeTab === 'cancelled') return order.orderStatus === 'cancelled';
     return true;
@@ -227,8 +227,8 @@ const AdminOrders = () => {
           <div className="flex gap-2 flex-wrap">
             {[
               { id: 'all', label: 'All Orders' },
-              { id: 'pending', label: 'Pending Fulfill' },
-              { id: 'shipped', label: 'Shipped' },
+              { id: 'pending', label: 'Pending' },
+              { id: 'returned', label: 'Returned' },
               { id: 'delivered', label: 'Delivered' },
               { id: 'cancelled', label: 'Cancelled' },
             ].map((tab) => (

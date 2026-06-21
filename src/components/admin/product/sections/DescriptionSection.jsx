@@ -41,7 +41,6 @@ const DescriptionSection = ({ form, onChange }) => {
             { id: 'description', label: 'Full Description' },
             { id: 'material', label: 'Material & Construction' },
             { id: 'washCare', label: 'Wash & Care Instructions' },
-            { id: 'warranty', label: 'Warranty Details' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -85,16 +84,6 @@ const DescriptionSection = ({ form, onChange }) => {
               onChange={(e) => handleChange('washCare', e.target.value)}
               className="input w-full resize-none font-sans"
               placeholder="Dry clean recommended. Gentle wash in cold water..."
-            />
-          )}
-
-          {activeTab === 'warranty' && (
-            <textarea
-              rows={5}
-              value={form.warranty || ''}
-              onChange={(e) => handleChange('warranty', e.target.value)}
-              className="input w-full resize-none font-sans"
-              placeholder="e.g. 5-year brand warranty covering structural defects..."
             />
           )}
         </div>

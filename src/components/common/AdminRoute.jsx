@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const AdminRoute = () => {
   const { user } = useSelector(s => s.auth);
-  if (!user || user.role !== 'admin') return <Navigate to="/admin/login" replace />;
+  if (!user || (user.role || '').trim().toLowerCase() !== 'admin') return <Navigate to="/admin/login" replace />;
   return <Outlet />;
 };
 

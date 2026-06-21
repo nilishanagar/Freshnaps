@@ -29,6 +29,13 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
       const newImages = [...images];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        
+        // Client-side file size check: 10MB limit
+        if (file.size > 10 * 1024 * 1024) {
+          toast.error(`"${file.name}" exceeds the maximum upload size of 10MB.`);
+          continue;
+        }
+
         const formData = new FormData();
         formData.append('images', file);
 
@@ -135,7 +142,7 @@ const ImageUploadZone = ({ images = [], onChange, onUploadingChange }) => {
             {loading ? 'Uploading...' : 'Drag & drop your files here, or browse'}
           </div>
           <div className="text-xs text-gray-400 dark:text-gray-500">
-            Supports JPEG, PNG, WebP up to 5MB
+            Supports JPEG, PNG, WebP up to 10MB
           </div>
         </div>
       </div>

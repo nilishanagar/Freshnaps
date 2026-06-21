@@ -412,7 +412,7 @@ const Navbar = () => {
                         <Link to="/profile?tab=orders" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <Package size={15} className="text-gray-400" /> My Orders
                         </Link>
-                        {user.role === 'admin' && (
+                        {(user.role || '').trim().toLowerCase() === 'admin' && (
                           <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-extrabold text-primary-600 dark:text-primary-400 hover:bg-surface-100/60 dark:hover:bg-surface-900 transition-colors" onClick={() => setUserMenuOpen(false)}>
                             <Leaf size={15} /> Admin Panel
                           </Link>

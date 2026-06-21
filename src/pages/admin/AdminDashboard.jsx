@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Package, ShoppingBag, Users, IndianRupee, Clock, TrendingUp, 
@@ -7,7 +7,6 @@ import {
 import { adminService } from '../../services';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
-import io from 'socket.io-client';
 
 const formatPrice = (p) => `₹${(p || 0).toLocaleString('en-IN')}`;
 
@@ -70,7 +69,22 @@ const AdminDashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [liveAlerts, setLiveAlerts] = useState([]);
-  const [socketConnected, setSocketConnected] = useState(false);
+  const [sseConnected, setSseConnected] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const notifRef = useRef(null);
+
+  // Close notification dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setNotifOpen(false);
+      }
+    };
+    if (notifOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [notifOpen]);
 
   // Fetch initial analytical dashboard stats
   const fetchDashboardStats = () => {
@@ -82,36 +96,34 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchDashboardStats();
 
-    // Establish WebSocket connection
-    const socketUrl = process.env.NODE_ENV === 'production' 
-      ? window.location.origin 
-      : 'http://localhost:5000';
+    // Establish SSE connection for real-time admin notifications
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const token = localStorage.getItem('freshnaps_token');
+    const sseUrl = `${apiBase}/admin/sse?token=${encodeURIComponent(token || '')}`;
+    
+    const eventSource = new EventSource(sseUrl, { withCredentials: true });
 
-    const socket = io(socketUrl, {
-      transports: ['websocket', 'polling'],
-      withCredentials: true
+    // Connection opened
+    eventSource.addEventListener('connected', () => {
+      setSseConnected(true);
+      console.log('[SSE] Connected to Admin Notification channel.');
     });
 
-    socket.on('connect', () => {
-      setSocketConnected(true);
-      socket.emit('register_admin');
-      console.log('[SOCKET] Connected to Admin Notification channel.');
+    // Heartbeat keep-alive
+    eventSource.addEventListener('heartbeat', () => {
+      // Connection is alive — no action needed
     });
 
-    socket.on('disconnect', () => {
-      setSocketConnected(false);
-    });
-
-    // Real-time Event 1: New order webhook completion
-    socket.on('new_order', (orderAlert) => {
+    // Real-time Event 1: New order payment completion
+    eventSource.addEventListener('new_order', (e) => {
+      const orderAlert = JSON.parse(e.data);
       playChime();
       
-      // Floating alert display
       const alertId = Date.now();
       const newAlert = {
         id: alertId,
         type: 'order',
-        title: 'New Paid Order Recieved!',
+        title: 'New Paid Order Received!',
         desc: `${orderAlert.name} purchased bedding. Total: ${formatPrice(orderAlert.amount)}`,
         invoice: orderAlert.invoiceNumber
       };
@@ -141,7 +153,8 @@ const AdminDashboard = () => {
     });
 
     // Real-time Event 2: Variant stock warnings
-    socket.on('low_stock', (stockAlert) => {
+    eventSource.addEventListener('low_stock', (e) => {
+      const stockAlert = JSON.parse(e.data);
       playChime();
 
       const alertId = Date.now();
@@ -157,14 +170,24 @@ const AdminDashboard = () => {
       toast.error(
         <div className="flex flex-col gap-1">
           <span className="font-bold flex items-center gap-1"><AlertCircle className="w-3.5 h-3.5 text-rose-500" /> Low Inventory Warn!</span>
-          <span className="text-[11px] text-gray-300">{stockAlert.name} stock level hit ${stockAlert.stock} threshold.</span>
+          <span className="text-[11px] text-gray-300">{stockAlert.name} stock level hit {stockAlert.stock} threshold.</span>
         </div>,
         { duration: 8000, position: 'top-right' }
       );
     });
 
+    // Handle connection errors — EventSource auto-reconnects
+    eventSource.onerror = () => {
+      setSseConnected(false);
+      console.warn('[SSE] Connection lost. Browser will auto-reconnect...');
+    };
+
+    eventSource.onopen = () => {
+      setSseConnected(true);
+    };
+
     return () => {
-      socket.disconnect();
+      eventSource.close();
     };
   }, []);
 
@@ -231,88 +254,124 @@ const AdminDashboard = () => {
           </p>
         </div>
 
-        {/* Live Socket Monitor status */}
-        <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-950 border border-surface-200 dark:border-surface-900 rounded-2xl shadow-sm w-fit">
-          <span className={`w-2.5 h-2.5 rounded-full ${socketConnected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-          <span className="text-xs font-bold text-surface-600 dark:text-gray-300">
-            {socketConnected ? 'WebSocket Channel Active' : 'Disconnected (Offline)'}
-          </span>
+        {/* Notification Bell + Dropdown */}
+        <div className="relative" ref={notifRef}>
+          <button
+            onClick={() => setNotifOpen(!notifOpen)}
+            className="relative p-2.5 rounded-2xl bg-white dark:bg-surface-900 border border-surface-200 dark:border-surface-800 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105"
+            aria-label="Notifications"
+          >
+            <BellRing size={20} className="text-primary-500" />
+            {liveAlerts.length > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-rose-500 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center px-1 animate-bounce shadow-lg">
+                {liveAlerts.length}
+              </span>
+            )}
+          </button>
+
+          <AnimatePresence>
+            {notifOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.18 }}
+                className="absolute top-full right-0 mt-2.5 w-80 sm:w-96 bg-white dark:bg-surface-950 rounded-2xl shadow-2xl border border-surface-200 dark:border-surface-800 overflow-hidden z-50"
+              >
+                {/* Dropdown Header */}
+                <div className="px-5 py-3.5 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between bg-gradient-to-r from-surface-50/80 to-white dark:from-surface-950 dark:to-surface-900">
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <BellRing size={15} className="text-primary-500" />
+                    Notifications
+                  </h3>
+                  {liveAlerts.length > 0 && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setLiveAlerts([]); }}
+                      className="text-[10px] font-bold text-primary-500 hover:text-primary-600 transition-colors ml-1"
+                    >
+                      Clear all
+                    </button>
+                  )}
+                </div>
+
+                {/* Notification List */}
+                <div className="max-h-[360px] overflow-y-auto">
+                  {liveAlerts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-gray-400 text-center px-6">
+                      <div className="w-14 h-14 rounded-full bg-surface-100 dark:bg-surface-900 flex items-center justify-center mb-3">
+                        <BellRing size={24} className="opacity-30" />
+                      </div>
+                      <p className="text-xs font-bold opacity-60">No notifications yet</p>
+                      <p className="text-[10px] mt-1 opacity-40 leading-relaxed">Real-time order and stock alerts will appear here.</p>
+                    </div>
+                  ) : (
+                    <div className="divide-y divide-surface-100 dark:divide-surface-800">
+                      {liveAlerts.map((alert, i) => (
+                        <motion.div
+                          key={alert.id}
+                          initial={{ opacity: 0, x: 12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.04 }}
+                          className={`px-5 py-3.5 hover:bg-surface-50/60 dark:hover:bg-surface-900/50 transition-colors cursor-default ${
+                            i === 0 ? 'bg-primary-50/30 dark:bg-primary-950/10' : ''
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                              alert.type === 'warning'
+                                ? 'bg-rose-100 dark:bg-rose-950/30'
+                                : 'bg-emerald-100 dark:bg-emerald-950/30'
+                            }`}>
+                              <span className="text-base">{alert.type === 'warning' ? '⚠️' : '🎉'}</span>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-bold text-gray-900 dark:text-white leading-tight">
+                                {alert.title}
+                              </p>
+                              <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">
+                                {alert.desc}
+                              </p>
+                              {alert.invoice && (
+                                <span className="inline-block mt-1.5 text-[10px] font-mono font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/20 px-2 py-0.5 rounded-md">
+                                  #{alert.invoice}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* Outer Grid for Stats and Real-time Activity feed */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 mb-8">
-        
-        {/* Main Stats Block */}
-        <div className="xl:col-span-8 space-y-8">
-          
-          {/* Stats grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {statCards.map(({ label, value, icon: Icon, bg, text, change }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                className="bg-white dark:bg-surface-900 rounded-3xl border border-surface-200 dark:border-surface-900/80 p-6 shadow-card hover:shadow-card-hover transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`w-12 h-12 rounded-2xl ${bg} flex items-center justify-center`}>
-                    <Icon size={22} className={text} />
-                  </div>
-                  <span className="flex items-center gap-1 text-xs font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 px-2 py-0.5 rounded-lg">
-                    <TrendingUp size={12} />
-                    {change}
-                  </span>
-                </div>
-                <p className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1 tracking-tight">{value}</p>
-                <p className="text-xs font-bold text-gray-400 dark:text-gray-450 uppercase tracking-wider">{label}</p>
-              </motion.div>
-            ))}
-          </div>
-
-        </div>
-
-        {/* Live Real-time Activity Ticker */}
-        <div className="xl:col-span-4">
-          <div className="bg-white dark:bg-surface-950 rounded-3xl border border-surface-200 dark:border-surface-900 shadow-card p-5 h-full space-y-4">
-            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2 border-b border-surface-100 dark:border-surface-900 pb-3">
-              <BellRing size={16} className="text-primary-500 animate-swing" />
-              Live Order Alerts
-            </h3>
-            
-            <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1">
-              <AnimatePresence initial={false}>
-                {liveAlerts.map(alert => (
-                  <motion.div
-                    key={alert.id}
-                    initial={{ opacity: 0, x: 20, height: 0 }}
-                    animate={{ opacity: 1, x: 0, height: 'auto' }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className={`p-3 rounded-2xl border text-xs ${
-                      alert.type === 'warning'
-                        ? 'bg-rose-50/50 border-rose-200 text-rose-800 dark:bg-rose-950/10 dark:border-rose-900/30 dark:text-rose-300'
-                        : 'bg-green-50/50 border-green-200 text-green-800 dark:bg-green-950/10 dark:border-green-900/30 dark:text-green-300'
-                    }`}
-                  >
-                    <p className="font-extrabold flex items-center gap-1">
-                      {alert.type === 'warning' ? '⚠️' : '🎉'} {alert.title}
-                    </p>
-                    <p className="text-[10px] opacity-80 mt-1 font-semibold leading-relaxed">{alert.desc}</p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-              {liveAlerts.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-10 text-gray-400 text-center">
-                  <Clock size={28} className="mb-2 opacity-30 animate-pulse" />
-                  <p className="text-xs font-bold uppercase tracking-wider opacity-60">Listening to Webhooks...</p>
-                  <p className="text-[10px] mt-0.5 opacity-50 leading-relaxed">Incoming Stripe or Razorpay payments will sound a chime here instantly.</p>
-                </div>
-              )}
+      {/* Stats Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        {statCards.map(({ label, value, icon: Icon, bg, text, change }, i) => (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.08 }}
+            className="bg-white dark:bg-surface-900 rounded-3xl border border-surface-200 dark:border-surface-900/80 p-6 shadow-card hover:shadow-card-hover transition-all duration-300"
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className={`w-12 h-12 rounded-2xl ${bg} flex items-center justify-center`}>
+                <Icon size={22} className={text} />
+              </div>
+              <span className="flex items-center gap-1 text-xs font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 px-2 py-0.5 rounded-lg">
+                <TrendingUp size={12} />
+                {change}
+              </span>
             </div>
-          </div>
-        </div>
-
+            <p className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1 tracking-tight">{value}</p>
+            <p className="text-xs font-bold text-gray-400 dark:text-gray-450 uppercase tracking-wider">{label}</p>
+          </motion.div>
+        ))}
       </div>
 
       {/* Recent orders */}

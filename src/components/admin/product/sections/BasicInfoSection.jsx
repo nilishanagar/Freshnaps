@@ -135,6 +135,20 @@ const BasicInfoSection = ({ form, onChange }) => {
             placeholder="e.g. Premium Foam"
           />
         </div>
+
+        {/* Warranty */}
+        <div>
+          <label className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 block uppercase">
+            Warranty Period
+          </label>
+          <input
+            type="text"
+            value={form.warranty || ''}
+            onChange={(e) => handleChange('warranty', e.target.value)}
+            className="input w-full"
+            placeholder="e.g. 10-year warranty, 5 Years"
+          />
+        </div>
       </div>
     </SectionCard>
   );

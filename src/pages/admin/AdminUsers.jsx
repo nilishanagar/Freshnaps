@@ -28,13 +28,15 @@ const AdminUsers = () => {
   }, []);
 
   const handleRoleChange = async (userId, currentRole) => {
-    if (currentUser?._id === userId) {
+    const user = users.find(u => u._id === userId);
+    if (currentUser?._id === userId || (user && user.email === currentUser?.email)) {
       toast.error('You cannot change your own role');
       return;
     }
 
-    const newRole = currentRole === 'admin' ? 'customer' : 'admin';
-    const confirmMsg = `Are you sure you want to ${currentRole === 'admin' ? 'demote this admin to customer' : 'promote this customer to admin'}?`;
+    const normalizedRole = (currentRole || '').trim().toLowerCase();
+    const newRole = normalizedRole === 'admin' ? 'customer' : 'admin';
+    const confirmMsg = `Are you sure you want to ${normalizedRole === 'admin' ? 'demote this admin to customer' : 'promote this customer to admin'}?`;
     if (!window.confirm(confirmMsg)) return;
 
     try {
@@ -50,12 +52,12 @@ const AdminUsers = () => {
 
   const filteredUsers = users.filter(u => {
     const matchesSearch = u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase());
-    const matchesRole = roleFilter === 'all' || u.role === roleFilter;
+    const matchesRole = roleFilter === 'all' || (u.role || '').trim().toLowerCase() === roleFilter;
     return matchesSearch && matchesRole;
   });
 
-  const adminCount = users.filter(u => u.role === 'admin').length;
-  const customerCount = users.filter(u => u.role === 'customer').length;
+  const adminCount = users.filter(u => (u.role || '').trim().toLowerCase() === 'admin').length;
+  const customerCount = users.filter(u => (u.role || '').trim().toLowerCase() !== 'admin').length;
 
   return (
     <div className="p-6 lg:p-8">
@@ -148,7 +150,7 @@ const AdminUsers = () => {
                 {/* User info */}
                 <div className="col-span-3 flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0 ${
-                    u.role === 'admin' ? 'bg-brand-gradient shadow-brand' : 'bg-gray-400 dark:bg-surface-700'
+                    (u.role || '').trim().toLowerCase() === 'admin' ? 'bg-brand-gradient shadow-brand' : 'bg-gray-400 dark:bg-surface-700'
                   }`}>
                     {u.name?.charAt(0).toUpperCase()}
                   </div>
@@ -162,14 +164,19 @@ const AdminUsers = () => {
 
                 {/* Role */}
                 <div className="col-span-2 flex items-center">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold ${
-                    u.role === 'admin'
-                      ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
-                      : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                  }`}>
-                    {u.role === 'admin' ? <ShieldCheck size={12} /> : <User size={12} />}
-                    {u.role}
-                  </span>
+                  {(() => {
+                    const isAdmin = (u.role || '').trim().toLowerCase() === 'admin';
+                    return (
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold ${
+                        isAdmin
+                          ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
+                          : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      }`}>
+                        {isAdmin ? <ShieldCheck size={12} /> : <User size={12} />}
+                        {isAdmin ? 'admin' : 'customer'}
+                      </span>
+                    );
+                  })()}
                 </div>
 
                 {/* Phone */}
@@ -198,21 +205,26 @@ const AdminUsers = () => {
 
                 {/* Actions */}
                 <div className="col-span-2 flex justify-end">
-                  {u._id !== currentUser?._id ? (
-                    <button
-                      onClick={() => handleRoleChange(u._id, u.role)}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                        u.role === 'admin'
-                          ? 'border-red-200 text-red-600 bg-red-50 hover:bg-red-100 dark:border-red-900/30 dark:text-red-400 dark:bg-red-900/10'
-                          : 'border-primary-200 text-primary-600 bg-primary-50 hover:bg-primary-100 dark:border-primary-900/30 dark:text-primary-400 dark:bg-primary-900/10'
-                      }`}
-                    >
-                      <UserCog size={13} />
-                      {u.role === 'admin' ? 'Demote User' : 'Make Admin'}
-                    </button>
-                  ) : (
-                    <span className="text-xs text-gray-400 dark:text-gray-500 italic pr-2">Current Admin</span>
-                  )}
+                  {(() => {
+                    const isAdmin = (u.role || '').trim().toLowerCase() === 'admin';
+                    const isSelf = u._id === currentUser?._id || u.email === currentUser?.email;
+                    if (isSelf) {
+                      return <span className="text-xs text-gray-400 dark:text-gray-500 italic pr-2">Current Admin</span>;
+                    }
+                    return (
+                      <button
+                        onClick={() => handleRoleChange(u._id, u.role)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                          isAdmin
+                            ? 'border-red-200 text-red-600 bg-red-50 hover:bg-red-100 dark:border-red-900/30 dark:text-red-400 dark:bg-red-900/10'
+                            : 'border-primary-200 text-primary-600 bg-primary-50 hover:bg-primary-100 dark:border-primary-900/30 dark:text-primary-400 dark:bg-primary-900/10'
+                        }`}
+                      >
+                        <UserCog size={13} />
+                        {isAdmin ? 'Demote User' : 'Make Admin'}
+                      </button>
+                    );
+                  })()}
                 </div>
               </motion.div>
             ))}
