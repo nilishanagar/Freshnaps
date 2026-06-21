@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Star } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleWishlistItem } from '../../store/slices/wishlistSlice';
 import { userService } from '../../services';
+import LoginPromptModal from './LoginPromptModal';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
@@ -15,11 +16,15 @@ const ProductCard = ({ product }) => {
   const wishlist = useSelector(s => s.wishlist.items);
   const user = useSelector(s => s.auth.user);
   const isWishlisted = wishlist.includes(product._id);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const handleWishlist = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!user) return toast.error('Please login to save to wishlist');
+    if (!user) {
+      setShowLoginPrompt(true);
+      return;
+    }
 
     dispatch(toggleWishlistItem(product._id));
     
@@ -49,13 +54,14 @@ const ProductCard = ({ product }) => {
     'Orthopedic Foam';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25 }}
-      className="group flex flex-col h-full bg-white dark:bg-surface-900 rounded-2xl overflow-hidden"
-    >
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -4 }}
+        transition={{ duration: 0.25 }}
+        className="group flex flex-col h-full bg-white dark:bg-surface-900 rounded-2xl overflow-hidden"
+      >
       <Link to={`/product/${product.slug}`} className="block h-full flex flex-col">
         {/* ── Visual Frame (Image area) ── */}
         <div className="relative overflow-hidden bg-surface-100 dark:bg-surface-950 aspect-square w-full">
@@ -124,7 +130,14 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </Link>
-    </motion.div>
+      </motion.div>
+
+      <LoginPromptModal
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+        action="wishlist"
+      />
+    </>
   );
 };
 

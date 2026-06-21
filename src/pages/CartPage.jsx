@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,6 +6,7 @@ import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag, Heart } from 'lucide
 import { removeFromCart, updateQuantity, selectCartItems, selectCartSubtotal } from '../store/slices/cartSlice';
 import { toggleWishlistItem } from '../store/slices/wishlistSlice';
 import { userService } from '../services';
+import LoginPromptModal from '../components/common/LoginPromptModal';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
@@ -29,13 +30,14 @@ const CartPage = () => {
   const wishlistItems = useSelector(s => s.wishlist.items);
   const [coupon, setCoupon] = React.useState('');
   const [activeRemoveKey, setActiveRemoveKey] = React.useState(null);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const shippingCharge = subtotal >= 999 ? 0 : 99;
   const total = subtotal + shippingCharge;
 
   const handleMoveToWishlist = async (item) => {
     if (!user) {
-      toast.error('Please login to move items to your wishlist');
+      setShowLoginPrompt(true);
       return;
     }
     const isInWishlist = wishlistItems.includes(item.product._id);
@@ -247,7 +249,13 @@ const CartPage = () => {
           </div>
         </div>
       </div>
-    </div>
+
+    <LoginPromptModal
+      isOpen={showLoginPrompt}
+      onClose={() => setShowLoginPrompt(false)}
+      action="wishlist"
+    />
+  </div>
   );
 };
 

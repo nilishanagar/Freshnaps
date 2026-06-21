@@ -10,6 +10,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { toggleWishlistItem } from '../store/slices/wishlistSlice';
 import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import LoginPromptModal from '../components/common/LoginPromptModal';
 import toast from 'react-hot-toast';
 
 // ─── Product Sub-Components ───
@@ -44,6 +45,10 @@ const ProductDetailPage = () => {
   const [activeImg, setActiveImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(null);
+
+  // Login prompt modal state
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [loginPromptAction, setLoginPromptAction] = useState('wishlist');
 
   // Custom Size (mattress)
   const [isCustomSize, setIsCustomSize] = useState(false);
@@ -128,12 +133,21 @@ const ProductDetailPage = () => {
   };
 
   const handleBuyNow = () => {
+    if (!user) {
+      setLoginPromptAction('buy');
+      setShowLoginPrompt(true);
+      return;
+    }
     handleAddToCart();
     navigate('/checkout');
   };
 
   const handleWishlist = async () => {
-    if (!user) return toast.error('Please login to save to wishlist');
+    if (!user) {
+      setLoginPromptAction('wishlist');
+      setShowLoginPrompt(true);
+      return;
+    }
     dispatch(toggleWishlistItem(product._id));
     try {
       await userService.toggleWishlist(product._id);
@@ -361,6 +375,13 @@ const ProductDetailPage = () => {
         onAddToCart={handleAddToCart}
         onBuyNow={handleBuyNow}
         isOutOfStock={product.stock === 0}
+      />
+
+      {/* Login Prompt Modal */}
+      <LoginPromptModal
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+        action={loginPromptAction}
       />
     </div>
   );
