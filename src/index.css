@@ -307,7 +307,62 @@
     animation-delay: 300ms;
   }
 
-  .animate-delay-400 {
+  .animate-delay-455 {
     animation-delay: 400ms;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIPTAP / PROSEMIRROR RICH TEXT EDITOR STYLES
+   ═══════════════════════════════════════════════════════════════ */
+.ProseMirror {
+  outline: none !important;
+  min-height: 180px;
+}
+
+.ProseMirror:focus {
+  outline: none !important;
+  border-color: transparent !important;
+}
+
+.ProseMirror p {
+  margin-bottom: 0.75rem;
+}
+
+.ProseMirror ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.25rem;
+}
+
+.ProseMirror a {
+  @apply text-primary-500 underline hover:text-primary-600;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 border-gray-300 dark:border-surface-700 pl-4 italic my-4;
+}
+
+.ProseMirror h1 {
+  @apply text-2xl font-bold mb-3 mt-4;
+}
+
+.ProseMirror h2 {
+  @apply text-xl font-bold mb-2 mt-3;
+}
+
+.ProseMirror h3 {
+  @apply text-lg font-bold mb-2 mt-3;
 }
