@@ -162,9 +162,9 @@ const ImageGallery = ({
             </div>
 
             {/* View real images link */}
-            <button className="flex items-center gap-1.5 mx-auto mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {/* <button className="flex items-center gap-1.5 mx-auto mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               <ImageIcon size={13} /> View real images
-            </button>
+            </button> */}
           </div>
         </div>
 

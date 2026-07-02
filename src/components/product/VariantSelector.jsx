@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Ruler } from 'lucide-react';
+import { calculateFreshNapsPrice, parseMattressDimensions } from '../../utils/pricingUtils';
 
 /* ═══════════════════════════════════════════════════════
    MATTRESS SIZE DATA — Based on standard Indian sizes
@@ -39,6 +40,7 @@ const VariantSelector = ({
   images,
   setActiveImg,
   setActivePreset,
+  productPrice,
 }) => {
   // Mattress-specific state
   const [selectedBeddingSize, setSelectedBeddingSize] = useState('Single');
@@ -56,19 +58,36 @@ const VariantSelector = ({
     }
   };
 
-  // Build a virtual variant from mattress selections
+  // Build a virtual variant from mattress selections with dynamic pricing
   const handleMattressSizeChange = (beddingSize, size, thickness) => {
     setIsCustomSize(false);
     setActivePreset?.(null);
     const label = `${size} - ${thickness} (${beddingSize})`;
+
+    // Parse L×W from the size string (e.g. '72"x36"')
+    const dims = parseMattressDimensions(size);
+    // Parse thickness number (e.g. '5 inch' → 5)
+    const thicknessNum = parseInt(thickness, 10) || 5;
+
+    // Calculate volume-based price
+    let calculatedPrice = 0;
+    if (dims && productPrice) {
+      calculatedPrice = calculateFreshNapsPrice(
+        productPrice, dims.length, dims.width, thicknessNum
+      );
+    }
+
     // Create a virtual variant object for the cart
     const virtualVariant = {
       size: label,
       beddingSize,
       dimensions: size,
       thickness,
-      price: selectedVariant?.price || 0,
+      price: calculatedPrice || selectedVariant?.price || 0,
       stock: selectedVariant?.stock,
+      customLength: dims?.length,
+      customWidth: dims?.width,
+      customThickness: thicknessNum,
     };
     setSelectedVariant(virtualVariant);
   };

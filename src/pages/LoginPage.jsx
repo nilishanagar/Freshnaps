@@ -8,6 +8,7 @@ import { loginStart, loginSuccess, loginFailure } from '../store/slices/authSlic
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff, Mail, Lock, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
+import freshnapsLogo from '../assets/freshnaps-logo.png';
 import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
@@ -134,12 +135,7 @@ const LoginPage = () => {
           {/* Logo Brand Header */}
           <div className="text-center mb-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center shadow-brand">
-                <span className="text-white font-display font-bold text-sm">FN</span>
-              </div>
-              <span className="font-display font-bold text-xl text-surface-950 dark:text-primary-300">
-                Fresh<span className="text-primary-500">naps</span>
-              </span>
+              <img src={freshnapsLogo} alt="Freshnaps" className="h-10 w-auto object-contain" />
             </Link>
             <h1 className="font-display text-xl md:text-2xl font-extrabold text-surface-600 dark:text-white">
               Secure Sign In

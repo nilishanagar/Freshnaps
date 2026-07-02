@@ -53,7 +53,8 @@ export const selectCartSubtotal = (state) =>
   state.cart.items.reduce((acc, i) => {
     let price = i.product.discountPrice > 0 ? i.product.discountPrice : i.product.price;
     if (i.variant) {
-      if (i.variant.isCustom) {
+      if (i.variant.isCustom || i.variant.priceCalculated) {
+        // Price is already the final selling price (mattress volume-based pricing)
         price = i.variant.price;
       } else if (i.variant.price) {
         const discountAmount = i.product.discountPrice > 0 ? (i.product.price - i.product.discountPrice) : 0;

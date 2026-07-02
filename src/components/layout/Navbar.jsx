@@ -547,7 +547,7 @@ const Navbar = () => {
       </AnimatePresence>
 
       {/* Spacer: announcement bar (28px) + navbar (64/72px) */}
-      <div className="h-[92px] md:h-[100px]" />
+      <div className="h-[100px] md:h-[120px]" />
     </>
   );
 };

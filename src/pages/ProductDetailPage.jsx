@@ -12,6 +12,7 @@ import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import LoginPromptModal from '../components/common/LoginPromptModal';
 import toast from 'react-hot-toast';
+import { calculateFreshNapsPrice } from '../utils/pricingUtils';
 
 // ─── Product Sub-Components ───
 import ImageGallery from '../components/product/ImageGallery';
@@ -101,16 +102,52 @@ const ProductDetailPage = () => {
   const isMattress = (product.category?.slug || product.categoryLegacy || product.category) === 'mattress';
   const categorySlug = product.category?.slug || product.categoryLegacy || product.category || '';
 
-  const customSurchargePercent = 5;
-  const customSurcharge = Math.round(((product.discountPrice || product.price) * customSurchargePercent) / 100);
-  const basePrice = isCustomSize
-    ? (product.price + customSurcharge)
-    : (selectedVariant?.price || product.price);
-  const discountAmount = hasDiscount ? (product.price - product.discountPrice) : 0;
-  const displayPrice = isCustomSize
-    ? ((product.discountPrice || product.price) + customSurcharge)
-    : (selectedVariant?.price ? (selectedVariant.price - discountAmount) : (hasDiscount ? product.discountPrice : product.price));
-  const discountPct = hasDiscount ? Math.round((discountAmount / product.price) * 100) : 0;
+  // ─── Mattress Volume-Based Pricing ───
+  // product.price = MRP for reference 72×72×5
+  // product.discountPrice = selling price for reference 72×72×5
+  // For mattresses: prices are computed dynamically via calculateFreshNapsPrice()
+  // For non-mattresses: use standard product pricing
+
+  let displayPrice, basePrice, discountPct;
+
+  if (isMattress && selectedVariant?.price) {
+    // Variant price is already the calculated MRP-based price from VariantSelector
+    const variantMRP = selectedVariant.price;
+    // If product has a discount, calculate the same proportional discount on the variant price
+    if (hasDiscount) {
+      const discountRatio = (product.price - product.discountPrice) / product.price;
+      displayPrice = Math.round(variantMRP * (1 - discountRatio));
+      basePrice = variantMRP;
+      discountPct = Math.round(discountRatio * 100);
+    } else {
+      displayPrice = variantMRP;
+      basePrice = variantMRP;
+      discountPct = 0;
+    }
+  } else if (isMattress && isCustomSize && customLength && customWidth && customThickness) {
+    // Custom size: calculate from entered dimensions
+    const customMRP = calculateFreshNapsPrice(product.price, Number(customLength), Number(customWidth), Number(customThickness));
+    if (hasDiscount) {
+      const discountRatio = (product.price - product.discountPrice) / product.price;
+      displayPrice = Math.round(customMRP * (1 - discountRatio));
+      basePrice = customMRP;
+      discountPct = Math.round(discountRatio * 100);
+    } else {
+      displayPrice = customMRP;
+      basePrice = customMRP;
+      discountPct = 0;
+    }
+  } else {
+    // Non-mattress or fallback
+    basePrice = selectedVariant?.price || product.price;
+    const discountAmount = hasDiscount ? (product.price - product.discountPrice) : 0;
+    displayPrice = selectedVariant?.price
+      ? (selectedVariant.price - discountAmount)
+      : (hasDiscount ? product.discountPrice : product.price);
+    discountPct = hasDiscount ? Math.round(discountAmount / product.price * 100) : 0;
+  }
+
+  const discountAmount = hasDiscount ? (basePrice - displayPrice) : 0;
 
   // ─── Handlers ───
   const handleAddToCart = () => {
@@ -119,12 +156,32 @@ const ProductDetailPage = () => {
         toast.error('Please enter length, width, and thickness for custom size');
         return;
       }
+      // Calculate the selling price for custom dimensions
+      const customMRP = calculateFreshNapsPrice(product.price, Number(customLength), Number(customWidth), Number(customThickness));
+      let customSellingPrice = customMRP;
+      if (hasDiscount) {
+        const discountRatio = (product.price - product.discountPrice) / product.price;
+        customSellingPrice = Math.round(customMRP * (1 - discountRatio));
+      }
       dispatch(addToCart({
         product, quantity,
         variant: {
           size: `Custom (${customLength}×${customWidth}×${customThickness} in)`,
-          price: hasDiscount ? (product.discountPrice + customSurcharge) : (product.price + customSurcharge),
-          isCustom: true, customLength, customWidth, customThickness,
+          price: customSellingPrice,
+          isCustom: true, customLength: Number(customLength), customWidth: Number(customWidth), customThickness: Number(customThickness),
+        },
+      }));
+    } else if (isMattress && selectedVariant) {
+      // Standard mattress size — use the dynamically-calculated price from variant
+      dispatch(addToCart({
+        product, quantity,
+        variant: {
+          ...selectedVariant,
+          price: displayPrice,  // selling price (with discount applied)
+          priceCalculated: true, // flag: price is final, don't subtract discount again
+          customLength: selectedVariant.customLength,
+          customWidth: selectedVariant.customWidth,
+          customThickness: selectedVariant.customThickness,
         },
       }));
     } else {
@@ -168,14 +225,14 @@ const ProductDetailPage = () => {
       {/* ─── Breadcrumb ─── */}
       <div className="border-b border-gray-100 dark:border-surface-800 bg-gray-50 dark:bg-surface-900">
         <div className="container-custom py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-gray-500">
-            <Link to="/" className="hover:text-primary-600 transition-colors">Home</Link>
-            <ChevronRight size={11} />
-            <Link to="/shop" className="hover:text-primary-600 transition-colors">Shop</Link>
-            <ChevronRight size={11} />
-            <Link to={`/shop?category=${categorySlug}`} className="hover:text-primary-600 transition-colors capitalize">{product.category?.name || categorySlug}</Link>
-            <ChevronRight size={11} />
-            <span className="text-gray-600 dark:text-gray-300 font-medium truncate max-w-[200px]">{product.name}</span>
+          <nav className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Home</Link>
+            <ChevronRight size={11} className="text-gray-400 dark:text-gray-500" />
+            <Link to="/shop" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Shop</Link>
+            <ChevronRight size={11} className="text-gray-400 dark:text-gray-500" />
+            <Link to={`/shop?category=${categorySlug}`} className="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium capitalize">{product.category?.name || categorySlug}</Link>
+            <ChevronRight size={11} className="text-gray-400 dark:text-gray-500" />
+            <span className="text-gray-800 dark:text-gray-100 font-semibold truncate max-w-[200px]">{product.name}</span>
           </nav>
         </div>
       </div>
@@ -221,8 +278,7 @@ const ProductDetailPage = () => {
                 hasDiscount={hasDiscount}
                 discountAmount={discountAmount}
                 discountPct={discountPct}
-                isCustomSize={isCustomSize}
-                customSurcharge={customSurcharge}
+                isCustomSize={isCustomSize && isMattress}
               />
 
               {/* ── 3. USP Icons (2x2) ── */}
@@ -240,6 +296,7 @@ const ProductDetailPage = () => {
                   images={product.images}
                   setActiveImg={setActiveImg}
                   setActivePreset={setActivePreset}
+                  productPrice={product.price}
                 />
               )}
 
@@ -250,7 +307,7 @@ const ProductDetailPage = () => {
                   customWidth={customWidth} setCustomWidth={setCustomWidth}
                   customThickness={customThickness} setCustomThickness={setCustomThickness}
                   activePreset={activePreset} setActivePreset={setActivePreset}
-                  customSurcharge={customSurcharge}
+                  productPrice={product.price}
                 />
               )}
 
@@ -335,13 +392,15 @@ const ProductDetailPage = () => {
            BELOW THE FOLD
          ═══════════════════════════════════════════════════ */}
       <div className="bg-gray-50 dark:bg-surface-900 border-t border-gray-100 dark:border-surface-800">
-        <div className="container-custom py-16 space-y-16">
+        <div className="container-custom pt-8 pb-12 space-y-8">
 
-          {/* Trust Badges */}
+          {/* Trust Ba
+          dges */}
           <TrustBadges warranty={product.warranty} />
 
-          {/* Frequently Bought Together */}
+          {/* Frequently Bought Together
           <FrequentlyBoughtTogether currentProduct={product} relatedProducts={relatedProducts} />
+          */}
 
           {/* Reviews */}
           <ReviewSection product={product} user={user} />

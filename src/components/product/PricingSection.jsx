@@ -2,7 +2,7 @@ import React from 'react';
 
 const formatPrice = (p) => `₹${p?.toLocaleString('en-IN')}`;
 
-const PricingSection = ({ displayPrice, basePrice, hasDiscount, discountAmount, discountPct, isCustomSize, customSurcharge }) => {
+const PricingSection = ({ displayPrice, basePrice, hasDiscount, discountAmount, discountPct, isCustomSize }) => {
   const emi = displayPrice ? Math.round(displayPrice / 3) : 0;
 
   return (
@@ -28,7 +28,7 @@ const PricingSection = ({ displayPrice, basePrice, hasDiscount, discountAmount, 
 
       {isCustomSize && (
         <p className="text-[11px] text-gray-400 mt-1.5 font-medium">
-          Includes 5% custom manufacturing surcharge (+₹{customSurcharge?.toLocaleString('en-IN')})
+          Includes 7% custom manufacturing surcharge
         </p>
       )}
 
@@ -48,3 +48,4 @@ const PricingSection = ({ displayPrice, basePrice, hasDiscount, discountAmount, 
 };
 
 export default PricingSection;
+

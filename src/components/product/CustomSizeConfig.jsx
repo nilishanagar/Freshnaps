@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Ruler, Check, Info } from 'lucide-react';
+import { calculateFreshNapsPrice } from '../../utils/pricingUtils';
 
 const CUSTOM_SIZE_PRESETS = [
   { label: 'Single Bed', length: 72, width: 36, thickness: 5 },
@@ -15,8 +16,12 @@ const CustomSizeConfig = ({
   customWidth, setCustomWidth,
   customThickness, setCustomThickness,
   activePreset, setActivePreset,
-  customSurcharge,
+  productPrice,
 }) => {
+  // Calculate dynamic price for the entered custom dimensions
+  const customCalculatedPrice = (customLength && customWidth && customThickness && productPrice)
+    ? calculateFreshNapsPrice(productPrice, Number(customLength), Number(customWidth), Number(customThickness))
+    : 0;
   const applyPreset = (preset, idx) => {
     setActivePreset(idx);
     setCustomLength(String(preset.length));
@@ -41,7 +46,7 @@ const CustomSizeConfig = ({
           </div>
         </div>
         <span className="text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 px-2.5 py-1 rounded-full">
-          +5% surcharge
+          +7% custom surcharge
         </span>
       </div>
 
@@ -89,7 +94,12 @@ const CustomSizeConfig = ({
               <Check size={14} className="text-primary-500" />
               <span className="text-xs font-bold text-gray-800 dark:text-white">Your Custom Size</span>
             </div>
-            <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{customLength}" × {customWidth}" × {customThickness}"</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{customLength}" × {customWidth}" × {customThickness}"</span>
+              {customCalculatedPrice > 0 && (
+                <span className="text-xs font-extrabold text-primary-600 dark:text-primary-400">₹{customCalculatedPrice.toLocaleString('en-IN')}</span>
+              )}
+            </div>
           </motion.div>
         )}
 

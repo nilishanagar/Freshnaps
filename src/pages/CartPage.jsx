@@ -80,7 +80,7 @@ const CartPage = () => {
             <AnimatePresence>
               {items.map(item => {
                 const discountAmount = item.product.discountPrice > 0 ? (item.product.price - item.product.discountPrice) : 0;
-                const price = item.variant?.isCustom 
+                const price = (item.variant?.isCustom || item.variant?.priceCalculated)
                   ? item.variant.price 
                   : (item.variant?.price ? (item.variant.price - discountAmount) : (item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price));
                 return (
