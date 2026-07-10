@@ -244,17 +244,20 @@ const Navbar = () => {
                         </ul>
                       </div>
 
-                      {/* Column 4: Premium Sleep Advisor Card */}
-                      <div className="bg-[#F8FAFC] dark:bg-surface-950/60 rounded-2xl p-5 border border-primary-100/50 dark:border-surface-900/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card">
+                      {/* Column 4: Premium Sleep Advisor Card — Coming Soon */}
+                      <div className="bg-[#F8FAFC] dark:bg-surface-950/60 rounded-2xl p-5 border border-primary-100/50 dark:border-surface-900/80 flex flex-col justify-between shadow-inner relative overflow-hidden group/card opacity-80">
                         <div className="absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-primary-200/10 dark:bg-primary-500/5 blur-xl group-hover/card:scale-125 transition-transform duration-500" />
                         <div>
-                          <span className="text-[9px] font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-widest block mb-1">AI Advisor</span>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[9px] font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-widest">AI Advisor</span>
+                            {/* <span className="text-[8px] font-extrabold text-amber-600 dark:text-amber-400 uppercase tracking-widest bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded-full">Coming Soon</span> */}
+                          </div>
                           <h4 className="font-bold text-gray-900 dark:text-white text-sm leading-tight mb-2">Find Your Mattress</h4>
                           <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-normal">Answer 4 quick sleep behavior questions to unlock your custom recommendation.</p>
                         </div>
-                        <Link to="/" className="w-full text-center mt-4 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5">
-                          Start Advisor
-                        </Link>
+                        <button disabled className="w-full text-center mt-4 px-4 py-2.5 bg-gray-300 dark:bg-surface-800 text-gray-500 dark:text-gray-500 font-extrabold text-xs rounded-xl cursor-not-allowed">
+                          Coming Soon
+                        </button>
                       </div>
                     </div>
 

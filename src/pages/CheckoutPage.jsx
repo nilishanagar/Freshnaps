@@ -42,7 +42,7 @@ const CheckoutPage = () => {
   const [simulateFailure, setSimulateFailure] = useState(false);
 
   // Active payment category (accordion state)
-  const [paymentType, setPaymentType] = useState('UPI'); // UPI, Card, NetBanking, Wallet, COD
+  const [paymentType, setPaymentType] = useState('COD'); // UPI, Card, NetBanking, Wallet, COD
 
   // UPI Specific state
   const [upiProvider, setUpiProvider] = useState('gpay'); // gpay, phonepe, paytm, bhim, other
@@ -254,8 +254,8 @@ const CheckoutPage = () => {
       upiDiscount = 150;
     }
 
-    // COD handling fee of ₹49 for COD under ₹2500
-    const codCharge = (paymentType === 'COD' && subtotal < 2500) ? 49 : 0;
+    // COD handling fee of ₹49 is removed as per user request
+    const codCharge = 0;
 
     const totalDiscount = discountAmount + upiDiscount;
     const finalShippingCharge = appliedCoupon?.type === 'freeship' ? 0 : shippingCharge;
@@ -550,30 +550,95 @@ const CheckoutPage = () => {
 
                   {/* Accordion List */}
                   <div className="border border-surface-200 dark:border-surface-900 rounded-2xl overflow-hidden divide-y divide-surface-100 dark:divide-surface-900">
-                    
-                    {/* 1. UPI Payments */}
-                    <div className={`transition-all ${paymentType === 'UPI' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
+
+                    {/* 5. Cash on Delivery (COD) */}
+                    <div className={`transition-all ${paymentType === 'COD' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
                       <button
-                        onClick={() => setPaymentType('UPI')}
+                        onClick={() => setPaymentType('COD')}
                         className="w-full flex items-center justify-between p-5 text-left font-bold"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'UPI' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
-                            {paymentType === 'UPI' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
+                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'COD' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
+                            {paymentType === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                           </div>
                           <div>
                             <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
+                              Cash on Delivery (COD)
+                            </span>
+                            <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Pay when you receive your sleep products</span>
+                          </div>
+                        </div>
+                      </button>
+
+                      {/* Pincode eligibility check accordion is commented out so COD is instantly available */}
+                      {/* <AnimatePresence initial={false}>
+                        {paymentType === 'COD' && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
+                              
+                              <div className="bg-surface-50/30 dark:bg-surface-950 p-4 rounded-xl border border-surface-100/50 dark:border-surface-900/80 space-y-2">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Verify Pincode Eligibility for COD</label>
+                                <div className="flex gap-2">
+                                  <input
+                                    type="text"
+                                    value={pincodeCheck}
+                                    onChange={(e) => {
+                                      setPincodeCheck(e.target.value.replace(/\D/g, ''));
+                                      setPincodeStatus('unchecked');
+                                    }}
+                                    placeholder="E.g. 400001"
+                                    className="input flex-1"
+                                    maxLength="6"
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={handleCheckPincode}
+                                    disabled={pincodeStatus === 'checking'}
+                                    className="px-4 py-2.5 bg-surface-600 hover:bg-surface-700 dark:bg-surface-900 text-xs font-bold text-white rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
+                                  >
+                                    {pincodeStatus === 'checking' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : 'Check'}
+                                  </button>
+                                </div>
+
+                                {pincodeStatus === 'eligible' && (
+                                  <p className="text-[11px] text-green-500 font-bold flex items-center gap-1 mt-1">
+                                    <CheckCircle className="w-3.5 h-3.5" /> This pincode is eligible for cash on delivery.
+                                  </p>
+                                )}
+
+                                {pincodeStatus === 'ineligible' && (
+                                  <p className="text-[11px] text-rose-500 font-bold flex items-center gap-1 mt-1">
+                                    <AlertTriangle className="w-3.5 h-3.5" /> Sorry, COD is not supported at this pincode location.
+                                  </p>
+                                )}
+                              </div>
+
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence> */}
+                    </div>
+
+                    {/* 1. UPI Payments */}
+                    <div className={`transition-all ${paymentType === 'UPI' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
+                      <div className="w-full flex items-center justify-between p-5 text-left font-bold opacity-50 pointer-events-none bg-gray-50/50 dark:bg-surface-900/10 select-none">
+                        <div className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full border border-gray-300 dark:border-surface-800 flex items-center justify-center" />
+                          <div>
+                            <span className="text-sm font-extrabold text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                               UPI Payments
-                              <span className="badge bg-green-100 text-green-700 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md animate-pulse">Instant Payment</span>
-                              <span className="badge bg-primary-500 text-white text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Recommended</span>
+                              <span className="badge bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Coming Soon</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Google Pay, PhonePe, Paytm, QR Code</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 text-[10px] text-green-500 uppercase font-extrabold bg-green-50 dark:bg-green-950/20 px-2 py-0.5 rounded-lg">
-                          <Sparkles className="w-3 h-3" /> Save ₹150
-                        </div>
-                      </button>
+                      </div>
 
                       <AnimatePresence initial={false}>
                         {paymentType === 'UPI' && (
@@ -697,23 +762,18 @@ const CheckoutPage = () => {
 
                     {/* 2. Credit & Debit Cards */}
                     <div className={`transition-all ${paymentType === 'Card' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
-                      <button
-                        onClick={() => setPaymentType('Card')}
-                        className="w-full flex items-center justify-between p-5 text-left font-bold"
-                      >
+                      <div className="w-full flex items-center justify-between p-5 text-left font-bold opacity-50 pointer-events-none bg-gray-50/50 dark:bg-surface-900/10 select-none">
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Card' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
-                            {paymentType === 'Card' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
-                          </div>
+                          <div className="w-5 h-5 rounded-full border border-gray-300 dark:border-surface-800 flex items-center justify-center" />
                           <div>
-                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                               Credit & Debit Cards
-                              <span className="badge bg-primary-100 text-primary-700 dark:bg-surface-900 dark:text-primary-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">SSL Secured</span>
+                              <span className="badge bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Coming Soon</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Visa, Mastercard, RuPay, Amex • EMI Options</span>
                           </div>
                         </div>
-                      </button>
+                      </div>
 
                       <AnimatePresence initial={false}>
                         {paymentType === 'Card' && (
@@ -871,22 +931,18 @@ const CheckoutPage = () => {
 
                     {/* 3. Net Banking */}
                     <div className={`transition-all ${paymentType === 'NetBanking' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
-                      <button
-                        onClick={() => setPaymentType('NetBanking')}
-                        className="w-full flex items-center justify-between p-5 text-left font-bold"
-                      >
+                      <div className="w-full flex items-center justify-between p-5 text-left font-bold opacity-50 pointer-events-none bg-gray-50/50 dark:bg-surface-900/10 select-none">
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'NetBanking' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
-                            {paymentType === 'NetBanking' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
-                          </div>
+                          <div className="w-5 h-5 rounded-full border border-gray-300 dark:border-surface-800 flex items-center justify-center" />
                           <div>
-                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                               Net Banking
+                              <span className="badge bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Coming Soon</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Select from popular Indian Banks</span>
                           </div>
                         </div>
-                      </button>
+                      </div>
 
                       <AnimatePresence initial={false}>
                         {paymentType === 'NetBanking' && (
@@ -971,22 +1027,18 @@ const CheckoutPage = () => {
 
                     {/* 4. Wallets */}
                     <div className={`transition-all ${paymentType === 'Wallet' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
-                      <button
-                        onClick={() => setPaymentType('Wallet')}
-                        className="w-full flex items-center justify-between p-5 text-left font-bold"
-                      >
+                      <div className="w-full flex items-center justify-between p-5 text-left font-bold opacity-50 pointer-events-none bg-gray-50/50 dark:bg-surface-900/10 select-none">
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'Wallet' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
-                            {paymentType === 'Wallet' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
-                          </div>
+                          <div className="w-5 h-5 rounded-full border border-gray-300 dark:border-surface-800 flex items-center justify-center" />
                           <div>
-                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
+                            <span className="text-sm font-extrabold text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                               Mobile Wallets
+                              <span className="badge bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400 text-[9px] uppercase font-bold py-0.5 px-1.5 rounded-md">Coming Soon</span>
                             </span>
                             <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Paytm, Amazon Pay, Mobikwik, Freecharge</span>
                           </div>
                         </div>
-                      </button>
+                      </div>
 
                       <AnimatePresence initial={false}>
                         {paymentType === 'Wallet' && (
@@ -1056,104 +1108,6 @@ const CheckoutPage = () => {
                       </AnimatePresence>
                     </div>
 
-                    {/* 5. Cash on Delivery (COD) */}
-                    <div className={`transition-all ${paymentType === 'COD' ? 'bg-surface-50/10 dark:bg-surface-950/20' : ''}`}>
-                      <button
-                        onClick={() => setPaymentType('COD')}
-                        className="w-full flex items-center justify-between p-5 text-left font-bold"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentType === 'COD' ? 'border-primary-500' : 'border-gray-300 dark:border-surface-800'}`}>
-                            {paymentType === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
-                          </div>
-                          <div>
-                            <span className="text-sm font-extrabold text-surface-600 dark:text-gray-200 flex items-center gap-1.5">
-                              Cash on Delivery (COD)
-                            </span>
-                            <span className="block text-[10px] text-gray-400 font-semibold mt-0.5">Pay when you receive your sleep products</span>
-                          </div>
-                        </div>
-                      </button>
-
-                      <AnimatePresence initial={false}>
-                        {paymentType === 'COD' && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="px-5 pb-6 pt-2 border-t border-surface-100 dark:border-surface-900 space-y-4">
-                              
-                              {/* Verify Pincode Eligibility */}
-                              <div className="bg-surface-50/30 dark:bg-surface-950 p-4 rounded-xl border border-surface-100/50 dark:border-surface-900/80 space-y-2">
-                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Verify Pincode Eligibility for COD</label>
-                                <div className="flex gap-2">
-                                  <input
-                                    type="text"
-                                    value={pincodeCheck}
-                                    onChange={(e) => {
-                                      setPincodeCheck(e.target.value.replace(/\D/g, ''));
-                                      setPincodeStatus('unchecked');
-                                    }}
-                                    placeholder="E.g. 400001"
-                                    className="input flex-1"
-                                    maxLength="6"
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={handleCheckPincode}
-                                    disabled={pincodeStatus === 'checking'}
-                                    className="px-4 py-2.5 bg-surface-600 hover:bg-surface-700 dark:bg-surface-900 text-xs font-bold text-white rounded-xl transition-all disabled:opacity-50 select-none cursor-pointer"
-                                  >
-                                    {pincodeStatus === 'checking' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : 'Check'}
-                                  </button>
-                                </div>
-
-                                {pincodeStatus === 'eligible' && (
-                                  <p className="text-[11px] text-green-500 font-bold flex items-center gap-1 mt-1">
-                                    <CheckCircle className="w-3.5 h-3.5" /> This pincode is eligible for cash on delivery.
-                                  </p>
-                                )}
-
-                                {pincodeStatus === 'ineligible' && (
-                                  <p className="text-[11px] text-rose-500 font-bold flex items-center gap-1 mt-1">
-                                    <AlertTriangle className="w-3.5 h-3.5" /> Sorry, COD is not supported at this pincode location.
-                                  </p>
-                                )}
-                              </div>
-
-                              {/* Handling fee notice */}
-                              <div className="p-3 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-100 dark:border-yellow-900/30 rounded-xl text-[10px] text-yellow-700 dark:text-yellow-400 font-semibold leading-relaxed flex gap-2">
-                                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                                <div>
-                                  <span className="font-extrabold">COD Handling Policy:</span> An additional handling fee of ₹49 is applicable on COD orders under ₹2,500 to avoid mock checkouts. We recommend paying online or via UPI for instant free shipping!
-                                </div>
-                              </div>
-
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                  </div>
-
-                  {/* Failure toggle switch for demo purposes */}
-                  <div className="p-3 bg-surface-50/20 dark:bg-surface-900/40 rounded-xl border border-surface-200/40 dark:border-surface-900/60 flex items-center justify-between text-xs">
-                    <span className="font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-[9px] flex items-center gap-1">
-                      <HelpCircle className="w-3.5 h-3.5" /> Demo Gateway Controls:
-                    </span>
-                    <label className="flex items-center gap-1.5 cursor-pointer select-none">
-                      <input 
-                        type="checkbox" 
-                        checked={simulateFailure} 
-                        onChange={(e) => setSimulateFailure(e.target.checked)}
-                        className="w-3.5 h-3.5 rounded text-rose-500 focus:ring-rose-500 bg-white dark:bg-surface-950 border-gray-300 dark:border-surface-800"
-                      />
-                      <span className="text-[10px] font-bold text-rose-500">Simulate Payment Failure</span>
-                    </label>
                   </div>
 
                   {/* Checkout buttons */}

@@ -24,7 +24,7 @@ const footerLinks = {
 };
 
 const socials = [
-  { icon: FaInstagram, label: 'Instagram', href: '#' },
+  { icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/freshnapsmattress?igsh=bTVxYThyazR6ODZr' },
   { icon: FaFacebook,  label: 'Facebook',  href: '#' },
   { icon: FaXTwitter,  label: 'X (Twitter)', href: '#' },
   { icon: FaYoutube,   label: 'YouTube',   href: '#' },
@@ -107,15 +107,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-gray-400">
                 <MapPin size={15} className="text-primary-400 mt-0.5 flex-shrink-0" />
-                <span>Freshnaps HQ, Textile Market, Jodhpur, Rajasthan 342001</span>
+                <span>Royal Marwadi Near Roop Laxmi Furniture, Mandi Road, Sawai Madhopur, Rajasthan, 322001</span>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-gray-400">
                 <Phone size={15} className="text-primary-400 flex-shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-primary-400 transition-colors">+91 98765 43210</a>
+                <a href="tel:+919057204097" className="hover:text-primary-400 transition-colors">+91 9057204097</a>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-gray-400">
                 <Mail size={15} className="text-primary-400 flex-shrink-0" />
-                <a href="mailto:hello@freshnaps.com" className="hover:text-primary-400 transition-colors">hello@freshnaps.com</a>
+                <a href="mailto:freshnapsmattress@gmail.com" className="hover:text-primary-400 transition-colors">freshnapsmattress@gmail.com</a>
               </li>
             </ul>
 

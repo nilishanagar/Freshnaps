@@ -78,3 +78,7 @@ export const categoryService = {
   update: (id, data) => api.put(`/categories/${id}`, data),
   remove: (id) => api.delete(`/categories/${id}`),
 };
+
+export const contactService = {
+  submitForm: (data) => api.post('/contact', data),
+};

@@ -28,7 +28,7 @@ const AboutPage = () => (
           <span className="text-primary-500 font-medium text-sm uppercase tracking-widest">Since 2020</span>
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-5">Crafting Sleep <span className="text-transparent bg-clip-text bg-brand-gradient">Excellence</span></h2>
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
-            Freshnaps was founded with a single belief: every person deserves a luxurious, restful sleep — regardless of their budget. Our journey began in the textile heartland of Jodhpur, Rajasthan, where generations of artisanal fabric craftsmanship meet modern comfort science.
+            Freshnaps was founded with a single belief: every person deserves a luxurious, restful sleep — regardless of their budget. Our journey began in the textile heartland of Sawai Madhopur, Rajasthan, where generations of artisanal fabric craftsmanship meet modern comfort science.
           </p>
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
             Today, we curate and craft premium bedding solutions — from orthopedic mattresses to 500 thread count Egyptian cotton sheets — delivering them directly to customers across India, cutting out the middleman and passing savings to you.

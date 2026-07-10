@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { contactService } from '../services';
 
 const ContactPage = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -10,10 +11,15 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    toast.success('Message sent! We\'ll reply within 24 hours.');
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setLoading(false);
+    try {
+      await contactService.submitForm(form);
+      toast.success("Message sent! We'll reply within 24 hours.");
+      setForm({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      toast.error(err.message || 'Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,9 +40,9 @@ const ContactPage = () => {
             <h2 className="font-display text-2xl font-bold text-gray-900 dark:text-white mb-6">Let's <span className="text-transparent bg-clip-text bg-brand-gradient">Talk</span></h2>
             <div className="space-y-5">
               {[
-                { icon: Phone, title: 'Phone', lines: ['+91 98765 43210', 'Mon–Sat 9AM–7PM'], href: 'tel:+919876543210' },
-                { icon: Mail, title: 'Email', lines: ['hello@freshnaps.com', 'support@freshnaps.com'], href: 'mailto:hello@freshnaps.com' },
-                { icon: MapPin, title: 'Visit Us', lines: ['Textile Market, Jodhpur', 'Rajasthan 342001'] },
+                { icon: Phone, title: 'Phone', lines: ['+91 9057204097', 'Mon–Sat 9AM–7PM'], href: 'tel:+919057204097' },
+                { icon: Mail, title: 'Email', lines: ['freshnapsmattress@gmail.com'], href: 'mailto:freshnapsmattress@gmail.com' },
+                { icon: MapPin, title: 'Visit Us', lines: ['Royal Marwadi Near Roop Laxmi Furniture, Mandi Road, Sawai Madhopur, Rajasthan, 322001'], href: '#' },
                 { icon: Clock, title: 'Business Hours', lines: ['Mon–Sat: 9AM – 7PM', 'Sunday: 10AM – 5PM'] },
               ].map(({ icon: Icon, title, lines, href }) => (
                 <div key={title} className="flex gap-4">

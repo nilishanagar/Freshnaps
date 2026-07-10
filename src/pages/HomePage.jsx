@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ShoppingBag, ArrowRight, ChevronDown, ChevronLeft, Truck, RotateCcw, Shield, Award, BadgeCheck, Heart, Zap, Sparkles, HelpCircle, Eye, Info, Check, RefreshCw } from 'lucide-react';
+import { Star, ShoppingBag, ArrowRight, ChevronDown, ChevronLeft, Truck, RotateCcw, Shield, Award, BadgeCheck, Heart, Zap, Sparkles, HelpCircle, Eye, Info, Check, RefreshCw, X, BarChart3 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productService } from '../services';
 import ProductCard from '../components/common/ProductCard';
@@ -248,6 +248,20 @@ const HomePage = () => {
   
   // Compare state
   const [compareEnabled, setCompareEnabled] = useState(false);
+  const [compareItems, setCompareItems] = useState([]);
+  const [showCompareModal, setShowCompareModal] = useState(false);
+
+  const toggleCompareItem = (product) => {
+    setCompareItems(prev => {
+      const exists = prev.find(p => p._id === product._id);
+      if (exists) return prev.filter(p => p._id !== product._id);
+      if (prev.length >= 3) {
+        toast.error('You can compare up to 3 mattresses at a time.');
+        return prev;
+      }
+      return [...prev, product];
+    });
+  };
 
   // Tabbed other products
   const [otherActiveTab, setOtherActiveTab] = useState('pillow'); // 'pillow', 'cushion', 'comforter', 'accessory'
@@ -309,6 +323,12 @@ const HomePage = () => {
       if (!hasMatchingThickness) return false;
     }
     return true;
+  }).sort((a, b) => {
+    const priceA = a.discountPrice > 0 ? a.discountPrice : a.price;
+    const priceB = b.discountPrice > 0 ? b.discountPrice : b.price;
+    if (sortOption === 'low') return priceA - priceB;
+    if (sortOption === 'high') return priceB - priceA;
+    return 0; // 'best' — keep original order
   });
 
   // Filter Tabbed bedding materials
@@ -566,8 +586,10 @@ const HomePage = () => {
                 {/* Compare toggle */}
                 <button
                   onClick={() => {
-                    setCompareEnabled(!compareEnabled);
-                    toast.success(compareEnabled ? 'Compare mode disabled' : 'Compare mode enabled! Select mattresses to inspect.');
+                    const next = !compareEnabled;
+                    setCompareEnabled(next);
+                    if (!next) setCompareItems([]);
+                    toast.success(next ? 'Compare mode enabled! Select mattresses to compare.' : 'Compare mode disabled');
                   }}
                   className={`flex items-center gap-1.5 px-4 py-2 border text-xs font-bold rounded transition-colors ${
                     compareEnabled
@@ -620,9 +642,289 @@ const HomePage = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredMattresses.slice(0, 8).map(product => (
-                <ProductCard key={product._id} product={product} />
+                <div key={product._id} className="relative">
+                  {compareEnabled && (
+                    <button
+                      onClick={() => toggleCompareItem(product)}
+                      className={`absolute top-3 right-12 z-20 w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-all duration-200 ${
+                        compareItems.find(p => p._id === product._id)
+                          ? 'bg-primary-500 text-white scale-110'
+                          : 'bg-white text-gray-400 hover:bg-primary-50 hover:text-primary-500'
+                      }`}
+                      title={compareItems.find(p => p._id === product._id) ? 'Remove from compare' : 'Add to compare'}
+                    >
+                      {compareItems.find(p => p._id === product._id) ? <Check size={13} /> : <BarChart3 size={13} />}
+                    </button>
+                  )}
+                  <ProductCard product={product} />
+                </div>
               ))}
             </div>
+
+            {/* Compare Sticky Bottom Bar — Visible while selecting products */}
+            <AnimatePresence>
+              {compareEnabled && compareItems.length > 0 && !showCompareModal && (
+                <motion.div
+                  initial={{ y: 80, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 80, opacity: 0 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-surface-950/95 backdrop-blur-lg border-t border-gray-200 dark:border-surface-800 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] px-4 md:px-8 py-4"
+                >
+                  <div className="container-custom flex items-center justify-between gap-4 flex-wrap">
+                    {/* Selected Items Preview */}
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="w-9 h-9 rounded-xl bg-primary-500/10 flex items-center justify-center flex-shrink-0">
+                        <BarChart3 size={18} className="text-primary-500" />
+                      </div>
+                      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                        {compareItems.map((item) => (
+                          <div key={item._id} className="flex items-center gap-2 bg-[#F8FAFC] dark:bg-surface-900 border border-gray-100 dark:border-surface-800 rounded-xl px-3 py-2 flex-shrink-0">
+                            <img
+                              src={item.images?.[0]?.url || item.images?.[0] || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400'}
+                              alt={item.name}
+                              className="w-8 h-8 rounded-lg object-cover"
+                            />
+                            <span className="text-xs font-bold text-gray-700 dark:text-gray-200 max-w-[100px] truncate">{item.name}</span>
+                            <button
+                              onClick={() => toggleCompareItem(item)}
+                              className="w-5 h-5 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
+                            >
+                              <X size={10} />
+                            </button>
+                          </div>
+                        ))}
+                        {compareItems.length < 3 && (
+                          <div className="flex items-center gap-1.5 px-3 py-2 border border-dashed border-gray-300 dark:border-surface-700 rounded-xl text-[11px] font-semibold text-gray-400 flex-shrink-0">
+                            <BarChart3 size={12} /> Add {3 - compareItems.length} more
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <span className="text-[11px] font-bold text-gray-400">{compareItems.length} of 3</span>
+                      <button
+                        onClick={() => setShowCompareModal(true)}
+                        disabled={compareItems.length < 2}
+                        className={`px-6 py-2.5 text-xs font-bold rounded-xl transition-all ${
+                          compareItems.length >= 2
+                            ? 'bg-primary-500 hover:bg-primary-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 active:scale-[0.98]'
+                            : 'bg-gray-100 dark:bg-surface-800 text-gray-400 cursor-not-allowed'
+                        }`}
+                      >
+                        Compare Now
+                      </button>
+                      <button
+                        onClick={() => { setCompareItems([]); setCompareEnabled(false); }}
+                        className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-surface-800 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Compare Modal Overlay — Opens only when user clicks "Compare Now" */}
+            <AnimatePresence>
+              {showCompareModal && compareItems.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 bg-surface-950/60 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
+                  onClick={() => setShowCompareModal(false)}
+                >
+                  <motion.div
+                    initial={{ y: 40, opacity: 0, scale: 0.97 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    exit={{ y: 40, opacity: 0, scale: 0.97 }}
+                    transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+                    onClick={e => e.stopPropagation()}
+                    className="w-full max-w-5xl max-h-[90vh] bg-white dark:bg-surface-950 rounded-3xl shadow-2xl border border-gray-100 dark:border-surface-800 overflow-hidden flex flex-col"
+                  >
+                    {/* Modal Header */}
+                    <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-gray-100 dark:border-surface-800 bg-[#F8FAFC] dark:bg-surface-950/80 flex-shrink-0">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-primary-500/10 flex items-center justify-center">
+                          <BarChart3 size={18} className="text-primary-500" />
+                        </div>
+                        <div>
+                          <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">Compare Mattresses</h3>
+                          <p className="text-[11px] text-gray-400 font-medium">{compareItems.length} of 3 selected</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setShowCompareModal(false)}
+                        className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-surface-800 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+
+                    {/* Scrollable Content */}
+                    <div className="overflow-y-auto flex-1 p-6 md:p-8">
+                      {/* Product Header Cards */}
+                      <div className={`grid gap-5 mb-8 ${compareItems.length === 1 ? 'grid-cols-1 max-w-xs mx-auto' : compareItems.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                        {compareItems.map((item, idx) => {
+                          const hasDiscount = item.discountPrice > 0;
+                          const displayPrice = hasDiscount ? item.discountPrice : item.price;
+                          const discountPct = hasDiscount ? Math.round(((item.price - item.discountPrice) / item.price) * 100) : 0;
+                          return (
+                            <div key={item._id} className="relative bg-[#F8FAFC] dark:bg-surface-900/50 rounded-2xl border border-gray-100 dark:border-surface-800 overflow-hidden group">
+                              {/* Remove Button */}
+                              <button
+                                onClick={() => toggleCompareItem(item)}
+                                className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full bg-white dark:bg-surface-800 shadow-sm flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
+                              >
+                                <X size={12} />
+                              </button>
+
+                              {/* Product Number Badge */}
+                              <div className="absolute top-3 left-3 z-10 w-6 h-6 rounded-full bg-primary-500 text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
+                                {idx + 1}
+                              </div>
+
+                              {/* Product Image */}
+                              <div className="w-full aspect-[4/3] bg-white dark:bg-surface-900 overflow-hidden">
+                                <img
+                                  src={item.images?.[0]?.url || item.images?.[0] || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400'}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                              </div>
+
+                              {/* Product Info */}
+                              <div className="p-4">
+                                <h4 className="font-bold text-sm text-gray-900 dark:text-white leading-tight mb-1 line-clamp-2">{item.name}</h4>
+                                
+                                {/* Rating */}
+                                {item.rating > 0 && (
+                                  <div className="flex items-center gap-1.5 mb-2">
+                                    <div className="flex items-center gap-0.5">
+                                      {[1,2,3,4,5].map(s => (
+                                        <Star key={s} size={11} className={s <= Math.round(item.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200 dark:text-surface-700'} />
+                                      ))}
+                                    </div>
+                                    <span className="text-[10px] font-bold text-gray-500">{item.rating.toFixed(1)}</span>
+                                  </div>
+                                )}
+
+                                {/* Price */}
+                                <div className="flex items-baseline gap-2 flex-wrap">
+                                  <span className="text-lg font-bold text-gray-900 dark:text-white">₹{displayPrice.toLocaleString('en-IN')}</span>
+                                  {hasDiscount && (
+                                    <>
+                                      <span className="text-xs text-gray-400 line-through">₹{item.price.toLocaleString('en-IN')}</span>
+                                      <span className="text-[10px] font-bold text-green-600 bg-green-50 dark:bg-green-950/30 dark:text-green-400 px-1.5 py-0.5 rounded">{discountPct}% OFF</span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Specification Comparison Grid */}
+                      <div className="rounded-2xl border border-gray-100 dark:border-surface-800 overflow-hidden">
+                        <div className="bg-[#F8FAFC] dark:bg-surface-900/50 px-5 py-3 border-b border-gray-100 dark:border-surface-800">
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Detailed Specifications</span>
+                        </div>
+
+                        {[
+                          {
+                            label: 'Price',
+                            icon: '💰',
+                            render: (item) => {
+                              const hasDiscount = item.discountPrice > 0;
+                              const dp = hasDiscount ? item.discountPrice : item.price;
+                              return <span className="font-bold text-gray-900 dark:text-white">₹{dp.toLocaleString('en-IN')}</span>;
+                            }
+                          },
+                          {
+                            label: 'Rating',
+                            icon: '⭐',
+                            render: (item) => (
+                              <div className="flex items-center gap-1.5">
+                                <div className="flex gap-0.5">
+                                  {[1,2,3,4,5].map(s => (
+                                    <Star key={s} size={10} className={s <= Math.round(item.rating || 0) ? 'text-amber-400 fill-amber-400' : 'text-gray-200 dark:text-surface-700'} />
+                                  ))}
+                                </div>
+                                <span className="font-bold text-gray-700 dark:text-gray-300">{item.rating?.toFixed(1) || 'N/A'}</span>
+                              </div>
+                            )
+                          },
+                          {
+                            label: 'Material',
+                            icon: '🧱',
+                            render: (item) => <span className="capitalize">{item.material || item.tags?.find(t => t.toLowerCase() !== 'mattress') || '—'}</span>
+                          },
+                          {
+                            label: 'Warranty',
+                            icon: '🛡️',
+                            render: (item) => <span className="capitalize">{item.warranty || item.features?.find(f => f.toLowerCase().includes('warranty')) || '—'}</span>
+                          },
+                          {
+                            label: 'Available Sizes',
+                            icon: '📐',
+                            render: (item) => {
+                              const sizes = item.variants?.map(v => v.size).filter(Boolean) || [];
+                              return sizes.length > 0
+                                ? <div className="flex flex-wrap gap-1">{sizes.map((s, i) => <span key={i} className="px-2 py-0.5 bg-gray-100 dark:bg-surface-800 rounded text-[10px] font-semibold text-gray-600 dark:text-gray-300">{s}</span>)}</div>
+                                : <span className="text-gray-400">—</span>;
+                            }
+                          },
+                          {
+                            label: 'Discount',
+                            icon: '🏷️',
+                            render: (item) => {
+                              if (item.discountPrice > 0) {
+                                const saved = item.price - item.discountPrice;
+                                return <span className="font-bold text-green-600 dark:text-green-400">Save ₹{saved.toLocaleString('en-IN')}</span>;
+                              }
+                              return <span className="text-gray-400">No discount</span>;
+                            }
+                          }
+                        ].map((spec, rowIdx) => (
+                          <div key={spec.label} className={`grid ${compareItems.length === 1 ? 'grid-cols-2' : compareItems.length === 2 ? 'grid-cols-3' : 'grid-cols-4'} border-b border-gray-50 dark:border-surface-800 last:border-b-0 ${rowIdx % 2 === 0 ? 'bg-white dark:bg-surface-950' : 'bg-[#FAFBFC] dark:bg-surface-900/30'}`}>
+                            {/* Label Column */}
+                            <div className="px-5 py-3.5 flex items-center gap-2">
+                              <span className="text-sm">{spec.icon}</span>
+                              <span className="text-xs font-bold text-gray-500 dark:text-gray-400">{spec.label}</span>
+                            </div>
+                            {/* Value Columns */}
+                            {compareItems.map(item => (
+                              <div key={item._id} className="px-5 py-3.5 flex items-center text-xs text-gray-700 dark:text-gray-300">
+                                {spec.render(item)}
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className={`grid gap-4 mt-6 ${compareItems.length === 1 ? 'grid-cols-1 max-w-xs mx-auto' : compareItems.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                        {compareItems.map(item => (
+                          <Link
+                            key={item._id}
+                            to={`/product/${item.slug}`}
+                            onClick={() => { setCompareItems([]); setCompareEnabled(false); setShowCompareModal(false); }}
+                            className="flex items-center justify-center gap-2 px-5 py-3 bg-primary-500 hover:bg-primary-600 text-white text-xs font-bold rounded-xl transition-all shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 active:scale-[0.98]"
+                          >
+                            <Eye size={14} /> View {item.name.split(' ')[0]}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             </>
           )}
         </div>
