@@ -21,15 +21,14 @@ function numToWords(n) {
   return str.trim();
 }
 
-const COMPANY = {
-  name:    'FRESHNAPS',
-  sub:     'ROOPLAXMI FURNITURE',
+const defaultCompany = {
+  name:    'ROOPLAXMI FURNITURE',
   address: 'Mandi Road, Sawai Madhopur',
   mobile:  '9414045376',
   gstin:   '08AEBPG6497C1ZJ',
 };
 
-const BANK = {
+const defaultBank = {
   details: 'AU Small Finance Bank, SAWAI MADHOPUR',
   ifsc:    'AUBL0002254',
   acc:     '2221225437547561',
@@ -53,6 +52,17 @@ export default function AdminInvoice() {
   const [items, setItems] = useState([emptyItem()]);
   const [mobileError, setMobileError] = useState('');
   const [itemErrors, setItemErrors] = useState({});
+
+  /* ── company details state ── */
+  const [companyName, setCompanyName] = useState(defaultCompany.name);
+  const [companyAddress, setCompanyAddress] = useState(defaultCompany.address);
+  const [companyMobile, setCompanyMobile] = useState(defaultCompany.mobile);
+  const [companyGstin, setCompanyGstin] = useState(defaultCompany.gstin);
+
+  /* ── bank details state ── */
+  const [bankDetails, setBankDetails] = useState(defaultBank.details);
+  const [bankIfsc, setBankIfsc] = useState(defaultBank.ifsc);
+  const [bankAcc, setBankAcc] = useState(defaultBank.acc);
 
   /* ── mobile validation ── */
   const handleMobileChange = (val) => {
@@ -195,6 +205,55 @@ export default function AdminInvoice() {
               <div>
                 <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</label>
                 <input value={date} onChange={e => setDate(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+              </div>
+            </div>
+          </div>
+
+          {/* Company Details */}
+          <div className="bg-white dark:bg-surface-900 rounded-2xl border border-gray-200 dark:border-surface-800 p-5 space-y-4">
+            <h3 className="text-sm font-extrabold text-gray-900 dark:text-white uppercase tracking-wider border-b border-gray-100 dark:border-surface-800 pb-3">Company Details</h3>
+            <div>
+              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Company / Brand Name</label>
+              <input value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="e.g. ROOPLAXMI FURNITURE"
+                className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+            </div>
+            <div>
+              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Address</label>
+              <input value={companyAddress} onChange={e => setCompanyAddress(e.target.value)} placeholder="Address"
+                className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Mobile No.</label>
+                <input value={companyMobile} onChange={e => setCompanyMobile(e.target.value)} placeholder="Mobile No"
+                  className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+              </div>
+              <div>
+                <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">GSTIN</label>
+                <input value={companyGstin} onChange={e => setCompanyGstin(e.target.value)} placeholder="GSTIN"
+                  className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+              </div>
+            </div>
+          </div>
+
+          {/* Bank Details */}
+          <div className="bg-white dark:bg-surface-900 rounded-2xl border border-gray-200 dark:border-surface-800 p-5 space-y-4">
+            <h3 className="text-sm font-extrabold text-gray-900 dark:text-white uppercase tracking-wider border-b border-gray-100 dark:border-surface-800 pb-3">Bank Details</h3>
+            <div>
+              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Bank Name & Branch</label>
+              <input value={bankDetails} onChange={e => setBankDetails(e.target.value)} placeholder="AU Small Finance Bank, SAWAI MADHOPUR"
+                className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">IFSC Code</label>
+                <input value={bankIfsc} onChange={e => setBankIfsc(e.target.value)} placeholder="IFSC Code"
+                  className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
+              </div>
+              <div>
+                <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account Number</label>
+                <input value={bankAcc} onChange={e => setBankAcc(e.target.value)} placeholder="Account Number"
                   className="mt-1 w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50" />
               </div>
             </div>
@@ -408,11 +467,10 @@ export default function AdminInvoice() {
               {/* Company Header */}
               <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                 <h1 style={{ fontSize: '22px', fontWeight: 'bold', textDecoration: 'underline', margin: '0 0 6px' }}>INVOICE</h1>
-                <p style={{ fontWeight: 'bold', fontSize: '15px', margin: '2px 0' }}>{COMPANY.name}</p>
-                <p style={{ margin: '2px 0' }}>{COMPANY.sub}</p>
-                <p style={{ margin: '2px 0' }}>{COMPANY.address}</p>
-                <p style={{ margin: '2px 0' }}>Mobile No: {COMPANY.mobile}</p>
-                <p style={{ margin: '2px 0' }}>GSTIN: {COMPANY.gstin}</p>
+                <p style={{ fontWeight: 'bold', fontSize: '15px', margin: '2px 0' }}>{companyName}</p>
+                <p style={{ margin: '2px 0' }}>{companyAddress}</p>
+                <p style={{ margin: '2px 0' }}>Mobile No: {companyMobile}</p>
+                <p style={{ margin: '2px 0' }}>GSTIN: {companyGstin}</p>
               </div>
 
               <hr style={{ borderColor: '#000', margin: '10px 0' }} />
@@ -477,13 +535,13 @@ export default function AdminInvoice() {
 
               {/* Bank Details */}
               <div style={{ border: '1px solid #000', padding: '8px 12px', margin: '10px 0' }}>
-                <p style={{ margin: '2px 0' }}><strong style={{ textDecoration: 'underline' }}>BANK DETAILS:</strong>&nbsp;{BANK.details}</p>
-                <p style={{ margin: '2px 0' }}><strong>IFSC:</strong> {BANK.ifsc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>A/C:</strong> {BANK.acc}</p>
+                <p style={{ margin: '2px 0' }}><strong style={{ textDecoration: 'underline' }}>BANK DETAILS:</strong>&nbsp;{bankDetails}</p>
+                <p style={{ margin: '2px 0' }}><strong>IFSC:</strong> {bankIfsc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>A/C:</strong> {bankAcc}</p>
               </div>
 
               {/* Signature */}
               <div style={{ textAlign: 'right', marginTop: '32px' }}>
-                <p style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>FOR: {COMPANY.name}</p>
+                <p style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>FOR: {companyName}</p>
                 {sigUrl ? (
                   <img
                     src={sigUrl}
