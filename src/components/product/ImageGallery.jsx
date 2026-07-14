@@ -87,7 +87,7 @@ const ImageGallery = ({
           {/* ── Main Image ── */}
           <div className="flex-1 flex flex-col">
             <div
-              className="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-50 dark:bg-surface-900 border border-gray-200 dark:border-surface-700 cursor-pointer group"
+              className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-50 dark:bg-surface-900 border border-gray-200 dark:border-surface-700 cursor-pointer group"
               onClick={() => setLightboxOpen(true)}
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
@@ -151,15 +151,6 @@ const ImageGallery = ({
               )}
             </div>
 
-            {/* ── USP Bar (below image, Frido-style) ── */}
-            <div className="flex items-stretch mt-0 border border-t-0 border-gray-200 dark:border-surface-700 rounded-b-xl overflow-hidden bg-white dark:bg-surface-900 divide-x divide-gray-200 dark:divide-surface-700">
-              {uspItems.map((item, i) => (
-                <div key={i} className="flex-1 py-3 px-3 text-center">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight">{item.top}</p>
-                  <p className="text-xs font-bold text-gray-900 dark:text-white leading-tight">{item.bottom}</p>
-                </div>
-              ))}
-            </div>
 
             {/* View real images link */}
             {/* <button className="flex items-center gap-1.5 mx-auto mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">

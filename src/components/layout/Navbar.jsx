@@ -440,15 +440,27 @@ const Navbar = () => {
             </div>
 
             {/* Royal Marwadi button */}
-            <a
-              href={ROYAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-brand-gradient text-white text-[13px] font-extrabold rounded-2xl shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <Leaf size={14} className="animate-pulse" />
-              Royal Marwadi
-            </a>
+            <div className="relative group hidden lg:block">
+              <a
+                href={ROYAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4.5 py-2.5 bg-gradient-to-r from-[#A75D46] to-[#D58C73] text-white text-xs font-extrabold rounded-2xl shadow-[0_4px_12px_rgba(167,93,70,0.2)] hover:shadow-[0_8px_24px_rgba(167,93,70,0.3)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap"
+              >
+                <Leaf size={14} className="animate-pulse" />
+                Buy Premium Furniture with Royal Marwadi
+              </a>
+              {/* Tooltip explanation */}
+              <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-700 rounded-2xl shadow-2xl p-4 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 text-left">
+                <h5 className="text-xs font-bold text-gray-900 dark:text-white mb-1">Looking for Premium Furniture?</h5>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed mb-2.5">
+                  Visit our flagship partner store <strong>Royal Marwadi</strong> to explore high-quality solid wood beds, sofas, wardrobes, and dining sets designed to complement your sleep setup.
+                </p>
+                <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 flex items-center gap-1 hover:underline">
+                  Visit Showroom Online <ArrowRight size={10} />
+                </span>
+              </div>
+            </div>
 
             {/* Mobile menu toggle */}
             <button
@@ -500,8 +512,11 @@ const Navbar = () => {
                       <Link to="/register" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-extrabold text-primary-600 dark:text-primary-400 hover:bg-surface-100 dark:hover:bg-surface-950/60 rounded-2xl">Register</Link>
                     </>
                   )}
-                  <a href={ROYAL_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3.5 text-sm font-extrabold text-white bg-brand-gradient rounded-2xl shadow-brand mt-2">
-                    <Leaf size={14} /> Royal Marwadi
+                  <a href={ROYAL_URL} target="_blank" rel="noopener noreferrer" className="flex flex-col gap-1 px-4 py-3 bg-gradient-to-r from-[#A75D46] to-[#D58C73] text-white rounded-2xl shadow-[0_4px_12px_rgba(167,93,70,0.2)] mt-2 text-center">
+                    <span className="flex items-center justify-center gap-2 text-sm font-extrabold">
+                      <Leaf size={14} /> Buy Premium Furniture with Royal Marwadi
+                    </span>
+                    <span className="text-[10px] opacity-80 font-medium">Explore Beds &amp; Sofas by Royal Marwadi</span>
                   </a>
                 </div>
               </div>

@@ -241,10 +241,10 @@ const ProductDetailPage = () => {
            HERO SECTION — Frido Layout
          ═══════════════════════════════════════════════════ */}
       <div className="container-custom py-6 lg:py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
           {/* ═══ LEFT: Image Gallery with USP bar ═══ */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7">
             <ImageGallery
               images={product.images}
               productName={product.name}
@@ -261,7 +261,7 @@ const ProductDetailPage = () => {
           </div>
 
           {/* ═══ RIGHT: Product Info — Frido Style ═══ */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-5">
             <div className="space-y-5">
 
               {/* ── 1. Bestseller + Rating + Title ── */}

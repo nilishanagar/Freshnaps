@@ -23,6 +23,8 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const OrdersPage = lazy(() => import('./pages/OrdersPage'));
 const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
@@ -32,6 +34,7 @@ const EditProductPage = lazy(() => import('./pages/admin/EditProductPage'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminInvoice = lazy(() => import('./pages/admin/AdminInvoice'));
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
@@ -58,6 +61,8 @@ function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="order-success/:id" element={<OrderSuccessPage />} />
+              <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="terms-of-service" element={<TermsOfServicePage />} />
 
               {/* Protected customer routes */}
               <Route element={<ProtectedRoute />}>
@@ -81,6 +86,7 @@ function App() {
                 <Route path="admin/products/:id/edit" element={<EditProductPage />} />
                 <Route path="admin/orders" element={<AdminOrders />} />
                 <Route path="admin/users" element={<AdminUsers />} />
+                <Route path="admin/invoice" element={<AdminInvoice />} />
               </Route>
             </Route>
 

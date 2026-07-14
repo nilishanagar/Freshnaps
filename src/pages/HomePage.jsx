@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ShoppingBag, ArrowRight, ChevronDown, ChevronLeft, Truck, RotateCcw, Shield, Award, BadgeCheck, Heart, Zap, Sparkles, HelpCircle, Eye, Info, Check, RefreshCw, X, BarChart3 } from 'lucide-react';
+import { Star, ShoppingBag, ArrowRight, ChevronDown, ChevronLeft, Truck, RotateCcw, Shield, Award, BadgeCheck, Heart, Zap, Sparkles, HelpCircle, Eye, Info, Check, RefreshCw, X, BarChart3, Leaf } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productService } from '../services';
 import ProductCard from '../components/common/ProductCard';
@@ -224,6 +224,7 @@ const LayerCarousel = () => {
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const ROYAL_URL = import.meta.env.VITE_ROYAL_MARWADI_URL || 'https://royalmarwadi.com';
   const [loading, setLoading] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
   const [email, setEmail] = useState('');
@@ -1092,6 +1093,95 @@ const HomePage = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Royal Marwadi Furniture Experience Section ─── */}
+      <section className="py-24 bg-[#FDFBF7] dark:bg-surface-900/40 border-y border-gray-200/50 dark:border-surface-900">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column: Text & Premium Category Grid (lg:col-span-6) */}
+            <div className="lg:col-span-6 space-y-8 text-left">
+              <div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-950/30 text-primary-700 dark:text-primary-300 text-[10px] font-bold uppercase tracking-wider mb-4 border border-primary-200/50 dark:border-primary-900/30">
+                  <Leaf size={11} className="fill-primary-700 dark:fill-primary-300" /> FLAGSHIP COLLABORATION
+                </span>
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-gray-900 dark:text-white leading-tight">
+                  Exquisite Furniture. <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-500">Handcrafted for Your Home.</span>
+                </h2>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
+                  Freshnaps has partnered with <strong>Royal Marwadi</strong> to bring you premium, hand-carved solid wood furniture. From heirloom-quality bed frames designed to hold your mattress perfectly, to custom wardrobes and luxury seating.
+                </p>
+              </div>
+
+              {/* Minimalist Grid List */}
+              <div className="grid grid-cols-2 gap-6 border-t border-gray-200/60 dark:border-surface-800 pt-6">
+                <div>
+                  <span className="text-[10px] font-extrabold text-primary-500 uppercase tracking-wider">01 / Beds &amp; Frames</span>
+                  <h4 className="font-bold text-sm text-gray-900 dark:text-white mt-1">Solid Wood Beds</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-normal">Premium Teak &amp; Sheesham wood bed frames.</p>
+                </div>
+                <div>
+                  <span className="text-[10px] font-extrabold text-primary-500 uppercase tracking-wider">02 / Seating Comfort</span>
+                  <h4 className="font-bold text-sm text-gray-900 dark:text-white mt-1">Luxury Sofas</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-normal">Customizable fabric &amp; leather sofas.</p>
+                </div>
+                <div className="border-t border-gray-100 dark:border-surface-800/50 pt-4">
+                  <span className="text-[10px] font-extrabold text-primary-500 uppercase tracking-wider">03 / Storage Systems</span>
+                  <h4 className="font-bold text-sm text-gray-900 dark:text-white mt-1">Wardrobes &amp; Cabinets</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-normal">Bedside storage drawers and custom closets.</p>
+                </div>
+                <div className="border-t border-gray-100 dark:border-surface-800/50 pt-4">
+                  <span className="text-[10px] font-extrabold text-primary-500 uppercase tracking-wider">04 / Dining &amp; Tables</span>
+                  <h4 className="font-bold text-sm text-gray-900 dark:text-white mt-1">Dining Sets</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-normal">Handmade wooden dining tables and chairs.</p>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href={ROYAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 px-8 py-4 bg-gradient-to-r from-[#A75D46] to-[#D58C73] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl transition-all shadow-[0_4px_14px_rgba(167,93,70,0.2)] hover:shadow-[0_8px_30px_rgba(167,93,70,0.35)] hover:-translate-y-0.5 active:scale-95"
+                >
+                  Explore Royal Marwadi Showroom <ArrowRight size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Overlapping Editorial Collage (lg:col-span-6) */}
+            <div className="lg:col-span-6 relative h-[500px] flex items-center justify-center mt-12 lg:mt-0">
+              
+              {/* Back Image (Left side) */}
+              <div className="absolute left-4 top-0 w-[60%] aspect-[3/4] rounded-3xl overflow-hidden shadow-xl border border-white/20 dark:border-surface-800 z-10 -rotate-3 hover:rotate-0 transition-transform duration-500">
+                <img 
+                  src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800" 
+                  alt="Royal Marwadi Showroom Bedroom" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Front Overlapping Image (Right side) */}
+              <div className="absolute right-4 bottom-0 w-[55%] aspect-square rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-surface-800 z-20 translate-y-4 translate-x-2 rotate-3 hover:rotate-0 transition-transform duration-500">
+                <img 
+                  src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800" 
+                  alt="Teakwood Frame Detail" 
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Floating dark glassmorphic label */}
+                <div className="absolute inset-x-4 bottom-4 bg-black/60 backdrop-blur-md border border-white/10 p-3.5 rounded-2xl text-left text-white">
+                  <p className="text-[9px] uppercase tracking-wider font-extrabold text-primary-400">Experience Store</p>
+                  <h4 className="text-xs font-bold mt-0.5">Explore Royal Marwadi in Sawai Madhopur</h4>
+                </div>
+              </div>
+              
+            </div>
+
           </div>
         </div>
       </section>
