@@ -11,6 +11,7 @@ import { toggleWishlistItem } from '../store/slices/wishlistSlice';
 import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import LoginPromptModal from '../components/common/LoginPromptModal';
+import SEOHead, { buildProductSchema, buildBreadcrumbSchema } from '../components/common/SEOHead';
 import toast from 'react-hot-toast';
 import { calculateFreshNapsPrice } from '../utils/pricingUtils';
 
@@ -217,10 +218,34 @@ const ProductDetailPage = () => {
   };
 
   // ═══════════════════════════════════════════════════════
+  //  SEO — dynamic per-product meta tags + structured data
+  // ═══════════════════════════════════════════════════════
+  const productImage = product.images?.find(img => img.isPrimary)?.url || product.images?.[0]?.url || '';
+  const productSeoTitle = product.seo?.metaTitle || product.name;
+  const productSeoDesc = product.seo?.metaDescription || product.shortDescription || `Buy ${product.name} at Freshnaps. Premium quality with free shipping, 30-day returns & 2-year warranty.`;
+  const categoryName = product.category?.name || categorySlug;
+  const breadcrumbItems = [
+    { name: 'Home', url: '/' },
+    { name: 'Shop', url: '/shop' },
+    { name: categoryName, url: `/shop?category=${categorySlug}` },
+    { name: product.name },
+  ];
+
+  // ═══════════════════════════════════════════════════════
   //  RENDER
   // ═══════════════════════════════════════════════════════
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950 pb-20">
+      <SEOHead
+        title={productSeoTitle}
+        description={productSeoDesc}
+        path={`/product/${product.slug}`}
+        ogImage={productImage}
+        ogType="product"
+        keywords={`${product.name}, ${categoryName}, buy ${product.name} online, freshnaps ${categoryName}`}
+        canonicalUrl={product.seo?.canonicalUrl || ''}
+        jsonLd={[buildProductSchema(product), buildBreadcrumbSchema(breadcrumbItems)]}
+      />
 
       {/* ─── Breadcrumb ─── */}
       <div className="border-b border-gray-100 dark:border-surface-800 bg-gray-50 dark:bg-surface-900">

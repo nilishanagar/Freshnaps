@@ -9,6 +9,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff, User, Mail, Smartphone, Lock, Sparkles, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
+import SEOHead from '../components/common/SEOHead';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -122,6 +123,7 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface-50/20 dark:bg-surface-950 px-4 py-20 select-none">
+      <SEOHead title="Create Account" noindex />
       <div className="w-full max-w-md space-y-6">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { FileText, AlertTriangle, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import SEOHead from '../components/common/SEOHead';
 
 const TermsOfServicePage = () => {
   useEffect(() => {
@@ -8,6 +9,11 @@ const TermsOfServicePage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950 py-12 md:py-16">
+      <SEOHead
+        title="Terms of Service"
+        description="Freshnaps Terms of Service — Read our terms and conditions for shopping, shipping, returns, and warranty policies."
+        path="/terms-of-service"
+      />
       <div className="container-custom max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">

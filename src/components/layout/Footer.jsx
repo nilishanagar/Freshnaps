@@ -152,7 +152,7 @@ const Footer = () => {
             <span>·</span>
             <Link to="/terms-of-service" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">Terms of Service</Link>
             <span>·</span>
-            <Link to="#" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">Sitemap</Link>
+            <a href="/sitemap.xml" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">Sitemap</a>
           </div>
         </div>
       </div>

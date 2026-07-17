@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { Eye, EyeOff, Mail, Lock, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
 import freshnapsLogo from '../assets/freshnaps-logo.png';
 import { useGoogleLogin } from '@react-oauth/google';
+import SEOHead from '../components/common/SEOHead';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -124,6 +125,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface-50/20 dark:bg-surface-950 px-4 py-20 select-none">
+      <SEOHead title="Sign In" noindex />
       <div className="w-full max-w-md space-y-6">
         
         <motion.div 

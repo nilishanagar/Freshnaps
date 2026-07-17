@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingBag, ArrowLeft, RefreshCw, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import SEOHead from '../components/common/SEOHead';
 
 import { fetchOrders, cancelOrder, reorderItems } from '../store/slices/orderSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -127,6 +128,7 @@ const OrdersPage = () => {
 
   return (
     <div className="min-h-screen bg-surface-50/40 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
+      <SEOHead title="My Orders" noindex />
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* Page Header */}

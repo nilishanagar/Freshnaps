@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { fetchOrderDetail, cancelOrder, returnOrder, reorderItems, submitReview } from '../store/slices/orderSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { orderService } from '../services';
+import SEOHead from '../components/common/SEOHead';
 
 import OrderStatusBadge from '../components/orders/OrderStatusBadge';
 import OrderStatusTimeline from '../components/orders/OrderStatusTimeline';
@@ -35,6 +36,7 @@ const OrderDetailPage = () => {
   if (loading && !order) {
     return (
       <div className="flex flex-col items-center justify-center py-40 space-y-3 bg-surface-50/40 dark:bg-surface-950 min-h-screen">
+        <SEOHead title="Loading Order..." noindex />
         <RefreshCw className="w-8 h-8 text-primary-500 animate-spin" />
         <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">Syncing Order details...</span>
       </div>
@@ -44,6 +46,7 @@ const OrderDetailPage = () => {
   if (error || !order) {
     return (
       <div className="flex flex-col items-center justify-center py-40 space-y-4 bg-surface-50/40 dark:bg-surface-950 min-h-screen text-center px-4">
+        <SEOHead title="Order Error" noindex />
         <AlertCircle className="w-12 h-12 text-rose-500" />
         <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">Failed to load order details</h3>
         <p className="text-xs text-gray-400 max-w-sm">{error || 'Order not found.'}</p>
@@ -160,6 +163,7 @@ const OrderDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-surface-50/40 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
+      <SEOHead title={`Order Details #${orderIdShort}`} noindex />
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* Detail Header / Navigation */}

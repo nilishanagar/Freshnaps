@@ -6,6 +6,7 @@ import { productService } from '../services';
 import { setProducts, setFilters, setLoading } from '../store/slices/productSlice';
 import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SEOHead from '../components/common/SEOHead';
 
 const categories = [
   { label: 'All Collection', slug: '' },
@@ -312,8 +313,22 @@ const ShopPage = () => {
     </div>
   );
 
+  const activeCatLabel = categories.find(c => c.slug === localFilters.category)?.label || 'All Products';
+  const shopTitle = localFilters.category
+    ? `Shop ${activeCatLabel} — Premium Bedding`
+    : 'Shop All Products — Premium Bedding & Home Comfort';
+  const shopDesc = localFilters.category
+    ? `Browse Freshnaps ${activeCatLabel.toLowerCase()} collection. Premium quality, free shipping across India, 30-day returns & 2-year warranty.`
+    : 'Shop premium mattresses, pillows, bedsheets, comforters, blankets & more at Freshnaps. Free shipping across India. 30-day hassle-free returns.';
+
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950">
+      <SEOHead
+        title={shopTitle}
+        description={shopDesc}
+        path={`/shop${localFilters.category ? `?category=${localFilters.category}` : ''}`}
+        keywords={`freshnaps, shop, ${activeCatLabel.toLowerCase()}, buy ${activeCatLabel.toLowerCase()} online, premium bedding, home comfort`}
+      />
       {/* Header */}
       <div className="bg-surface-200 dark:bg-surface-900 border-b border-gray-100 dark:border-surface-800 py-8">
         <div className="container-custom">

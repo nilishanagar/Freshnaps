@@ -8,6 +8,7 @@ import { updateUser } from '../store/slices/authSlice';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { indianStatesAndCities, statesList } from '../utils/indiaData';
 import toast from 'react-hot-toast';
+import SEOHead from '../components/common/SEOHead';
 
 import { fetchOrders, cancelOrder, reorderItems } from '../store/slices/orderSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -260,6 +261,7 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-10">
+      <SEOHead title="My Profile" noindex />
       <div className="container-custom max-w-5xl">
         {/* Header */}
         <div className="card p-6 mb-6 flex items-center gap-5 relative overflow-hidden">

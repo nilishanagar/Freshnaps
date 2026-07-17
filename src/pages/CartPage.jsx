@@ -7,6 +7,7 @@ import { removeFromCart, updateQuantity, selectCartItems, selectCartSubtotal } f
 import { toggleWishlistItem } from '../store/slices/wishlistSlice';
 import { userService } from '../services';
 import LoginPromptModal from '../components/common/LoginPromptModal';
+import SEOHead from '../components/common/SEOHead';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
@@ -71,6 +72,7 @@ const CartPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950 py-10">
+      <SEOHead title="Shopping Cart" noindex />
       <div className="container-custom">
         <h1 className="section-title mb-8">Shopping Cart <span className="text-primary-500 text-2xl">({items.length})</span></h1>
 

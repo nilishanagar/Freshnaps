@@ -1,0 +1,13 @@
+# Freshnaps — https://freshnapsmattress.com
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /profile
+Disallow: /orders
+Disallow: /order-success/
+Disallow: /login
+Disallow: /register
+
+# Sitemap
+Sitemap: https://freshnapsmattress.com/sitemap.xml

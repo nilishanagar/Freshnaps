@@ -6,6 +6,7 @@ import { Star, ShoppingBag, ArrowRight, ChevronDown, ChevronLeft, Truck, RotateC
 import { useDispatch, useSelector } from 'react-redux';
 import { productService } from '../services';
 import ProductCard from '../components/common/ProductCard';
+import SEOHead from '../components/common/SEOHead';
 import mattressLayer1 from '../assets/mattress-layers-1.png';
 import mattressLayer2 from '../assets/mattress-layers-2.png';
 import mattressLayer3 from '../assets/mattress-layers-3.png';
@@ -343,6 +344,12 @@ const HomePage = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#fafaf9] dark:bg-surface-950">
+      <SEOHead
+        title="Premium Mattresses, Pillows & Bedding"
+        description="Shop Freshnaps premium mattresses, pillows, bedsheets, comforters & more. Orthopedic memory foam, pocket spring & latex mattresses. Free shipping across India. 30-day returns."
+        path="/"
+        keywords="freshnaps, mattress, premium mattress, memory foam mattress, orthopedic mattress, pillow, bedsheet, comforter, blanket, bedding India, buy mattress online"
+      />
 
       {/* ─── 1. HERO: LAYERED MATTRESSES AUTO-SLIDING CAROUSEL ─── */}
       <section className="relative min-h-[92vh] flex items-center bg-[#F8FAFC] dark:bg-surface-950 border-b border-gray-100 dark:border-surface-900 pt-0 pb-0">

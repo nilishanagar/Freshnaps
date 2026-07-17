@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { contactService } from '../services';
+import SEOHead from '../components/common/SEOHead';
 
 const ContactPage = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -24,6 +25,12 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950">
+      <SEOHead
+        title="Contact Us"
+        description="Get in touch with Freshnaps. Call +91 9057204097, email freshnapsmattress@gmail.com, or visit our Sawai Madhopur showroom. Mon-Sat 9AM-7PM."
+        path="/contact"
+        keywords="contact freshnaps, freshnaps phone number, mattress store Sawai Madhopur, freshnaps email"
+      />
       {/* Hero */}
       <section className="bg-surface-200 dark:bg-surface-900/50 py-16 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

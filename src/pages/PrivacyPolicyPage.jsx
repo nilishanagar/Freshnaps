@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Shield, Eye, Lock, RefreshCw, FileText } from 'lucide-react';
+import SEOHead from '../components/common/SEOHead';
 
 const PrivacyPolicyPage = () => {
   useEffect(() => {
@@ -8,6 +9,11 @@ const PrivacyPolicyPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-surface-950 py-12 md:py-16">
+      <SEOHead
+        title="Privacy Policy"
+        description="Freshnaps Privacy Policy — Learn how we collect, use, and protect your personal information when you shop at freshnapsmattress.com."
+        path="/privacy-policy"
+      />
       <div className="container-custom max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">

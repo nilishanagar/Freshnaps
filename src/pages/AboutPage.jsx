@@ -2,9 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Award, Leaf, Heart, ArrowRight } from 'lucide-react';
+import SEOHead from '../components/common/SEOHead';
 
 const AboutPage = () => (
   <div className="min-h-screen bg-white dark:bg-surface-950">
+    <SEOHead
+      title="About Us — Our Story"
+      description="Born in Rajasthan's textile heritage, Freshnaps brings premium bedding tradition to modern homes across India. Quality first, sustainable, customer-loved since 2020."
+      path="/about"
+      keywords="about freshnaps, freshnaps story, premium bedding company, Sawai Madhopur mattress"
+    />
     {/* Hero */}
     <section className="relative bg-dark-gradient py-24 px-4 text-center text-white overflow-hidden">
       <div className="absolute inset-0 opacity-20">

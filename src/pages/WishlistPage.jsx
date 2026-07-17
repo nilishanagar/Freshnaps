@@ -4,6 +4,7 @@ import { Heart, ShoppingBag } from 'lucide-react';
 import { authService } from '../services';
 import ProductCard from '../components/common/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SEOHead from '../components/common/SEOHead';
 import toast from 'react-hot-toast';
 
 const WishlistPage = () => {
@@ -28,6 +29,7 @@ const WishlistPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-10">
+      <SEOHead title="My Wishlist" noindex />
       <div className="container-custom">
         <div className="flex items-center justify-between mb-8">
           <div>

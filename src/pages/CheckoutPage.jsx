@@ -11,6 +11,7 @@ import {
 import { orderService } from '../services';
 import { clearCart, selectCartItems, selectCartSubtotal } from '../store/slices/cartSlice';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SEOHead from '../components/common/SEOHead';
 import toast from 'react-hot-toast';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
@@ -389,6 +390,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="min-h-screen bg-surface-50/20 dark:bg-surface-950 py-10 px-4 md:px-8 select-none">
+      <SEOHead title="Checkout" noindex />
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Package, Truck, Home, ShoppingBag } from 'lucide-react';
 import { orderService } from '../services';
+import SEOHead from '../components/common/SEOHead';
 
 const formatPrice = (p) => `₹${p.toLocaleString('en-IN')}`;
 
@@ -22,6 +23,7 @@ const OrderSuccessPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-surface-950 py-16 px-4">
+      <SEOHead title="Order Successful" noindex />
       <div className="max-w-2xl mx-auto">
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center mb-10">
           <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mx-auto mb-6">
